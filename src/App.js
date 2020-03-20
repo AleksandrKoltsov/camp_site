@@ -1,10 +1,11 @@
 import React from 'react';
+import PersistentDrawerLeft from './Menu.js';
 // import logo from './logo.svg';
 // import './App.css';
 
 function App() {
   return (
-   <h1>Hello camp site!</h1>
+   <div><PersistentDrawerLeft /></div>
   );
 }
 
