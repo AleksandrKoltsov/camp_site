@@ -1,11 +1,11 @@
 import React from 'react';
-// import logo from './logo.svg';
-// import './App.css';
+import SwipeableTextMobileStepper from './components/slider.js'
 
-function App() {
-  return (
-   <h1>Hello camp site!</h1>
-  );
+class App extends React.Component {
+  render() {
+    return (
+      <SwipeableTextMobileStepper />
+    )
+  }
 }
-
 export default App;
