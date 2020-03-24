@@ -10,6 +10,7 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
+import FirstBoxBackground from './bgrnd.jpg';
 
 const useStyles = makeStyles({
   list: {
@@ -35,13 +36,30 @@ const useStyles = makeStyles({
   fullList: {
     width: 'auto',
   },
+  cardsBox:{
+    flexFlow: "column wrap",
+    owerflow:"hidden",
+  },
+  firstBox:{
+    textAlign: "center",
+    backgroundImage: `url(${FirstBoxBackground})`,
+    backgroundRepeat: "no-repeat",
+    backgroundPosition: "top",
+    backgroundSize: "contain",
+    color: "white",
+    fontWeight:"900",
+    padding: "130px",
+  },
   content: {
     flexGrow: 1,
-    padding: "130px",
+  },
+  toolbarGroup:{
+    justifyContent:"space-between",
+    flexDirection:"row",
   },
 });
 
-export default function SwipeableTemporaryDrawer() {
+export default function SwipeableTemporaryDrawer(props) {
   const classes = useStyles();
   const [state, setState] = React.useState({
     menu: false,
@@ -83,7 +101,7 @@ export default function SwipeableTemporaryDrawer() {
       <AppBar
         className={`${classes[state.bar]} ${state.bar}`}
       >
-        <Toolbar>
+        <Toolbar className={classes.toolbarGroup}>
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -92,10 +110,10 @@ export default function SwipeableTemporaryDrawer() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap mr="auto">
+          <Typography variant="h6" noWrap m="auto">
             LOGO
           </Typography>
-          <Box component="div" ml="auto" display="block">
+          <Box component="div" display="block">
             <Typography>
               email@example.com
           </Typography>
@@ -113,6 +131,7 @@ export default function SwipeableTemporaryDrawer() {
         {list()}
       </SwipeableDrawer>
       <main  className={classes.content}>
+        <Box className={classes.firstBox}>
         <Typography>
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio, vero dicta, pariatur ut facilis repellat commodi
   eos, praesentium tempore incidunt quaerat ullam itaque harum. At cum quos aut eum accusantium, tempora sunt neque
@@ -151,36 +170,11 @@ export default function SwipeableTemporaryDrawer() {
   enim reiciendis. Libero possimus quasi rerum corporis quis, laboriosam delectus praesentium, eius autem repellendus
   iusto mollitia facilis officiis amet porro officia, quidem adipisci tempore? Ducimus tempore officiis suscipit quod
   illo nulla consectetur qui corrupti provident aliquid dolores quas doloribus pariatur vero eos atque quis, commodi rem
-  possimus modi fugit delectus. Voluptate amet, distinctio maiores debitis provident assumenda porro, ipsa animi
-  incidunt eum voluptatum quia! Ad repellendus nobis maiores veniam, atque deserunt quis? Illum et corrupti similique
-  quaerat ducimus hic est quisquam, accusantium ea, rerum veritatis alias nihil, sunt animi. At dignissimos vel minima
-  doloribus nobis vero corporis quibusdam necessitatibus aut reprehenderit, nesciunt eos in neque pariatur sit? Corporis
-  iusto fugit ducimus libero? Aut, doloribus reiciendis fugit non ratione illum cupiditate incidunt. Cumque asperiores,
-  adipisci nostrum nulla assumenda eaque fugit quis! Incidunt est veritatis omnis accusantium sed quos dolorum ratione
-  rerum libero magnam consequatur repellat accusamus cumque, a animi iste ut voluptatibus enim. Sequi doloremque nam
-  aspernatur quaerat! Rem sed, asperiores iusto, voluptates ad illo dolor dignissimos repellendus debitis sint tenetur
-  voluptas. Voluptatem, inventore! Eaque dicta aspernatur soluta culpa officia earum aliquam! Voluptas dolore iste
-  impedit quisquam fuga eveniet quae suscipit ullam optio recusandae eum ipsum quia, et architecto labore possimus,
-  nulla distinctio odio a inventore nesciunt! Vitae autem alias, tempora aspernatur officiis, culpa quos maiores
-  veritatis ea nobis necessitatibus perspiciatis ullam! Facilis, ad quas deserunt illo ex, eum voluptatem reprehenderit
-  totam delectus magni fuga? Hic error, beatae cupiditate ipsum, fugit praesentium accusantium nisi saepe deleniti,
-  consequuntur pariatur officia unde reiciendis facere porro harum perferendis recusandae veniam quidem commodi dolorum
-  deserunt repudiandae? Dolore pariatur quas ea quaerat distinctio repudiandae dignissimos dolor! Repudiandae eius
-  pariatur fugiat fuga quod, dignissimos tenetur, facere cupiditate harum eos iure ut aliquam praesentium, nemo optio
-  officiis! Excepturi, corrupti unde? Reprehenderit repellendus unde numquam iusto? Neque rem quisquam quos tempore
-  sequi molestiae voluptates voluptatem suscipit modi alias eos nobis, velit perspiciatis recusandae laborum veniam quia
-  ab harum? Consequuntur enim accusamus facere suscipit sed iste velit cupiditate aperiam, libero architecto tempora
-  itaque corrupti nisi placeat laborum, assumenda vitae. Saepe sit quidem est. Neque dolore fuga facilis ducimus
-  delectus, natus fugit omnis qui eius, sapiente officiis quis unde aspernatur! Ducimus perferendis facilis facere,
-  voluptate eaque reiciendis aliquid suscipit similique! Nesciunt sequi laboriosam ad eum temporibus rerum iure possimus
-  non, et aspernatur, quisquam doloremque similique dolores, qui labore quidem asperiores fugiat! Facere iure voluptas
-  beatae quaerat, ex fuga cupiditate aperiam dolorum iste quas illum atque perferendis repudiandae quia soluta ab
-  facilis rem doloribus quos quod nobis. Consectetur ipsa beatae aperiam omnis ratione quod, praesentium exercitationem
-  soluta doloremque repellat fuga numquam architecto fugit molestias et recusandae ex sint ad tempore ducimus
-  perferendis in? Ipsum cum quam, laborum, illo nulla sit dolore odit doloremque porro minima aliquid ullam facilis quia
-  quidem veniam quibusdam id! Consequuntur veniam maiores temporibus cumque porro? Nulla architecto, eaque odit esse non
-  vel quia inventore ducimus consequuntur modi voluptatem corrupti facere tenetur deserunt.
-        </Typography>
+  </Typography>
+  </Box>
+  <Box>
+  {props.cards}
+  </Box>
       </main>
     </div>
   );
