@@ -57,7 +57,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function SwipeableTemporaryDrawer(props) {
+export default function MainPage(props) {
   const classes = useStyles();
   const [state, setState] = React.useState({
     menu: false,
