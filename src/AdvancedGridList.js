@@ -5,6 +5,8 @@ import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
 import IconButton from '@material-ui/core/IconButton';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
+// import StarIcon from '@material-ui/icons/Star';
+import InfoIcon from '@material-ui/icons/Info';
 
 const useStyles = makeStyles(theme => ({
   gridList: {
@@ -34,12 +36,23 @@ return (
           <GridListTile key={tile.img} cols={1} rows={2}>
             <img src={tile.img} alt={tile.title} />
             <GridListTileBar
-              title={tile.title}
               titlePosition="top"
               actionIcon={
                 <IconButton aria-label={`star ${tile.title}`} className={classes.icon}>
-                  <StarBorderIcon />
+                  <StarBorderIcon/>
                 </IconButton>
+              }
+              actionPosition="right"
+              className={classes.titleBar}
+            />
+          `<GridListTileBar
+              title={tile.title}
+              subtitle={`от ${tile.price}`}
+              titlePosition="bottom"
+              actionIcon={
+              <IconButton aria-label={`info about ${tile.title}`} className={classes.icon}>
+                <InfoIcon />
+              </IconButton>
               }
               actionPosition="left"
               className={classes.titleBar}
