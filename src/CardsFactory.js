@@ -23,8 +23,8 @@ export default class CardsFactory extends React.Component{
             return -1;
         }
             return 0;
-        }).map(({gsx$text,gsx$id,gsx$image,gsx$title}) => {
-            return {id:gsx$id.$t,text:gsx$text.$t,img:gsx$image.$t,title:gsx$title.$t};
+        }).map(({gsx$text,gsx$id,gsx$image,gsx$title, gsx$price}) => {
+            return {id:gsx$id.$t,text:gsx$text.$t,img:gsx$image.$t,title:gsx$title.$t, price:gsx$price.$t};
         });
             this.setState({...this.state,cards:<AdvancedGridList data={data}/>});
     })}
