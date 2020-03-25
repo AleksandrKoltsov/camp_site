@@ -9,5 +9,4 @@ function App() {
    <div><PersistentDrawerLeft cards={<CardsFactory/>}/></div>
   );
 }
-
 export default App;
