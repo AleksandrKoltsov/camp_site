@@ -10,7 +10,6 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import FirstBoxBackground from './bgrnd.jpg';
 
 const useStyles = makeStyles({
   list: {
@@ -42,7 +41,6 @@ const useStyles = makeStyles({
   },
   firstBox:{
     textAlign: "center",
-    backgroundImage: `url(${FirstBoxBackground})`,
     backgroundRepeat: "no-repeat",
     backgroundPosition: "top",
     backgroundSize: "contain",
@@ -132,7 +130,13 @@ export default function SwipeableTemporaryDrawer(props) {
       </SwipeableDrawer>
       <main  className={classes.content}>
         <Box className={classes.firstBox}>
-        <Typography>
+        
+  </Box>
+  <Box>
+  {props.cards}
+  </Box>
+  <Box>
+  <Typography>
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio, vero dicta, pariatur ut facilis repellat commodi
   eos, praesentium tempore incidunt quaerat ullam itaque harum. At cum quos aut eum accusantium, tempora sunt neque
   deserunt quam doloribus illo earum iste, reiciendis ut animi eligendi nulla temporibus. Iusto iure dolorum placeat
@@ -171,9 +175,6 @@ export default function SwipeableTemporaryDrawer(props) {
   iusto mollitia facilis officiis amet porro officia, quidem adipisci tempore? Ducimus tempore officiis suscipit quod
   illo nulla consectetur qui corrupti provident aliquid dolores quas doloribus pariatur vero eos atque quis, commodi rem
   </Typography>
-  </Box>
-  <Box>
-  {props.cards}
   </Box>
       </main>
     </div>

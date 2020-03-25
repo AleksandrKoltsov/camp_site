@@ -1,8 +1,8 @@
 import React from 'react';
-import PersistentDrawerLeft from './Menu.js';
+import PersistentDrawerLeft from './components/Menu.js';
 // import logo from './logo.svg';
 import './App.css';
-import CardsFactory from './CardsFactory.js';
+import CardsFactory from './components/CardsFactory.js';
 
 function App() {
   return (
