@@ -5,7 +5,7 @@ import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
 import IconButton from '@material-ui/core/IconButton';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
-// import StarIcon from '@material-ui/icons/Star';
+// import StarIcon from '@material-ui/icons/Star'; возможно будет использован для показа состояния отмеченной звездочки в карточке
 import InfoIcon from '@material-ui/icons/Info';
 
 const useStyles = makeStyles(theme => ({
@@ -16,6 +16,11 @@ const useStyles = makeStyles(theme => ({
   },
   titleBar: {
     background:
+      'linear-gradient(to top, rgba(0,0,0,0.7) 0%, ' +
+      'rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
+  },
+  titleBarTop:{
+    background:
       'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, ' +
       'rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
   },
@@ -24,11 +29,9 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function AdvancedGridList(props) {
-  const classes = useStyles();
-console.log(props.data);
-props.data.featured? console.log('true'):console.log("false");
-  
+export default function AdvancedGridList(props) {//принимает массив информации карточек(data),
+  const classes = useStyles();                   //методы App.js handleClickInfo, handleClickStar
+
 return (
   <div>
       <GridList cellHeight={200} spacing={1} className={classes.gridList}>
@@ -38,19 +41,25 @@ return (
             <GridListTileBar
               titlePosition="top"
               actionIcon={
-                <IconButton aria-label={`star ${tile.title}`} className={classes.icon}>
+                <IconButton
+                onClick={props.handleClickStar}
+                aria-label={`star ${tile.title}`}
+                className={classes.icon}>
                   <StarBorderIcon/>
                 </IconButton>
               }
               actionPosition="right"
-              className={classes.titleBar}
+              className={classes.titleBarTop}
             />
-          `<GridListTileBar
+          <GridListTileBar
               title={tile.title}
               subtitle={`от ${tile.price}`}
               titlePosition="bottom"
               actionIcon={
-              <IconButton aria-label={`info about ${tile.title}`} className={classes.icon}>
+              <IconButton
+              onClick={props.handleClickInfo}
+              aria-label={`info about ${tile.title}`}
+              className={classes.icon}>
                 <InfoIcon />
               </IconButton>
               }
@@ -63,5 +72,3 @@ return (
     </div>
   );
 }
-
-
