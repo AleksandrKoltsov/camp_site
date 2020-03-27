@@ -28,7 +28,11 @@ class App extends React.Component {
       (<div><Box mb={2}>
         <SwipeableTextMobileStepper/>
         </Box>
-        <Box mb={2}><SliderCards data={this.state.data}/></Box>
+        <Box mb={2}>
+          <SliderCards
+            handleClickInfo={this.handleClickInfo.bind(this)}
+            data={this.state.data}/>
+        </Box>
         <Box mb={50}>TEXT CONTENT</Box>
       </div>),
       (<div><Box mt={15}>
@@ -62,7 +66,7 @@ class App extends React.Component {
     }
         return 0;
     }).map(({gsx$text,gsx$id,gsx$image,gsx$title, gsx$price}) => {
-        return {id:gsx$id.$t,text:gsx$text.$t,img:gsx$image.$t,title:gsx$title.$t, price:gsx$price.$t};
+        return {id:gsx$id.$t,text:gsx$text.$t,img:gsx$image.$t,title:gsx$title.$t, price:gsx$price.$t, mini:[]};//Data - обьект данных для карточки
     });
     //полученные данные записываем в state data и записываем в контент для отображения первую страницу
     this.setState({...this.state, data:data})
