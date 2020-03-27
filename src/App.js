@@ -1,11 +1,15 @@
 import React from 'react';
-import SwipeableTextMobileStepper from './components/slider.js'
+import SwipeableTextMobileStepper from './components/Slider.js';
+import FullCard from './components/FullCard.js';
 
 class App extends React.Component {
   render() {
-    return (
-      <SwipeableTextMobileStepper />
-    )
+  return (
+      <div>
+        {/*<SwipeableTextMobileStepper />*/}
+        <FullCard />
+      </div>
+  );
   }
 }
 export default App;
