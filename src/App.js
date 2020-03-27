@@ -5,10 +5,7 @@ import FullCard from './components/FullCard.js';
 class App extends React.Component {
   render() {
   return (
-      <div>
-        {/*<SwipeableTextMobileStepper />*/}
-        <FullCard />
-      </div>
+    
   );
   }
 }
