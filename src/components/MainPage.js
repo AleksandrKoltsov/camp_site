@@ -10,6 +10,8 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
+import Logo from './Whiskey_Kings_alfa.png';
+import Link from '@material-ui/core/Link';
 
 const useStyles = makeStyles({
   list: {
@@ -20,6 +22,10 @@ const useStyles = makeStyles({
     position:"fixed",
     justifyContent:"center",
     color:'white',
+    backgroundImage:`url('${Logo}')`,
+    backgroundPosition:'center',
+    backgroundRepeat:'no-repeat',
+    backgroundSize:'contain',
     },
   hiddenBar:{
     backgroundColor:'transparent',
@@ -84,7 +90,7 @@ export default function MainPage(props) {//принимает список по�
   return (//возвращает хедер, меню, и контент(получен из props)
     <div>
       <AppBar
-        className={`${classes[state.bar]} ${state.bar}`}
+        className={`${classes[state.bar]} ${classes.bar}`}
       >
         <Toolbar className={classes.toolbarGroup}>
           <IconButton
@@ -95,15 +101,16 @@ export default function MainPage(props) {//принимает список по�
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap m="auto">
-            WHISKEY
-          </Typography>
           <Box component="div" display="block">
             <Typography>
-              email@example.com
+            <Link href="https://drive.google.com/open?id=1BuePN0GHsl2ig48EYF2Z9Amx6aA94tE9lYTTy-tg4dY" color='inherit'>
+              google table
+            </Link>
           </Typography>
             <Typography>
-              +380808080808
+            <Link href="https://drive.google.com/drive/folders/1t3OqJ6x5WdJZp0IgGRdQ-Ec_LI-_zeQ-" color='inherit'>
+              google drive
+            </Link>
             </Typography>
           </Box>
         </Toolbar>
