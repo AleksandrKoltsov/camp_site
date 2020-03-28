@@ -66,6 +66,7 @@ export default function SliderCards(props) {//получаем массив да
                 <IconButton
                 aria-label={`star ${tile.title}`}
                 onClick={props.handleClickInfo}
+                data-id={tile.id}
                 >
                   <InfoIcon
                   className={classes.title}
