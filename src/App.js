@@ -73,16 +73,17 @@ class App extends React.Component {
           title:gsx$title.$t,
           price:gsx$price.$t,
           mini:JSON.parse(gsx$mini.$t),
-          booked:JSON.parse(gsx$booked),
+          booked:JSON.parse(gsx$booked.$t),
         };//Data - обьект данных для карточки
     });
     //полученные данные записываем в state data и записываем в контент для отображения первую страницу
+    console.log(data);
     this.setState({...this.state, data:data})
     this.setState({...this.state, content:this.getContent(0)});
   })}
   //метод обработчик клика по карточке
   handleClickInfo(ev){
-    console.log(ev);
+    console.log(ev.currentTarget.dataset.id);
   }
   //метод обработчик клика по карточке
   handleClickStar(ev){
@@ -90,7 +91,7 @@ class App extends React.Component {
   }
   //метод обработчик клика по пунктам меню
   handleClickMenu(ev){
-    this.setState({...this.state,content:this.getContent(this.menu.indexOf(ev.nativeEvent.target.innerText))});
+    this.setState({...this.state,content:this.getContent(this.menu.indexOf(ev.currentTarget.dataset.name))});
   }
 
   render(){
