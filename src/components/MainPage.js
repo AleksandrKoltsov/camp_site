@@ -79,8 +79,12 @@ export default function MainPage(props) {//принимает список по�
     >
       <List>
         {props.menuItems.map((text, index) => (//массив названий меню преобразуется в список
-          <ListItem button key={text} onClick={props.handleClick}>
-            <ListItemText primary={text} />
+          <ListItem
+          button key={text}
+          onClick={props.handleClick}
+          data-name={text}
+          >
+            <ListItemText primary={text}/>
           </ListItem>
         ))}
       </List>
