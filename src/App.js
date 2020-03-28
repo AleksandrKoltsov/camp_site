@@ -65,8 +65,16 @@ class App extends React.Component {
         return -1;
     }
         return 0;
-    }).map(({gsx$text,gsx$id,gsx$image,gsx$title, gsx$price}) => {
-        return {id:gsx$id.$t,text:gsx$text.$t,img:gsx$image.$t,title:gsx$title.$t, price:gsx$price.$t, mini:[]};//Data - обьект данных для карточки
+    }).map(({gsx$text,gsx$id,gsx$image,gsx$title, gsx$price, gsx$booked, gsx$mini}) => {
+        return {
+          id:gsx$id.$t,
+          text:gsx$text.$t,
+          img:gsx$image.$t,
+          title:gsx$title.$t,
+          price:gsx$price.$t,
+          mini:JSON.parse(gsx$mini.$t),
+          booked:JSON.parse(gsx$booked),
+        };//Data - обьект данных для карточки
     });
     //полученные данные записываем в state data и записываем в контент для отображения первую страницу
     this.setState({...this.state, data:data})
