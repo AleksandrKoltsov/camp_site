@@ -1,0 +1,42 @@
+.toOrder {
+    border: 1px solid red;
+
+}
+
+
+.contPic {
+    overflow: hidden;
+}
+
+.picHouse {
+    background: center no-repeat url("https://www.polotskvodokanal.by/wp-content/uploads/2015/07/1009.jpg");
+    width: 100%;
+    height: 200px;
+    opacity: 50%;
+
+}
+.picHouse:hover {
+    transition: all 0.5s;
+    opacity: 100%;
+    transform: scale(1.3);
+    cursor: pointer;
+
+}
+.mainTextHeader {
+    text-align: center;
+}
+.mainText {
+    text-align: justify;
+}
+.contDate {
+    display: flex;
+    justify-content: center;
+}
+.date1, .date2 {
+    display: block;
+}
+.date1 > p, .date2 > p {
+    text-align: center;
+    font-size: 1.3rem;
+    font-weight: bold;
+}
