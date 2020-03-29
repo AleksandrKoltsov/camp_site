@@ -59,7 +59,9 @@ return (
               <IconButton
               onClick={props.handleClickInfo}
               aria-label={`info about ${tile.title}`}
-              className={classes.icon}>
+              className={classes.icon}
+              data-id={tile.id}
+              >
                 <InfoIcon />
               </IconButton>
               }

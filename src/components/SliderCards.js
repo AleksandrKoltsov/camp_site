@@ -52,7 +52,7 @@ export default function SliderCards(props) {//получаем массив да
         onChangeIndex={handleStepChange}
         enableMouseEvents
     >{props.data.map((tile, index) => (
-      <GridList cellHeight={200} spacing={1} className={classes.gridList} key={index}>
+      <GridList cellHeight={400} spacing={1} className={classes.gridList} key={index}>
           <GridListTile>
             <img src={tile.img} alt={tile.title}/>
             <GridListTileBar
@@ -63,8 +63,14 @@ export default function SliderCards(props) {//получаем массив да
                 title: classes.title,
               }}
               actionIcon={
-                <IconButton aria-label={`star ${tile.title}`}>
-                  <InfoIcon className={classes.title} />
+                <IconButton
+                aria-label={`star ${tile.title}`}
+                onClick={props.handleClickInfo}
+                data-id={tile.id}
+                >
+                  <InfoIcon
+                  className={classes.title}
+                  />
                 </IconButton>
               }
             />

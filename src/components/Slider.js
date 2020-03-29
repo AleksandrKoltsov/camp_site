@@ -10,7 +10,6 @@ const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 const tutorialSteps = [
     {
         imgPath:
-
             'https://www.videvo.net/videvo_files/converted/2016_01/preview/Forest_15_3b_Videvo.mov47209.webm',
     },
     {
