@@ -9,6 +9,7 @@ class FullCard extends React.Component{
     constructor(props){
         super(props);
         this.handleClickOnOrder = this.handleClickOnOrder.bind(this);
+        console.log(props.id);
     }
     render () {
         return (

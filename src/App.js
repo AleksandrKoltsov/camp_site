@@ -6,6 +6,7 @@ import AdvancedGridList from './components/AdvancedGridList.js';
 import SwipeableTextMobileStepper from './components/Slider.js';
 import Box from '@material-ui/core/Box';
 import SliderCards from './components/SliderCards.js';
+import FullCard from "./components/FullCard";
 
 
 class App extends React.Component {
@@ -78,12 +79,16 @@ class App extends React.Component {
     });
     //полученные данные записываем в state data и записываем в контент для отображения первую страницу
     console.log(data);
-    this.setState({...this.state, data:data})
+    this.setState({...this.state, data:data});
     this.setState({...this.state, content:this.getContent(0)});
   })}
   //метод обработчик клика по карточке
   handleClickInfo(ev){
     console.log(ev.currentTarget.dataset.id);
+    this.setState({...this.state,content:(<div><Box mt={0}><FullCard id={ev.currentTarget.dataset.id}/></Box></div>)});
+    // return (
+    //     <FullCard id={ev.currentTarget.dataset.id}/>
+    // );
   }
   //метод обработчик клика по карточке
   handleClickStar(ev){
