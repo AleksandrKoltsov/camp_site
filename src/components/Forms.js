@@ -11,12 +11,15 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-export default function UserInfoOrder() {
+export default function UserInfoOrder(props) {
     const classes = useStyles();
-
+    console.log(props);
     return (
-        <form className={classes.root} noValidate autoComplete="off">
-            <TextField id="standard-basic" label="Standard" />
+        <form className={classes.root}
+              noValidate
+              autoComplete="off"
+        >
+            <TextField id="standard-basic" label="Name" />
 
         </form>
     );

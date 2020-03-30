@@ -7,6 +7,7 @@ import SwipeableTextMobileStepper from './components/Slider.js';
 import Box from '@material-ui/core/Box';
 import SliderCards from './components/SliderCards.js';
 import FullCard from "./components/FullCard";
+import Forms from "./components/Forms";
 
 
 class App extends React.Component {
@@ -84,11 +85,12 @@ class App extends React.Component {
   })}
   //метод обработчик клика по карточке
   handleClickInfo(ev){
-    console.log(ev.currentTarget.dataset.id);
-    this.setState({...this.state,content:(<div><Box mt={0}><FullCard id={ev.currentTarget.dataset.id}/></Box></div>)});
-    // return (
-    //     <FullCard id={ev.currentTarget.dataset.id}/>
-    // );
+    // console.log(ev.currentTarget.dataset.id);
+    this.setState({...this.state,content:(<div><Box
+          mt={0}><FullCard
+          id={ev.currentTarget.dataset.id}
+          handleClickOrder={this.handleClickOrder.bind(this)}
+    /></Box></div>)});
   }
   //метод обработчик клика по карточке
   handleClickStar(ev){
@@ -98,6 +100,15 @@ class App extends React.Component {
   handleClickMenu(ev){
     this.setState({...this.state,content:this.getContent(this.menu.indexOf(ev.currentTarget.dataset.name))});
   }
+  // // handleClickOrder(ev){
+  // //   console.log(ev.currentTarget.dataset.id);
+  // //   this.setState({...this.state,content:(<div><Box
+  // //         mt={15}
+  // //         ml={5}>
+  // //       <Forms
+  // //         id={ev.currentTarget.dataset.id}
+  // //     /></Box></div>)});
+  // }
 
   render(){
     return (<div>
