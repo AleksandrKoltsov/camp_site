@@ -22,6 +22,7 @@ class App extends React.Component {
       this.formLink = 'https://script.google.com/macros/s/AKfycbxIjKe8TfxxsbfZle-_G_uWFs7qZa5TkSVDosNVC9EtclMbSao/exec?';
       this.loadCards();//метод для загрузки данных из таблицы
       this.menu = ['HOME', 'CHOOSE A HOUSE', 'MAP', 'ABOUT US', 'GALLERY']; // список пунктов для меню - передаем в MainPage
+      this.favorite = localStorage.getItem('fav')||[];
   }
   // метод для получения контента для отображения
   //принимает число-позицию в массиве);
@@ -92,7 +93,7 @@ class App extends React.Component {
   }
   //метод обработчик клика по карточке
   handleClickStar(ev){
-    console.log(ev);
+    console.log(ev.currentTarget.dataset);
   }
   // метод обработчик отправки данных с формы
 // Принимает обьект со следующими полями
@@ -112,7 +113,6 @@ class App extends React.Component {
       crossDomain: true,
       method: "GET",
       dataType: "jsonp"});
-  }
   }
   //метод обработчик клика по пунктам меню
   handleClickMenu(ev){
