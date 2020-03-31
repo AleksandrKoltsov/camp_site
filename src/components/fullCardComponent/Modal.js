@@ -18,10 +18,31 @@ const useStyles = makeStyles(theme => ({
         boxShadow: theme.shadows[5],
         // padding: theme.spacing(2, 4, 3),
     },
+    contPic: {
+        overflow: 'hidden',
+        height: '200px',
+    },
+    picHouse: {
+        // background:  'url("https://www.polotskvodokanal.by/wp-content/uploads/2015/07/1009.jpg")',
+        // backgroundRepeat: 'no-repeat',
+        // backgroundPosition: 'center',
+        width: '100%',
+        height: '100vh',
+        opacity: '50%',
+        position: 'relative',
+        top: '-50vh',
+        cursor: 'pointer',
+        '&:hover': {
+            transition: 'all 0.5s',
+            opacity: '100%',
+            transform: 'scale(1.3)',
+        },
+    },
 
 }));
 
-export default function TransitionsModal() {
+export default function TransitionsModal(props) {
+    // console.log(props);
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
 
@@ -35,11 +56,9 @@ export default function TransitionsModal() {
 
     return (
         <div>
-            <div className="contPic">
+            <div className={classes.contPic}>
                 <a href="#" onClick={handleOpen}>
-                    <div className='picHouse'>
-
-                    </div>
+                    <img src={props.img} className={classes.picHouse}/>
                 </a>
             </div>
             <Modal
@@ -56,7 +75,7 @@ export default function TransitionsModal() {
             >
                 <Fade in={open}>
                     <div className={classes.paper}>
-                        <SwipeableTextMobileStepper />
+                        <SwipeableTextMobileStepper mini={props.mini}/>
                     </div>
                 </Fade>
             </Modal>

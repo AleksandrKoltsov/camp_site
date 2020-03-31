@@ -60,7 +60,8 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-function SwipeableTextMobileStepper() {
+function SwipeableTextMobileStepper(props) {
+    // console.log(props);
     const classes = useStyles();
     const theme = useTheme();
     const [activeStep, setActiveStep] = React.useState(0);
@@ -80,19 +81,16 @@ function SwipeableTextMobileStepper() {
 
     return (
         <div className={classes.root}>
-            <Paper square elevation={0} className={classes.header}>
-                <Typography>{tutorialSteps[activeStep].label}</Typography>
-            </Paper>
             <AutoPlaySwipeableViews
                 axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
                 index={activeStep}
                 onChangeIndex={handleStepChange}
                 enableMouseEvents
             >
-                {tutorialSteps.map((step, index) => (
-                    <div key={step.label}>
+                {props.mini.map((step, index) => (
+                    <div key={index}>
                         {Math.abs(activeStep - index) <= 2 ? (
-                            <img className={classes.img} src={step.imgPath} alt={step.label} />
+                            <img className={classes.img} src={step}/>
                         ) : null}
                     </div>
                 ))}

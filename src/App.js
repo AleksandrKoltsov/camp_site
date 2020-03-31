@@ -7,7 +7,7 @@ import SwipeableTextMobileStepper from './components/Slider.js';
 import Box from '@material-ui/core/Box';
 import SliderCards from './components/SliderCards.js';
 import FullCard from "./components/FullCard";
-import Forms from "./components/Forms";
+import UserInfoOrder from "./components/FullCard";
 
 
 class App extends React.Component {
@@ -79,18 +79,15 @@ class App extends React.Component {
         };//Data - обьект данных для карточки
     });
     //полученные данные записываем в state data и записываем в контент для отображения первую страницу
-    console.log(data);
+    // console.log(data);
     this.setState({...this.state, data:data});
     this.setState({...this.state, content:this.getContent(0)});
   })}
   //метод обработчик клика по карточке
   handleClickInfo(ev){
-    // console.log(ev.currentTarget.dataset.id);
-    this.setState({...this.state,content:(<div><Box
-          mt={0}><FullCard
-          id={ev.currentTarget.dataset.id}
-          handleClickOrder={this.handleClickOrder.bind(this)}
-    /></Box></div>)});
+    const id = ev.currentTarget.dataset.id;
+    const data = this.state.data.filter(elem => elem.id === id);
+    this.setState({...this.state,content:(<div><Box mt={0}><FullCard data={data[0]}/></Box></div>)});
   }
   //метод обработчик клика по карточке
   handleClickStar(ev){
@@ -109,7 +106,6 @@ class App extends React.Component {
   // //         id={ev.currentTarget.dataset.id}
   // //     /></Box></div>)});
   // }
-
   render(){
     return (<div>
       <MainPage
