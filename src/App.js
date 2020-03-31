@@ -6,6 +6,11 @@ import AdvancedGridList from './components/AdvancedGridList.js';
 import SwipeableTextMobileStepper from './components/Slider.js';
 import Box from '@material-ui/core/Box';
 import SliderCards from './components/SliderCards.js';
+<<<<<<< HEAD
+=======
+import FullCard from "./components/FullCard";
+import UserInfoOrder from "./components/FullCard";
+>>>>>>> 86c26f3128f1e7d8f1ab380e70c7b06d6805cda1
 
 
 class App extends React.Component {
@@ -77,13 +82,24 @@ class App extends React.Component {
         };//Data - обьект данных для карточки
     });
     //полученные данные записываем в state data и записываем в контент для отображения первую страницу
+<<<<<<< HEAD
     console.log(data);
     this.setState({...this.state, data:data})
+=======
+    // console.log(data);
+    this.setState({...this.state, data:data});
+>>>>>>> 86c26f3128f1e7d8f1ab380e70c7b06d6805cda1
     this.setState({...this.state, content:this.getContent(0)});
   })}
   //метод обработчик клика по карточке
   handleClickInfo(ev){
+<<<<<<< HEAD
     console.log(ev.currentTarget.dataset.id);
+=======
+    const id = ev.currentTarget.dataset.id;
+    const data = this.state.data.filter(elem => elem.id === id);
+    this.setState({...this.state,content:(<div><Box mt={0}><FullCard data={data[0]}/></Box></div>)});
+>>>>>>> 86c26f3128f1e7d8f1ab380e70c7b06d6805cda1
   }
   //метод обработчик клика по карточке
   handleClickStar(ev){
@@ -93,7 +109,19 @@ class App extends React.Component {
   handleClickMenu(ev){
     this.setState({...this.state,content:this.getContent(this.menu.indexOf(ev.currentTarget.dataset.name))});
   }
+<<<<<<< HEAD
 
+=======
+  // // handleClickOrder(ev){
+  // //   console.log(ev.currentTarget.dataset.id);
+  // //   this.setState({...this.state,content:(<div><Box
+  // //         mt={15}
+  // //         ml={5}>
+  // //       <Forms
+  // //         id={ev.currentTarget.dataset.id}
+  // //     /></Box></div>)});
+  // }
+>>>>>>> 86c26f3128f1e7d8f1ab380e70c7b06d6805cda1
   render(){
     return (<div>
       <MainPage
