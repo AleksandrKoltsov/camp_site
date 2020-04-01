@@ -110,10 +110,7 @@ class App extends React.Component {
 // dop//date of payment
 // am//amount
   handleClickForm(data){
-<<<<<<< HEAD
-=======
     console.log(data);
->>>>>>> 9f014a4fb109d088897688ccfc2a914037fbf51d
     fetch(`${this.formLink}h=${data.h}&d=${data.date}&n=${data.name}&p=${data.phone}&e=${data.email}&dob=${data.dob}&cid=${data.cid}&oid=${data.oid}&hid=${data.hid}&dop=${data.dop}&am=${data.am}`, {
       crossDomain: true,
       method: "GET",
