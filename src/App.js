@@ -89,7 +89,8 @@ class App extends React.Component {
   handleClickInfo(ev){
     const id = ev.currentTarget.dataset.id;
     const data = this.state.data.filter(elem => elem.id === id);
-    this.setState({...this.state,content:(<div><Box mt={0}><FullCard data={data[0]}/></Box></div>)});
+    this.setState({...this.state,content:(<div><Box mt={0}><FullCard data={data[0]} handleClickForm={this.handleClickForm.bind(this)}
+      /></Box></div>)});
   }
   //метод обработчик клика по карточке
   handleClickStar(ev){
@@ -109,6 +110,10 @@ class App extends React.Component {
 // dop//date of payment
 // am//amount
   handleClickForm(data){
+<<<<<<< HEAD
+=======
+    console.log(data);
+>>>>>>> 9f014a4fb109d088897688ccfc2a914037fbf51d
     fetch(`${this.formLink}h=${data.h}&d=${data.date}&n=${data.name}&p=${data.phone}&e=${data.email}&dob=${data.dob}&cid=${data.cid}&oid=${data.oid}&hid=${data.hid}&dop=${data.dop}&am=${data.am}`, {
       crossDomain: true,
       method: "GET",
@@ -118,15 +123,7 @@ class App extends React.Component {
   handleClickMenu(ev){
     this.setState({...this.state,content:this.getContent(this.menu.indexOf(ev.currentTarget.dataset.name))});
   }
-  // // handleClickOrder(ev){
-  // //   console.log(ev.currentTarget.dataset.id);
-  // //   this.setState({...this.state,content:(<div><Box
-  // //         mt={15}
-  // //         ml={5}>
-  // //       <Forms
-  // //         id={ev.currentTarget.dataset.id}
-  // //     /></Box></div>)});
-  // }
+
   render(){
     return (<div>
       <MainPage

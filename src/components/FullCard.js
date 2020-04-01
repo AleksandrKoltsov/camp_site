@@ -1,12 +1,9 @@
 import React from 'react';
 import Box from '@material-ui/core/Box';
 import TransitionsModal from './fullCardComponent/Modal.js'
-// import UserInfoOrder from './Forms'
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-
-
+// import TextField from '@material-ui/core/TextField';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -19,13 +16,22 @@ const useStyles = makeStyles((theme) => ({
         },
         mainTextHeader: {
             textAlign: 'center',
-        }
+        },
+
+    },
+    container: {
+        display: 'flex',
+        flexWrap: 'wrap',
+    },
+    textField: {
+        marginLeft: theme.spacing(1),
+        marginRight: theme.spacing(1),
+        width: 200,
     },
 }));
 
 export default function FullCard (props) {
-    // console.log (props);
-        // const arrMini = props.mini;
+    console.log(props);
         const classes = useStyles();
         return (
             <Box component="div" m={2}>
@@ -38,24 +44,68 @@ export default function FullCard (props) {
                 </Box>
                 <div className={classes.root}>
                     <Button variant="contained"
-                            data={props.id}
-                            // handleClick={()=>UserInfoOrder()}
+                            onClick={()=>{
+                                props.handleClickForm({
+                                    h: 15,
+                                    d: '01.04.2020',
+                                    n: 'Vasya',
+                                    p: 380953333333,
+                                    e: 'Vasya@i.ua',
+                                    dob: '30.03.2020',
+                                    cid: Date.parse(Date.now),
+                                    oid: 101,
+                                    hid: props.id,
+                                    dop: '01.04.2020',
+                                    am: 1000,
+                                })
+                            }}
                     >Заказать</Button>
                 </div>
+                 {/*<Box component='div' m={2}>*/}
+                {/*//     <form className={classes.root}*/}
+                {/*//           noValidate*/}
+                {/*//           autoComplete="off"*/}
+                {/*//     >*/}
+                {/*//         <TextField id="outlined-basic" label="Name" />*/}
+                {/*//         <TextField id="outlined-basic" label="e-mail" />*/}
+                {/*//         <TextField id="outlined-basic" label="tel." />*/}
+                {/*//         <form className={classes.container} noValidate>*/}
+                {/*//             <TextField*/}
+                {/*//                 id="date"*/}
+                {/*//                 label="Birthday"*/}
+                {/*//                 type="date"*/}
+                {/*//                 defaultValue="2017-05-24"*/}
+                {/*//                 className={classes.textField}*/}
+                {/*//                 InputLabelProps={{*/}
+                {/*//                     shrink: true,*/}
+                {/*//                 }}*/}
+                {/*//             />*/}
+                {/*//             <TextField*/}
+                {/*//                 id="date"*/}
+                {/*//                 label="Check in"*/}
+                {/*//                 type="date"*/}
+                {/*//                 defaultValue="2017-05-24"*/}
+                {/*//                 className={classes.textField}*/}
+                {/*//                 InputLabelProps={{*/}
+                {/*//                     shrink: true,*/}
+                {/*//                 }}*/}
+                {/*//             />*/}
+                {/*//             <TextField*/}
+                {/*//                 id="date"*/}
+                {/*//                 label="Check out"*/}
+                {/*//                 type="date"*/}
+                {/*//                 defaultValue="2017-05-24"*/}
+                {/*                className={classes.textField}*/}
+                {/*                InputLabelProps={{*/}
+                {/*                    shrink: true,*/}
+                {/*                }}*/}
+                {/*            />*/}
+                {/*        </form>*/}
+                {/*    </form>*/}
+                {/*</Box>*/}
             </Box>
         );
 }
-// export function UserInfoOrder(props, ev) {
-//     // ev.preventDefault();
-//     const classes = useStyles();
-//     // console.log(props);
-//     return (
-//         <form className={classes.root}
-//               noValidate
-//               autoComplete="off"
-//         >
-//             <TextField id="standard-basic" label="Name" />
-//
-//         </form>
-//     );
-// }
+{/*function UserInfoOrder(props) {*/}
+{/*    console.log(props);*/}
+{/*}*/}
