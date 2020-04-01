@@ -19,8 +19,10 @@ class App extends React.Component {
       };
       // ссылка на таблицу
       this.link = 'https://spreadsheets.google.com/feeds/list/1BuePN0GHsl2ig48EYF2Z9Amx6aA94tE9lYTTy-tg4dY/1/public/full?alt=json';
+      this.formLink = 'https://script.google.com/macros/s/AKfycbxIjKe8TfxxsbfZle-_G_uWFs7qZa5TkSVDosNVC9EtclMbSao/exec?';
       this.loadCards();//метод для загрузки данных из таблицы
       this.menu = ['HOME', 'CHOOSE A HOUSE', 'MAP', 'ABOUT US', 'GALLERY']; // список пунктов для меню - передаем в MainPage
+      this.favorite = localStorage.getItem('fav')||[];
   }
   // метод для получения контента для отображения
   //принимает число-позицию в массиве);
@@ -87,25 +89,38 @@ class App extends React.Component {
   handleClickInfo(ev){
     const id = ev.currentTarget.dataset.id;
     const data = this.state.data.filter(elem => elem.id === id);
-    this.setState({...this.state,content:(<div><Box mt={0}><FullCard data={data[0]}/></Box></div>)});
+    this.setState({...this.state,content:(<div><Box mt={0}><FullCard data={data[0]} handleClickForm={this.handleClickForm.bind(this)}
+      /></Box></div>)});
   }
   //метод обработчик клика по карточке
   handleClickStar(ev){
-    console.log(ev);
+    console.log(ev.currentTarget.dataset);
+  }
+  // метод обработчик отправки данных с формы
+// Принимает обьект со следующими полями
+// h//house num
+// d//date
+// n//name
+// p//phone
+// e//email
+// dob//date of birth
+// cid//customer id
+// oid//order id
+// hid//house id
+// dop//date of payment
+// am//amount
+  handleClickForm(data){
+    console.log(data);
+    fetch(`${this.formLink}h=${data.h}&d=${data.date}&n=${data.name}&p=${data.phone}&e=${data.email}&dob=${data.dob}&cid=${data.cid}&oid=${data.oid}&hid=${data.hid}&dop=${data.dop}&am=${data.am}`, {
+      crossDomain: true,
+      method: "GET",
+      dataType: "jsonp"});
   }
   //метод обработчик клика по пунктам меню
   handleClickMenu(ev){
     this.setState({...this.state,content:this.getContent(this.menu.indexOf(ev.currentTarget.dataset.name))});
   }
-  // // handleClickOrder(ev){
-  // //   console.log(ev.currentTarget.dataset.id);
-  // //   this.setState({...this.state,content:(<div><Box
-  // //         mt={15}
-  // //         ml={5}>
-  // //       <Forms
-  // //         id={ev.currentTarget.dataset.id}
-  // //     /></Box></div>)});
-  // }
+
   render(){
     return (<div>
       <MainPage

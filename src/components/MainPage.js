@@ -29,14 +29,14 @@ const useStyles = makeStyles({
     },
   hiddenBar:{
     backgroundColor:'transparent',
-    paddingTop:"40px",
+    height:"20vh",
     boxShadow:"none",
-    transition:'all .1s 0s linear',
+    transition:'all .1s linear',
   },
   visibleBar:{
     backgroundColor:'#221F1F',
-    paddingTop:"inherit",
-    transition:'all .1s 0s linear',
+    height:"inherit",
+    transition:'all .1s linear',
   },
   fullList: {
     width: 'auto',
