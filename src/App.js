@@ -111,10 +111,10 @@ class App extends React.Component {
 // am//amount
   handleClickForm(data){
     console.log(data);
-    fetch(`${this.formLink}h=${data.h}&d=${data.date}&n=${data.name}&p=${data.phone}&e=${data.email}&dob=${data.dob}&cid=${data.cid}&oid=${data.oid}&hid=${data.hid}&dop=${data.dop}&am=${data.am}`, {
+    fetch(`${this.formLink}h=${data.h}&d=${data.d}&n=${data.n}&p=${data.p}&e=${data.e}&dob=${data.dob}&cid=${data.cid}&oid=${data.oid}&hid=${data.hid}&dop=${data.dop}&am=${data.am}`, {
       crossDomain: true,
       method: "GET",
-      dataType: "jsonp"});
+      dataType: "jsonp"}).then(data=>console.log(data));
   }
   //метод обработчик клика по пунктам меню
   handleClickMenu(ev){

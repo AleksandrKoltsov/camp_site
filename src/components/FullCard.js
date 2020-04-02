@@ -31,7 +31,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function FullCard (props) {
-    console.log(props);
         const classes = useStyles();
         return (
             <Box component="div" m={2}>
@@ -52,9 +51,9 @@ export default function FullCard (props) {
                                     p: 380953333333,
                                     e: 'Vasya@i.ua',
                                     dob: '30.03.2020',
-                                    cid: Date.parse(Date.now),
+                                    cid: new Date(),
                                     oid: 101,
-                                    hid: props.id,
+                                    hid: props.data.id,
                                     dop: '01.04.2020',
                                     am: 1000,
                                 })
