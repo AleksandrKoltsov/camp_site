@@ -10,23 +10,23 @@ const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 const tutorialSteps = [
     {
         imgPath:
-        'https://drive.google.com/uc?id=1QnThvRoMSy34uJpyOneLnS2JwgMaopKm&export=download',
+            'https://www.videvo.net/videvo_files/converted/2016_01/preview/Forest_15_3b_Videvo.mov47209.webm',
     },
     {
         imgPath:
-            'https://drive.google.com/uc?id=1BAdWLh87TgKSfjgg0V9IMcDN92haClzD&export=download',
+            'https://www.videvo.net/videvo_files/converted/2016_11/preview/GOPR6239_1.mov34724.webm',
     },
     {
         imgPath:
-            'https://drive.google.com/uc?id=1EQf8oVc5BInmTQSA10Mb5rMc18tVWHHz&export=download',
+            'https://cdn.videvo.net/videvo_files/video/free/2019-05/small_watermarked/190416_10_Drone1_04_preview.webm',
     },
     {
         imgPath:
-        'https://drive.google.com/uc?id=1igSFDPSvXZyx-7YOvyg3DfjmxqmfC_Y7&export=download',
+            'https://www.videvo.net/videvo_files/converted/2017_12/preview/171124_B1_HD_001.mp494977.webm',
     },
     {
         imgPath:
-            'https://drive.google.com/uc?id=1l-BlVYJAxpo1loXzHQd9V1QhJKnx-nkO&export=download',
+            'https://www.videvo.net/videvo_files/converted/2015_05/preview/Barley_3_Videvo.mov94814.webm',
     },
 ];
 
