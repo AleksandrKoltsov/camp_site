@@ -46,17 +46,17 @@ export default function FullCard (props) {
                     <Button variant="contained"
                             onClick={()=>{
                                 props.handleClickForm({
-                                    h: 15,
+                                    h: '15',
                                     d: '01.04.2020',
                                     n: 'Vasya',
-                                    p: 380953333333,
+                                    p: '380953333333',
                                     e: 'Vasya@i.ua',
                                     dob: '30.03.2020',
-                                    cid: Date.parse(Date.now),
-                                    oid: 101,
-                                    hid: props.id,
+                                    cid: '123321',
+                                    oid: '101',
+                                    hid: props.data.id,
                                     dop: '01.04.2020',
-                                    am: 1000,
+                                    am: '1000',
                                 })
                             }}
                     >Заказать</Button>

@@ -110,11 +110,11 @@ class App extends React.Component {
 // dop//date of payment
 // am//amount
   handleClickForm(data){
-    console.log(data);
-    fetch(`${this.formLink}h=${data.h}&d=${data.date}&n=${data.name}&p=${data.phone}&e=${data.email}&dob=${data.dob}&cid=${data.cid}&oid=${data.oid}&hid=${data.hid}&dop=${data.dop}&am=${data.am}`, {
+    // console.log(data);
+    fetch(`${this.formLink}h=${data.h}&d=${data.d}&n=${data.n}&p=${data.p}&e=${data.e}&dob=${data.dob}&cid=${data.cid}&oid=${data.oid}&hid=${data.hid}&dop=${data.dop}&am=${data.am}`, {
       crossDomain: true,
       method: "GET",
-      dataType: "jsonp"});
+      dataType: "jsonp"}).then(val => console.log(val));
   }
   //метод обработчик клика по пунктам меню
   handleClickMenu(ev){
