@@ -112,7 +112,7 @@ export default function MainPage(props) {//принимает список по�
             </Link>
           </Typography>
             <Typography>
-            <Link href="https://drive.google.com/drive/folders/1t3OqJ6x5WdJZp0IgGRdQ-Ec_LI-_zeQ-" color='inherit'>
+            <Link href="https://drive.google.com/open?id=1wMW9gsr43GQ-fkDuYRiGCc24oUlSas_s" color='inherit'>
               google drive
             </Link>
             </Typography>
