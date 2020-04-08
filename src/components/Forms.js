@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export function Forms(props) {
-    console.log(props);
+    // console.log(props);
     const classes = useStyles();
 
     function handleSubmit(){
@@ -89,7 +89,11 @@ export function Forms(props) {
                         onClick={()=>{
                             props.handleOrder({
                                 h: '15',
-                                d: '01.04.2020',
+                                d: {
+                                    cd: 'current date 08/04/2020',
+                                    ad: 'arrival date 09/04/2020',
+                                    dd: 'departure date 10/04/2020'
+                                },
                                 n: 'Vasya',
                                 p: '380953333333',
                                 e: 'Vasya@i.ua',
@@ -98,11 +102,7 @@ export function Forms(props) {
                                 oid: '101',
                                 hid: props.data,
                                 dop: '01.04.2020',
-                                am: '1000',
-                                date: {
-                                    ad: '01.04.2020',
-                                    dd: '02.04.2020'
-                                }
+                                am: '1000'
                             })
                         }}
                 >Заказать</Button>
@@ -113,7 +113,7 @@ export function Forms(props) {
 
 export default function FormContainer(props) {
     const classes = useStyles();
-    console.log(props);
+    // console.log(props);
     return (
         <React.Fragment>
             <CssBaseline />

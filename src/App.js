@@ -90,13 +90,13 @@ class App extends React.Component {
   handleClickInfo(ev){
     const id = ev.currentTarget.dataset.id;
     const data = this.state.data.filter(elem => elem.id === id);
-    this.setState({...this.state,content:(<div><Box mt={0}><FullCard data={data[0]} handleClickForm={this.handleClickBtnOrder.bind(this, data)}
+    this.setState({...this.state,content:(<div><Box mt={0}><FullCard data={data[0]} handleClickForm={this.handleClickBtnOrder.bind(this, id)}
       /></Box></div>)});
   }
 
-  handleClickBtnOrder(data){
-    console.log(data[0].id);
-    this.setState({...this.state,content:(<div><Box mt={0}><FormContainer data={data[0].id} handleClickOrder={this.handleClickBtnOrder.bind(this)}
+  handleClickBtnOrder(id){
+    console.log(id);
+    this.setState({...this.state,content:(<div><Box mt={0}><FormContainer data={id} handleClickOrder={this.handleClickForm.bind(this)}
       /></Box></div>)});
   }
   //метод обработчик клика по карточке
@@ -116,9 +116,13 @@ class App extends React.Component {
 // hid//house id
 // dop//date of payment
 // am//amount
+// data {
+//  ad: arrival data
+//  dd: departure data
+// }
   handleClickForm(data){
     console.log(data);
-    fetch(this.url, {
+    fetch(this.formLink, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
