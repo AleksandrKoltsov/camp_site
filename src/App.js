@@ -12,18 +12,18 @@ import FormContainer from "./components/Forms";
 
 class App extends React.Component {
   constructor(props){
-      super(props);
-      this.state = {
-        data:[],//массив данных о домах и картинок
-        content:[], // отображаемый на странице в данный момент контент
-      };
-      // ссылка на таблицу
-      this.link = 'https://spreadsheets.google.com/feeds/list/1BuePN0GHsl2ig48EYF2Z9Amx6aA94tE9lYTTy-tg4dY/1/public/full?alt=json';
+    super(props);
+    this.state = {
+      data:[],//массив данных о домах и картинок
+      content:[], // отображаемый на странице в данный момент контент
+    };
+    // ссылка на таблицу
+    this.link = 'https://spreadsheets.google.com/feeds/list/1BuePN0GHsl2ig48EYF2Z9Amx6aA94tE9lYTTy-tg4dY/1/public/full?alt=json';
     this.formLink = 'https://script.google.com/macros/s/AKfycbx64rdwZnavnYIdDmbUXC3BxzWEEzCv_7B7_ngqkDr9SbPfD3E/exec';
-      // this.formLink = 'https://script.google.com/macros/s/AKfycbxIjKe8TfxxsbfZle-_G_uWFs7qZa5TkSVDosNVC9EtclMbSao/exec?';
-      this.loadCards();//метод для загрузки данных из таблицы
-      this.menu = ['HOME', 'CHOOSE A HOUSE', 'MAP', 'ABOUT US', 'GALLERY']; // список пунктов для меню - передаем в MainPage
-      this.favorite = localStorage.getItem('fav')||[];
+    // this.formLink = 'https://script.google.com/macros/s/AKfycbxIjKe8TfxxsbfZle-_G_uWFs7qZa5TkSVDosNVC9EtclMbSao/exec?';
+    this.loadCards();//метод для загрузки данных из таблицы
+    this.menu = ['HOME', 'CHOOSE A HOUSE', 'MAP', 'ABOUT US', 'GALLERY']; // список пунктов для меню - передаем в MainPage
+    this.favorite = localStorage.getItem('fav')||[];
   }
   // метод для получения контента для отображения
   //принимает число-позицию в массиве);
@@ -32,20 +32,20 @@ class App extends React.Component {
     const structure = [
       (<div><Box mb={2}>
         <SwipeableTextMobileStepper/>
-        </Box>
+      </Box>
         <Box mb={2}>
           <SliderCards
-            handleClickInfo={this.handleClickInfo.bind(this)}
-            data={this.state.data}/>
+              handleClickInfo={this.handleClickInfo.bind(this)}
+              data={this.state.data}/>
         </Box>
         <Box mb={50}>TEXT CONTENT</Box>
       </div>),
       (<div><Box mt={15}>
         <AdvancedGridList
-      data={this.state.data}
-      handleClickInfo={this.handleClickInfo.bind(this)}
-      handleClickStar={this.handleClickStar.bind(this)}
-      />
+            data={this.state.data}
+            handleClickInfo={this.handleClickInfo.bind(this)}
+            handleClickStar={this.handleClickStar.bind(this)}
+        />
       </Box>
       </div>),
       (<div><Box mt={15}>MAP</Box>
@@ -60,32 +60,32 @@ class App extends React.Component {
   //метод для загрузки информации из таблицы
   loadCards(){
     fetch(this.link)
-    .then(response => response.json())
-    .then(({feed}) => {
-        const data = [...feed.entry].sort((a,b)=>{
-    if(a.gsx$text.$t > b.gsx$text.$t){
-        return 1;
-    }
-    if(a.gsx$text.$t < b.gsx$text.$t){
-        return -1;
-    }
-        return 0;
-    }).map(({gsx$text,gsx$id,gsx$image,gsx$title, gsx$price, gsx$booked, gsx$mini}) => {
-        return {
-          id:gsx$id.$t,
-          text:gsx$text.$t,
-          img:gsx$image.$t,
-          title:gsx$title.$t,
-          price:gsx$price.$t,
-          mini:JSON.parse(gsx$mini.$t),
-          booked:JSON.parse(gsx$booked.$t),
-        };//Data - обьект данных для карточки
-    });
-    //полученные данные записываем в state data и записываем в контент для отображения первую страницу
-    // console.log(data);
-    this.setState({...this.state, data:data});
-    this.setState({...this.state, content:this.getContent(0)});
-  })}
+        .then(response => response.json())
+        .then(({feed}) => {
+          const data = [...feed.entry].sort((a,b)=>{
+            if(a.gsx$text.$t > b.gsx$text.$t){
+              return 1;
+            }
+            if(a.gsx$text.$t < b.gsx$text.$t){
+              return -1;
+            }
+            return 0;
+          }).map(({gsx$text,gsx$id,gsx$image,gsx$title, gsx$price, gsx$booked, gsx$mini}) => {
+            return {
+              id:gsx$id.$t,
+              text:gsx$text.$t,
+              img:gsx$image.$t,
+              title:gsx$title.$t,
+              price:gsx$price.$t,
+              mini:JSON.parse(gsx$mini.$t),
+              booked:JSON.parse(gsx$booked.$t),
+            };//Data - обьект данных для карточки
+          });
+          //полученные данные записываем в state data и записываем в контент для отображения первую страницу
+          // console.log(data);
+          this.setState({...this.state, data:data});
+          this.setState({...this.state, content:this.getContent(0)});
+        })}
   //метод обработчик клика по карточке
   handleClickInfo(ev){
     const id = ev.currentTarget.dataset.id;
@@ -141,11 +141,11 @@ class App extends React.Component {
   render(){
     return (<div>
       <MainPage
-      content={this.state.content}
-      handleClick={this.handleClickMenu.bind(this)}
-      menuItems={this.menu}
+          content={this.state.content}
+          handleClick={this.handleClickMenu.bind(this)}
+          menuItems={this.menu}
       />
-  </div>);
+    </div>);
   }
 }
 export default App;
