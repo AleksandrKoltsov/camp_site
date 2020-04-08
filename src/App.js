@@ -7,7 +7,7 @@ import SwipeableTextMobileStepper from './components/Slider.js';
 import Box from '@material-ui/core/Box';
 import SliderCards from './components/SliderCards.js';
 import FullCard from "./components/FullCard";
-import UserInfoOrder from "./components/FullCard";
+import FormContainer from "./components/Forms";
 
 
 class App extends React.Component {
@@ -19,7 +19,8 @@ class App extends React.Component {
       };
       // ссылка на таблицу
       this.link = 'https://spreadsheets.google.com/feeds/list/1BuePN0GHsl2ig48EYF2Z9Amx6aA94tE9lYTTy-tg4dY/1/public/full?alt=json';
-      this.formLink = 'https://script.google.com/macros/s/AKfycbxIjKe8TfxxsbfZle-_G_uWFs7qZa5TkSVDosNVC9EtclMbSao/exec?';
+    this.formLink = 'https://script.google.com/macros/s/AKfycbx64rdwZnavnYIdDmbUXC3BxzWEEzCv_7B7_ngqkDr9SbPfD3E/exec';
+      // this.formLink = 'https://script.google.com/macros/s/AKfycbxIjKe8TfxxsbfZle-_G_uWFs7qZa5TkSVDosNVC9EtclMbSao/exec?';
       this.loadCards();//метод для загрузки данных из таблицы
       this.menu = ['HOME', 'CHOOSE A HOUSE', 'MAP', 'ABOUT US', 'GALLERY']; // список пунктов для меню - передаем в MainPage
       this.favorite = localStorage.getItem('fav')||[];
@@ -89,12 +90,18 @@ class App extends React.Component {
   handleClickInfo(ev){
     const id = ev.currentTarget.dataset.id;
     const data = this.state.data.filter(elem => elem.id === id);
-    this.setState({...this.state,content:(<div><Box mt={0}><FullCard data={data[0]} handleClickForm={this.handleClickForm.bind(this)}
+    this.setState({...this.state,content:(<div><Box mt={0}><FullCard data={data[0]} handleClickForm={this.handleClickBtnOrder.bind(this, data)}
+      /></Box></div>)});
+  }
+
+  handleClickBtnOrder(data){
+    console.log(data[0].id);
+    this.setState({...this.state,content:(<div><Box mt={0}><FormContainer data={data[0].id} handleClickOrder={this.handleClickBtnOrder.bind(this)}
       /></Box></div>)});
   }
   //метод обработчик клика по карточке
   handleClickStar(ev){
-    console.log(ev.currentTarget.dataset);
+    // console.log(ev.currentTarget.dataset);
   }
   // метод обработчик отправки данных с формы
 // Принимает обьект со следующими полями
@@ -110,12 +117,22 @@ class App extends React.Component {
 // dop//date of payment
 // am//amount
   handleClickForm(data){
-    // console.log(data);
-    fetch(`${this.formLink}h=${data.h}&d=${data.d}&n=${data.n}&p=${data.p}&e=${data.e}&dob=${data.dob}&cid=${data.cid}&oid=${data.oid}&hid=${data.hid}&dop=${data.dop}&am=${data.am}`, {
-      crossDomain: true,
-      method: "GET",
-      dataType: "jsonp"}).then(val => console.log(val));
+    console.log(data);
+    fetch(this.url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: JSON.stringify(data),
+    }).then(result=>result.json()).then(data=>console.log(data));
   }
+//   handleClickForm(data){
+//     // console.log(data);
+//     fetch(`${this.formLink}h=${data.h}&d=${data.d}&n=${data.n}&p=${data.p}&e=${data.e}&dob=${data.dob}&cid=${data.cid}&oid=${data.oid}&hid=${data.hid}&dop=${data.dop}&am=${data.am}`, {
+//       crossDomain: true,
+//       method: "GET",
+//       dataType: "jsonp"}).then(val => console.log(val));
+//   }
   //метод обработчик клика по пунктам меню
   handleClickMenu(ev){
     this.setState({...this.state,content:this.getContent(this.menu.indexOf(ev.currentTarget.dataset.name))});

@@ -4,6 +4,7 @@ import TransitionsModal from './fullCardComponent/Modal.js'
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 // import TextField from '@material-ui/core/TextField';
+// import FormContainer from  './Forms'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -31,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function FullCard (props) {
-    console.log(props);
+    // console.log(props);
         const classes = useStyles();
         return (
             <Box component="div" m={2}>
@@ -43,66 +44,10 @@ export default function FullCard (props) {
                     <p className={classes.mainText}>{props.data.text}</p>
                 </Box>
                 <div className={classes.root}>
-                    <Button variant="contained"
-                            onClick={()=>{
-                                props.handleClickForm({
-                                    h: '15',
-                                    d: '01.04.2020',
-                                    n: 'Vasya',
-                                    p: '380953333333',
-                                    e: 'Vasya@i.ua',
-                                    dob: '30.03.2020',
-                                    cid: '123321',
-                                    oid: '101',
-                                    hid: props.data.id,
-                                    dop: '01.04.2020',
-                                    am: '1000',
-                                })
-                            }}
-                    >Заказать</Button>
+                    <Button variant="contained" onClick={props.handleClickForm}>
+                        Оформить
+                    </Button>
                 </div>
-                 {/*<Box component='div' m={2}>*/}
-                {/*//     <form className={classes.root}*/}
-                {/*//           noValidate*/}
-                {/*//           autoComplete="off"*/}
-                {/*//     >*/}
-                {/*//         <TextField id="outlined-basic" label="Name" />*/}
-                {/*//         <TextField id="outlined-basic" label="e-mail" />*/}
-                {/*//         <TextField id="outlined-basic" label="tel." />*/}
-                {/*//         <form className={classes.container} noValidate>*/}
-                {/*//             <TextField*/}
-                {/*//                 id="date"*/}
-                {/*//                 label="Birthday"*/}
-                {/*//                 type="date"*/}
-                {/*//                 defaultValue="2017-05-24"*/}
-                {/*//                 className={classes.textField}*/}
-                {/*//                 InputLabelProps={{*/}
-                {/*//                     shrink: true,*/}
-                {/*//                 }}*/}
-                {/*//             />*/}
-                {/*//             <TextField*/}
-                {/*//                 id="date"*/}
-                {/*//                 label="Check in"*/}
-                {/*//                 type="date"*/}
-                {/*//                 defaultValue="2017-05-24"*/}
-                {/*//                 className={classes.textField}*/}
-                {/*//                 InputLabelProps={{*/}
-                {/*//                     shrink: true,*/}
-                {/*//                 }}*/}
-                {/*//             />*/}
-                {/*//             <TextField*/}
-                {/*//                 id="date"*/}
-                {/*//                 label="Check out"*/}
-                {/*//                 type="date"*/}
-                {/*//                 defaultValue="2017-05-24"*/}
-                {/*                className={classes.textField}*/}
-                {/*                InputLabelProps={{*/}
-                {/*                    shrink: true,*/}
-                {/*                }}*/}
-                {/*            />*/}
-                {/*        </form>*/}
-                {/*    </form>*/}
-                {/*</Box>*/}
             </Box>
         );
 }

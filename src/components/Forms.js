@@ -2,9 +2,9 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
+import Button from "@material-ui/core/Button";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -19,16 +19,30 @@ const useStyles = makeStyles((theme) => ({
         textField: {
             marginLeft: theme.spacing(1),
             marginRight: theme.spacing(1),
-            width: 200,
+            width: '200px',
         },
+    },
+    typography: {
+        backgroundColor: '#fcf6d6',
+        height: '100vh',
+    },
+    boxForm: {
+        backgroundColor: 'white',
+        margin: '7rem 2rem',
     },
 }));
 
-export function Forms() {
+export function Forms(props) {
+    console.log(props);
     const classes = useStyles();
 
+    function handleSubmit(){
+
+    }
+
     return (
-        <form className={classes.root} noValidate autoComplete="off">
+        <form className={classes.root} onSubmit={handleSubmit}>
+
             {/* Ф.И.О.*/}
             <TextField id="outlined-basic" label="Ф.И.О." variant="outlined" />
             {/*Дата заезда */}
@@ -53,9 +67,8 @@ export function Forms() {
                     shrink: true,
                 }}
             />
-
             {/* Телефон */}
-            <TextField id="outlined-basic" label="Телефон" variant="outlined" />
+            <TextField id="outlined-basic" label="Телефон" variant="outlined"/>
 
             {/* Почта */}
             <TextField id="outlined-basic" label="Электронная почта" variant="outlined" />
@@ -71,28 +84,44 @@ export function Forms() {
                     shrink: true,
                 }}
             />
-
+            <div className={classes.root}>
+                <Button variant="contained"
+                        onClick={()=>{
+                            props.handleOrder({
+                                h: '15',
+                                d: '01.04.2020',
+                                n: 'Vasya',
+                                p: '380953333333',
+                                e: 'Vasya@i.ua',
+                                dob: '30.03.2020',
+                                cid: '123321',
+                                oid: '101',
+                                hid: props.data,
+                                dop: '01.04.2020',
+                                am: '1000',
+                                date: {
+                                    ad: '01.04.2020',
+                                    dd: '02.04.2020'
+                                }
+                            })
+                        }}
+                >Заказать</Button>
+            </div>
         </form>
     );
 }
 
-
-
-
-
-
-
-
-export  function FormContainer(props) {
+export default function FormContainer(props) {
+    const classes = useStyles();
+    console.log(props);
     return (
         <React.Fragment>
             <CssBaseline />
-            <Container maxWidth="sm">
-                <Typography component="div" style={{ backgroundColor: '#cfe8fc', height: '100vh' }} />
-                <Box component="span" m={2}>
-                   <Forms />
+            {/*<Container maxWidth="sm, xs">*/}
+                <Box component="div" m={15}>
+                   <Forms data={props.data} handleOrder={props.handleClickOrder}/>
                 </Box>
-            </Container>
+            {/*</Container>*/}
         </React.Fragment>
     );
 }
