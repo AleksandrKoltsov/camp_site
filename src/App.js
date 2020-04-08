@@ -12,20 +12,6 @@ import FormContainer from "./components/Forms";
 
 class App extends React.Component {
   constructor(props){
-<<<<<<< HEAD
-      super(props);
-      this.state = {
-        data:[],//массив данных о домах и картинок
-        content:[], // отображаемый на странице в данный момент контент
-      };
-      // ссылка на таблицу
-      this.link = 'https://spreadsheets.google.com/feeds/list/1BuePN0GHsl2ig48EYF2Z9Amx6aA94tE9lYTTy-tg4dY/1/public/full?alt=json';
-      // ссылка на скрипт для отправки данных с формы.
-      this.formLink = 'https://script.google.com/macros/s/AKfycbx64rdwZnavnYIdDmbUXC3BxzWEEzCv_7B7_ngqkDr9SbPfD3E/exec';
-      this.loadCards();//метод для загрузки данных из таблицы
-      this.menu = ['HOME', 'CHOOSE A HOUSE', 'MAP', 'ABOUT US', 'GALLERY']; // список пунктов для меню - передаем в MainPage
-      this.favorite = localStorage.getItem('fav')||[];
-=======
     super(props);
     this.state = {
       data:[],//массив данных о домах и картинок
@@ -38,7 +24,6 @@ class App extends React.Component {
     this.loadCards();//метод для загрузки данных из таблицы
     this.menu = ['HOME', 'CHOOSE A HOUSE', 'MAP', 'ABOUT US', 'GALLERY']; // список пунктов для меню - передаем в MainPage
     this.favorite = localStorage.getItem('fav')||[];
->>>>>>> bd581348987260baf37878191a540f7bb24b4d1c
   }
   // метод для получения контента для отображения
   //принимает число-позицию в массиве);
@@ -137,17 +122,6 @@ class App extends React.Component {
 // }
   handleClickForm(data){
     console.log(data);
-<<<<<<< HEAD
-          fetch(this.formLink, {
-            method: 'POST',
-              headers: {
-              'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: JSON.stringify(data),
-          }).then(result=>result.json()).then(data=>console.log(data));
-      }
-
-=======
     fetch(this.formLink, {
       method: 'POST',
       headers: {
@@ -163,7 +137,6 @@ class App extends React.Component {
 //       method: "GET",
 //       dataType: "jsonp"}).then(val => console.log(val));
 //   }
->>>>>>> bd581348987260baf37878191a540f7bb24b4d1c
   //метод обработчик клика по пунктам меню
   handleClickMenu(ev){
     this.setState({...this.state,content:this.getContent(this.menu.indexOf(ev.currentTarget.dataset.name))});
