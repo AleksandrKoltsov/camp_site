@@ -32,7 +32,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function FullCard (props) {
-    // console.log(props);
         const classes = useStyles();
         return (
             <Box component="div" m={2}>
