@@ -26,17 +26,16 @@ const useStyles = makeStyles({
     backgroundPosition:'center',
     backgroundRepeat:'no-repeat',
     backgroundSize:'contain',
+    transition:'all .1s linear',
     },
   hiddenBar:{
     backgroundColor:'transparent',
     height:"20vh",
     boxShadow:"none",
-    transition:'all .1s linear',
   },
   visibleBar:{
     backgroundColor:'#221F1F',
     height:"inherit",
-    transition:'all .1s linear',
   },
   fullList: {
     width: 'auto',
