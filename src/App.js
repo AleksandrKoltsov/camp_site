@@ -10,7 +10,6 @@ import FullCard from "./components/FullCard";
 import FormContainer from "./components/Forms";
 import TerritoryMap from "./components/TerritoryMap.js"
 
-
 class App extends React.Component {
   constructor(props){
     super(props);
