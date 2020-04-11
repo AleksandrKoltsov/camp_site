@@ -527,7 +527,8 @@ return [
    className:"text",
    x:"-465.45053",
    y:"-51.404594",
-   id:"text2337",text:'СПОРТПЛОЩАДКА',
+   id:"text2337",
+   text:'СПОРТПЛОЩАДКА',
   },
       {
    className:'text',
