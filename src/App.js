@@ -9,7 +9,6 @@ import SliderCards from './components/SliderCards.js';
 import FullCard from "./components/FullCard";
 import FormContainer from "./components/Forms";
 
-
 class App extends React.Component {
   constructor(props){
     super(props);
@@ -143,13 +142,15 @@ class App extends React.Component {
   }
 
   render(){
-    return (<div>
-      <MainPage
-          content={this.state.content}
-          handleClick={this.handleClickMenu.bind(this)}
-          menuItems={this.menu}
-      />
-    </div>);
+    return (
+      <div>
+        <MainPage
+            content={this.state.content}
+            handleClick={this.handleClickMenu.bind(this)}
+            menuItems={this.menu}
+        />
+    </div>
+    );
   }
 }
 export default App;
