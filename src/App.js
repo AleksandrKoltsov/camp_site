@@ -41,7 +41,7 @@ class App extends React.Component {
         <Box mb={50}>TEXT CONTENT</Box>
       </div>),
       (<div>
-        <Box my={15}><TerritoryMap /></Box>
+        <Box my={15} boxShadow={5}><TerritoryMap /></Box>
         <Box>
         <AdvancedGridList
             data={this.state.data}
