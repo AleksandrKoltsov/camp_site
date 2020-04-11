@@ -27,7 +27,7 @@ function TextMap(props){
    className={`${classes.text} ${props.data.className}`}
    x={props.data.x}
    y={props.data.y}
-   transform={props.data.transform||'none'}
+   transform={props.data.transform||'initial'}
    id={props.data.id}><tspan
      id={props.data.id}
      x={props.data.x}
