@@ -94,7 +94,7 @@ class App extends React.Component {
   }
 
   handleClickBtnOrder(id){
-    console.log(id);
+    // console.log(id);
     this.setState({...this.state,content:(<div><Box mt={0}><FormContainer data={id} handleClickOrder={this.handleClickForm.bind(this)}
       /></Box></div>)});
   }
@@ -105,7 +105,11 @@ class App extends React.Component {
   // метод обработчик отправки данных с формы
 // Принимает обьект со следующими полями
 // h//house num
-// d//date
+// d:{
+//  cd: current date
+//  ad: arrival date
+//  dd: departure date
+// }
 // n//name
 // p//phone
 // e//email
@@ -115,10 +119,7 @@ class App extends React.Component {
 // hid//house id
 // dop//date of payment
 // am//amount
-// data {
-//  ad: arrival data
-//  dd: departure data
-// }
+
   handleClickForm(data){
     console.log(data);
     fetch(this.formLink, {

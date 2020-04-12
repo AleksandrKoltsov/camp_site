@@ -28,7 +28,7 @@ function Copyright() {
 
 const useStyles = makeStyles((theme) => ({
     paper: {
-        marginTop: theme.spacing(8),
+        marginTop: theme.spacing(15),
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -46,49 +46,56 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function SignUp() {
+export default function FormContainer (props) {
     const classes = useStyles();
     const [selectedDate, handleDateChange] = useState(new Date());
-    let [state, setState] = useState();
+    const [name, setName] = useState();
+    const [phone, setPhone] = useState();
+    const [email, setEmail] = useState();
 
-    state = {
-        name: '',
-        errors: {
-            name: false
-        }
-    }
-
-    function handleSubmit (e) {
+    const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(state);
-    }
+    };
 
-    function handleChange (e) {
-        setState({
-            [e.target.name]: e.target.value
-        })
-    }
+    const handleChange = () => {
+        // console.log(props);
+        props.handleClickOrder({
+            h: '15',
+            d: {
+                cd: new Date(),
+                ad: 'arrival date 09/04/2020',
+                dd: 'departure date 10/04/2020'
+            },
+            n: name,
+            p: phone,
+            e: email,
+            dob: selectedDate,
+            cid: '123321',
+            oid: '101',
+            hid: props.data,
+            dop: '01.04.2020',
+            am: '1000'
+        });
+    };
 
     return (
         <Container component="main" maxWidth="xs">
             <CssBaseline />
             <div className={classes.paper}>
-                <form className={classes.form} onSubmit={()=>handleSubmit()}>
+                <form className={classes.form} onSubmit={handleSubmit}>
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
                             <TextField
                                 autoComplete="fname"
-                                name="Name"
+                                name="n"
                                 variant="outlined"
                                 required
                                 fullWidth
                                 id="firstName"
                                 label="Ф.И.О."
                                 autoFocus
-                                value={state.name}
-                                onChange={(e)=> handleChange(e)}
-                                error={state.errors.name}
-
+                                value={name}
+                                onChange={(e)=>setName(e.target.value)}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -100,6 +107,8 @@ export default function SignUp() {
                                 label="Тел."
                                 name="lastName"
                                 autoComplete="lname"
+                                value={phone}
+                                onChange={(e)=>setPhone(e.target.value)}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -108,9 +117,11 @@ export default function SignUp() {
                                 required
                                 fullWidth
                                 id="email"
-                                label="Email Address"
+                                label="E-mail"
                                 name="email"
                                 autoComplete="email"
+                                value={email}
+                                onChange={(e)=>setEmail(e.target.value)}
                             />
                         </Grid>
                         <Grid item xs={4}>
@@ -120,7 +131,6 @@ export default function SignUp() {
                                 value={selectedDate}
                                 onChange={handleDateChange}
                                 orientation="portrait"
-                                // disabled={true}
                                 disableFuture={true}
                                 inputVariant="outlined"
                                 format="DD/MM/YYYY"
@@ -153,71 +163,37 @@ export default function SignUp() {
                                 inputVariant="outlined"
                                 format="DD/MM/YYYY"
                             />
-
                         </Grid>
                         <Grid item xs={12}>
                             <FormControlLabel
                                 control={<Checkbox value="allowExtraEmails" color="primary" />}
-                                label="I want to receive inspiration, marketing promotions and updates via email."
+                                label="Я хочу получать новости и промоакции на свою почту"
                             />
                         </Grid>
                     </Grid>
                     <Button
-                        // type="submit"
+                        type="submit"
                         fullWidth
                         variant="contained"
                         color="primary"
                         className={classes.submit}
+                        onClick={handleChange(props)}
                     >
                         Оформить
                     </Button>
                 </form>
             </div>
             <Box mt={5}>
+                {/*<p>*/}
+                {/*    {JSON.stringify(`name:{${name}} <br/> phohe:{${phone}} <br/>  email:{${email}} <br/> date:{${selectedDate}}`, null, 2)}*/}
+                {/*</p>*/}
                 <Copyright />
             </Box>
         </Container>
     );
 }
-//
-// export default function FormContainer(props) {
-//     // console.log(props);
-//     let  [value, setValue] = useState('');
-//
-//     value = {
-//         name: '',
-//         // tel: '',
-//         // mail: '',
-//         // arDate: '',
-//         // dpDate: '',
-//         // dob: '',
-//         errors: {
-//             name: '',
-//             // tel: '',
-//             // mail: '',
-//             // arDate: '',
-//             // dpDate: '',
-//             // dob: '',
-//         }
-//     };
-//     const classes = useStyles();
-//     // console.log(props);
-//
-//     function handleSubmit(props){
-//         console.log(props);
-//         // console.log(ev);
-//         // ev.preventDefault();
-//         // console.log(ev, props);
-//         let errors = {};
-//
-//         if (!value.name) errors.name = 'Имя не может быть пустым';
-//         // if (!value.tel) errors.tel = 'поле не может быть пустым';
-//         // if (!value.mail) errors.mail = 'поле не может быть пустым';
-//
-//         if (errors.name) {
-//             setValue({errors});
-//             return;
-//         }
+
+
 //         // props.handleOrder({
 //         //     h: '15',
 //         //     d: {
@@ -237,85 +213,5 @@ export default function SignUp() {
 //         // })
 //     }
 //
-//     return (
-//         {/*<Box component="div" m={15}>*/}
-//         {/*    <CssBaseline />*/}
-//         {/*    <form className={classes.root} noValidate autoComplete="off">*/}
-//         {/*         Ф.И.О.*/}
-//         {/*        <TextField*/}
-//         {/*            error={false}*/}
-//         {/*            id="outlined-basic"*/}
-//         {/*            label="Ф.И.О."*/}
-//         {/*            variant="outlined"*/}
-//         {/*            helperText={false}*/}
-//         {/*            errorText={value.errors.name}*/}
-//         {/*            onChange={(event, name)=> setValue({name})}*/}
-//         {/*            placeholder="Ф.И.О."*/}
-//         {/*        />*/}
-//         {/*        /!*Дата заезда *!/*/}
-//         {/*        <TextField*/}
-//         {/*            id="date"*/}
-//         {/*            label="Заезд"*/}
-//         {/*            type="date"*/}
-//         {/*            defaultValue="2020-04-01"*/}
-//         {/*            className={classes.root.textField}*/}
-//         {/*            onChange={(event, dpDate)=> setValue({dpDate})}*/}
-//         {/*            InputLabelProps={{*/}
-//         {/*                shrink: true,*/}
-//         {/*            }}*/}
-//         {/*        />*/}
-//         {/*        /!* Дата отъезда *!/*/}
-//         {/*        <TextField*/}
-//         {/*            id="date"*/}
-//         {/*            label="Выезд"*/}
-//         {/*            type="date"*/}
-//         {/*            defaultValue="2020-04-01"*/}
-//         {/*            className={classes.root.textField}*/}
-//         {/*            onChange={(event, arDate)=> setValue({arDate})}*/}
-//         {/*            InputLabelProps={{*/}
-//         {/*                shrink: true,*/}
-//         {/*            }}*/}
-//         {/*        />*/}
-//         {/*        /!* Телефон *!/*/}
-//         {/*        <TextField*/}
-//         {/*            id="outlined-basic"*/}
-//         {/*            label="Телефон"*/}
-//         {/*            variant="outlined"*/}
-//         {/*            onChange={(event, tel)=> setValue({tel})}*/}
-//         {/*            placeholder={'+380ХХХХХХХХХ'}*/}
-//         {/*        />*/}
-//
-//         {/*        /!* Почта *!/*/}
-//         {/*        <TextField*/}
-//         {/*            id="outlined-basic"*/}
-//         {/*            label="Электронная почта"*/}
-//         {/*            variant="outlined"*/}
-//         {/*            onChange={(event, mail)=> setValue({mail})}*/}
-//         {/*            placeholder={'example@mail.com'}*/}
-//         {/*        />*/}
-//
-//         {/*        /!* Дата рождения *!/*/}
-//         {/*        <TextField*/}
-//         {/*            id="date"*/}
-//         {/*            label="День рождения"*/}
-//         {/*            type="date"*/}
-//         {/*            defaultValue="2020-04-01"*/}
-//         {/*            className={classes.root.textField}*/}
-//         {/*            onChange={(event, dob)=> setValue({dob})}*/}
-//         {/*            InputLabelProps={{*/}
-//         {/*                shrink: true,*/}
-//         {/*            }}*/}
-//         {/*        />*/}
-//         {/*        <div className={classes.root}>*/}
-//         {/*            <Button variant="contained"*/}
-//         {/*                    label="Заказать"*/}
 //         {/*                    onClick={(props)=>handleSubmit(props)}*/}
-//         {/*                    >*/}
-//         {/*                Заказать*/}
-//         {/*            </Button>*/}
-//         {/*        </div>*/}
-//         {/*       <Forms data={props.data} handleOrder={props.handleClickOrder}/>*/}
-//         {/*    </form>*/}
-//         {/*</Box>*/}
-//     );
-// }
+
