@@ -8,7 +8,10 @@ import Box from '@material-ui/core/Box';
 import SliderCards from './components/SliderCards.js';
 import FullCard from "./components/FullCard";
 import FormContainer from "./components/Forms";
+<<<<<<< HEAD
 import TerritoryMap from "./components/TerritoryMap.js"
+=======
+>>>>>>> f496a80065e7915791b815b1c8d16977fcc60555
 
 class App extends React.Component {
   constructor(props){
@@ -97,7 +100,7 @@ class App extends React.Component {
   }
 
   handleClickBtnOrder(id){
-    console.log(id);
+    // console.log(id);
     this.setState({...this.state,content:(<div><Box mt={0}><FormContainer data={id} handleClickOrder={this.handleClickForm.bind(this)}
       /></Box></div>)});
   }
@@ -108,7 +111,11 @@ class App extends React.Component {
   // метод обработчик отправки данных с формы
 // Принимает обьект со следующими полями
 // h//house num
-// d//date
+// d:{
+//  cd: current date
+//  ad: arrival date
+//  dd: departure date
+// }
 // n//name
 // p//phone
 // e//email
@@ -118,10 +125,7 @@ class App extends React.Component {
 // hid//house id
 // dop//date of payment
 // am//amount
-// data {
-//  ad: arrival data
-//  dd: departure data
-// }
+
   handleClickForm(data){
     console.log(data);
     fetch(this.formLink, {
@@ -145,13 +149,15 @@ class App extends React.Component {
   }
 
   render(){
-    return (<div>
-      <MainPage
-          content={this.state.content}
-          handleClick={this.handleClickMenu.bind(this)}
-          menuItems={this.menu}
-      />
-    </div>);
+    return (
+      <div>
+        <MainPage
+            content={this.state.content}
+            handleClick={this.handleClickMenu.bind(this)}
+            menuItems={this.menu}
+        />
+    </div>
+    );
   }
 }
 export default App;

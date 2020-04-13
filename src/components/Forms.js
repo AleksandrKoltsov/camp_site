@@ -1,127 +1,217 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
+import React, { useState }  from 'react';
+import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Container from '@material-ui/core/Container';
+import TextField from '@material-ui/core/TextField';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+import Link from '@material-ui/core/Link';
+import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
-import Button from "@material-ui/core/Button";
+import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
+// import MomentUtils from '@date-io/moment';
+import { DatePicker } from '@material-ui/pickers';
+
+function Copyright() {
+    return (
+        <Typography variant="body2" color="textSecondary" align="center">
+            {'Copyright © '}
+            <Link color="inherit" href="https://material-ui.com/">
+                Your Website
+            </Link>{' '}
+            {new Date().getFullYear()}
+            {'.'}
+        </Typography>
+    );
+}
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-        '& > *': {
-            margin: theme.spacing(1),
-            width: '25ch',
-        },
-        container: {
-            display: 'flex',
-            flexWrap: 'wrap',
-        },
-        textField: {
-            marginLeft: theme.spacing(1),
-            marginRight: theme.spacing(1),
-            width: '200px',
-        },
+    paper: {
+        marginTop: theme.spacing(15),
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
     },
-    typography: {
-        backgroundColor: '#fcf6d6',
-        height: '100vh',
+    avatar: {
+        margin: theme.spacing(1),
+        backgroundColor: theme.palette.secondary.main,
     },
-    boxForm: {
-        backgroundColor: 'white',
-        margin: '7rem 2rem',
+    form: {
+        width: '100%', // Fix IE 11 issue.
+        marginTop: theme.spacing(3),
+    },
+    submit: {
+        margin: theme.spacing(3, 0, 2),
     },
 }));
 
-export function Forms(props) {
-    // console.log(props);
+export default function FormContainer (props) {
     const classes = useStyles();
+    const [selectedDate, handleDateChange] = useState(new Date());
+    const [name, setName] = useState();
+    const [phone, setPhone] = useState();
+    const [email, setEmail] = useState();
 
-    function handleSubmit(){
+    const handleSubmit = (e) => {
+        e.preventDefault();
+    };
 
-    }
+    const handleChange = () => {
+        // console.log(props);
+        props.handleClickOrder({
+            h: '15',
+            d: {
+                cd: new Date(),
+                ad: 'arrival date 09/04/2020',
+                dd: 'departure date 10/04/2020'
+            },
+            n: name,
+            p: phone,
+            e: email,
+            dob: selectedDate,
+            cid: '123321',
+            oid: '101',
+            hid: props.data,
+            dop: '01.04.2020',
+            am: '1000'
+        });
+    };
 
     return (
-        <form className={classes.root} onSubmit={handleSubmit}>
-
-            {/* Ф.И.О.*/}
-            <TextField id="outlined-basic" label="Ф.И.О." variant="outlined" />
-            {/*Дата заезда */}
-            <TextField
-                id="date"
-                label="Заезд"
-                type="date"
-                defaultValue="2020-04-01"
-                className={classes.root.textField}
-                InputLabelProps={{
-                    shrink: true,
-                }}
-            />
-            {/* Дата отъезда */}
-            <TextField
-                id="date"
-                label="Выезд"
-                type="date"
-                defaultValue="2020-04-01"
-                className={classes.root.textField}
-                InputLabelProps={{
-                    shrink: true,
-                }}
-            />
-            {/* Телефон */}
-            <TextField id="outlined-basic" label="Телефон" variant="outlined"/>
-
-            {/* Почта */}
-            <TextField id="outlined-basic" label="Электронная почта" variant="outlined" />
-
-            {/* Дата рождения */}
-            <TextField
-                id="date"
-                label="День рождения"
-                type="date"
-                defaultValue="2020-04-01"
-                className={classes.root.textField}
-                InputLabelProps={{
-                    shrink: true,
-                }}
-            />
-            <div className={classes.root}>
-                <Button variant="contained"
-                        onClick={()=>{
-                            props.handleOrder({
-                                h: '15',
-                                d: {
-                                    cd: 'current date 08/04/2020',
-                                    ad: 'arrival date 09/04/2020',
-                                    dd: 'departure date 10/04/2020'
-                                },
-                                n: 'Vasya',
-                                p: '380953333333',
-                                e: 'Vasya@i.ua',
-                                dob: '30.03.2020',
-                                cid: '123321',
-                                oid: '101',
-                                hid: props.data,
-                                dop: '01.04.2020',
-                                am: '1000'
-                            })
-                        }}
-                >Заказать</Button>
-            </div>
-        </form>
-    );
-}
-
-export default function FormContainer(props) {
-    const classes = useStyles();
-    // console.log(props);
-    return (
-        <React.Fragment>
+        <Container component="main" maxWidth="xs">
             <CssBaseline />
-            {/*<Container maxWidth="sm, xs">*/}
-                <Box component="div" m={15}>
-                   <Forms data={props.data} handleOrder={props.handleClickOrder}/>
-                </Box>
-            {/*</Container>*/}
-        </React.Fragment>
+            <div className={classes.paper}>
+                <form className={classes.form} onSubmit={handleSubmit}>
+                    <Grid container spacing={2}>
+                        <Grid item xs={12}>
+                            <TextField
+                                autoComplete="fname"
+                                name="n"
+                                variant="outlined"
+                                required
+                                fullWidth
+                                id="firstName"
+                                label="Ф.И.О."
+                                autoFocus
+                                value={name}
+                                onChange={(e)=>setName(e.target.value)}
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                variant="outlined"
+                                required
+                                fullWidth
+                                id="lastName"
+                                label="Тел."
+                                name="lastName"
+                                autoComplete="lname"
+                                value={phone}
+                                onChange={(e)=>setPhone(e.target.value)}
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                variant="outlined"
+                                required
+                                fullWidth
+                                id="email"
+                                label="E-mail"
+                                name="email"
+                                autoComplete="email"
+                                value={email}
+                                onChange={(e)=>setEmail(e.target.value)}
+                            />
+                        </Grid>
+                        <Grid item xs={4}>
+                            <DatePicker
+                                id="birdth"
+                                label="Дата рождения"
+                                value={selectedDate}
+                                onChange={handleDateChange}
+                                orientation="portrait"
+                                disableFuture={true}
+                                inputVariant="outlined"
+                                format="DD/MM/YYYY"
+                            />
+
+                        </Grid>
+                        <Grid item xs={4}>
+                            <DatePicker
+                                id="arrivalDate"
+                                label="Дата заезда"
+                                value={selectedDate}
+                                onChange={handleDateChange}
+                                orientation="portrait"
+                                disabled={true}
+                                disableFuture={true}
+                                inputVariant="outlined"
+                                format="DD/MM/YYYY"
+                            />
+
+                        </Grid>
+                        <Grid item xs={4}>
+                            <DatePicker
+                                id="departureDate"
+                                label="Дата выезда"
+                                value={selectedDate}
+                                onChange={handleDateChange}
+                                orientation="portrait"
+                                disabled={true}
+                                disableFuture={true}
+                                inputVariant="outlined"
+                                format="DD/MM/YYYY"
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <FormControlLabel
+                                control={<Checkbox value="allowExtraEmails" color="primary" />}
+                                label="Я хочу получать новости и промоакции на свою почту"
+                            />
+                        </Grid>
+                    </Grid>
+                    <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        color="primary"
+                        className={classes.submit}
+                        onClick={handleChange(props)}
+                    >
+                        Оформить
+                    </Button>
+                </form>
+            </div>
+            <Box mt={5}>
+                {/*<p>*/}
+                {/*    {JSON.stringify(`name:{${name}} <br/> phohe:{${phone}} <br/>  email:{${email}} <br/> date:{${selectedDate}}`, null, 2)}*/}
+                {/*</p>*/}
+                <Copyright />
+            </Box>
+        </Container>
     );
 }
+
+
+//         // props.handleOrder({
+//         //     h: '15',
+//         //     d: {
+//         //         cd: 'current date 08/04/2020',
+//         //         ad: 'arrival date 09/04/2020',
+//         //         dd: 'departure date 10/04/2020'
+//         //     },
+//         //     n: 'Vasya',
+//         //     p: '380953333333',
+//         //     e: 'Vasya@i.ua',
+//         //     dob: '30.03.2020',
+//         //     cid: '123321',
+//         //     oid: '101',
+//         //     hid: props.data,
+//         //     dop: '01.04.2020',
+//         //     am: '1000'
+//         // })
+//     }
+//
+//         {/*                    onClick={(props)=>handleSubmit(props)}*/}
+
