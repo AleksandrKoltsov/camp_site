@@ -8,10 +8,7 @@ import Box from '@material-ui/core/Box';
 import SliderCards from './components/SliderCards.js';
 import FullCard from "./components/FullCard";
 import FormContainer from "./components/Forms";
-<<<<<<< HEAD
 import TerritoryMap from "./components/TerritoryMap.js"
-=======
->>>>>>> f496a80065e7915791b815b1c8d16977fcc60555
 
 class App extends React.Component {
   constructor(props){
