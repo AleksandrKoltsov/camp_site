@@ -52,30 +52,48 @@ export default function FormContainer (props) {
     const [name, setName] = useState();
     const [phone, setPhone] = useState();
     const [email, setEmail] = useState();
+    const [arrivalDate, handleArrivalChange] = useState();
+    const [departureDate, handleDepartureChange] = useState();
 
     const handleSubmit = (e) => {
-        e.preventDefault();
+            e.preventDefault();
+      props.handleClickOrder({
+          h: '15',
+          d: {
+              cd: new Date(),
+              ad: arrivalDate,
+              dd: departureDate,
+          },
+          n: name,
+          p: phone,
+          e: email,
+          dob: selectedDate,
+          cid: '123321',
+          oid: '101',
+          hid: props.data,
+          dop: '01.04.2020',
+          am: '1000'
+      })
     };
 
     const handleChange = () => {
-        // console.log(props);
-        props.handleClickOrder({
-            h: '15',
-            d: {
-                cd: new Date(),
-                ad: 'arrival date 09/04/2020',
-                dd: 'departure date 10/04/2020'
-            },
-            n: name,
-            p: phone,
-            e: email,
-            dob: selectedDate,
-            cid: '123321',
-            oid: '101',
-            hid: props.data,
-            dop: '01.04.2020',
-            am: '1000'
-        });
+        // props.handleClickOrder({
+        //     h: '15',
+        //     d: {
+        //         cd: new Date(),
+        //         ad: 'arrival date 09/04/2020',
+        //         dd: 'departure date 10/04/2020'
+        //     },
+        //     n: name,
+        //     p: phone,
+        //     e: email,
+        //     dob: selectedDate,
+        //     cid: '123321',
+        //     oid: '101',
+        //     hid: props.data,
+        //     dop: '01.04.2020',
+        //     am: '1000'
+        // });
     };
 
     return (
@@ -141,11 +159,10 @@ export default function FormContainer (props) {
                             <DatePicker
                                 id="arrivalDate"
                                 label="Дата заезда"
-                                value={selectedDate}
-                                onChange={handleDateChange}
+                                value={arrivalDate}
+                                onChange={handleArrivalChange}
                                 orientation="portrait"
-                                disabled={true}
-                                disableFuture={true}
+                                disablePast={true}
                                 inputVariant="outlined"
                                 format="DD/MM/YYYY"
                             />
@@ -155,11 +172,10 @@ export default function FormContainer (props) {
                             <DatePicker
                                 id="departureDate"
                                 label="Дата выезда"
-                                value={selectedDate}
-                                onChange={handleDateChange}
+                                value={departureDate}
+                                onChange={handleDepartureChange}
+                                disablePast={true}
                                 orientation="portrait"
-                                disabled={true}
-                                disableFuture={true}
                                 inputVariant="outlined"
                                 format="DD/MM/YYYY"
                             />
@@ -214,4 +230,3 @@ export default function FormContainer (props) {
 //     }
 //
 //         {/*                    onClick={(props)=>handleSubmit(props)}*/}
-
