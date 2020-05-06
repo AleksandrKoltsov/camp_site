@@ -8,6 +8,7 @@ import Box from '@material-ui/core/Box';
 import SliderCards from './components/SliderCards.js';
 import FullCard from "./components/FullCard";
 import FormContainer from "./components/Forms";
+import TerritoryMap from "./components/TerritoryMap.js"
 
 class App extends React.Component {
   constructor(props){
@@ -39,13 +40,15 @@ class App extends React.Component {
         </Box>
         <Box mb={50}>TEXT CONTENT</Box>
       </div>),
-      (<div><Box mt={15}>
+      (<div>
+        <Box my={15} boxShadow={5}><TerritoryMap /></Box>
+        <Box>
         <AdvancedGridList
             data={this.state.data}
             handleClickInfo={this.handleClickInfo.bind(this)}
             handleClickStar={this.handleClickStar.bind(this)}
         />
-      </Box>
+        </Box>
       </div>),
       (<div><Box mt={15}>MAP</Box>
       </div>),

@@ -26,17 +26,16 @@ const useStyles = makeStyles({
     backgroundPosition:'center',
     backgroundRepeat:'no-repeat',
     backgroundSize:'contain',
+    transition:'all .1s linear',
     },
   hiddenBar:{
     backgroundColor:'transparent',
     height:"20vh",
     boxShadow:"none",
-    transition:'all .1s linear',
   },
   visibleBar:{
     backgroundColor:'#221F1F',
     height:"inherit",
-    transition:'all .1s linear',
   },
   fullList: {
     width: 'auto',
@@ -112,7 +111,7 @@ export default function MainPage(props) {//принимает список по�
             </Link>
           </Typography>
             <Typography>
-            <Link href="https://drive.google.com/drive/folders/1t3OqJ6x5WdJZp0IgGRdQ-Ec_LI-_zeQ-" color='inherit'>
+            <Link href="https://drive.google.com/open?id=1wMW9gsr43GQ-fkDuYRiGCc24oUlSas_s" color='inherit'>
               google drive
             </Link>
             </Typography>
