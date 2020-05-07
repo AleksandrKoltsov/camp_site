@@ -44,7 +44,8 @@ return (
                 <IconButton
                 onClick={props.handleClickStar}
                 aria-label={`star ${tile.title}`}
-                className={classes.icon}>
+                className={classes.icon}
+                data-id={tile.id}>
                   <StarBorderIcon/>
                 </IconButton>
               }
@@ -59,7 +60,9 @@ return (
               <IconButton
               onClick={props.handleClickInfo}
               aria-label={`info about ${tile.title}`}
-              className={classes.icon}>
+              className={classes.icon}
+              data-id={tile.id}
+              >
                 <InfoIcon />
               </IconButton>
               }

@@ -1,34 +1,55 @@
 import React from 'react';
 import Box from '@material-ui/core/Box';
 import TransitionsModal from './fullCardComponent/Modal.js'
-import DatePickers from './fullCardComponent/Calendar.js'
+import { makeStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+// import TextField from '@material-ui/core/TextField';
+// import FormContainer from  './Forms'
 
-class FullCard extends React.Component {
-    constructor(props){
-        super(props);
+const useStyles = makeStyles((theme) => ({
+    root: {
+        '& > *': {
+            margin: theme.spacing(1),
+            width: '25ch',
+        },
+        mainText:{
+            textAlign: 'justify',
+        },
+        mainTextHeader: {
+            textAlign: 'center',
+        },
 
-    }
-    render() {
+    },
+    container: {
+        display: 'flex',
+        flexWrap: 'wrap',
+    },
+    textField: {
+        marginLeft: theme.spacing(1),
+        marginRight: theme.spacing(1),
+        width: 200,
+    },
+}));
+
+export default function FullCard (props) {
+        const classes = useStyles();
         return (
             <Box component="div" m={2}>
-                <TransitionsModal />
+                <TransitionsModal img={props.data.img}
+                                mini={props.data.mini}
+                />
                 <Box component="span" m={1}>
-                   <h2 className='mainTextHeader'>Lorem ipsum dolor.</h2>
-                    <p className='mainText'>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa debitis, incidunt modi possimus provident saepe vitae? Accusamus autem corporis dicta distinctio dolor dolores eligendi error ex illum incidunt inventore maxime molestiae nesciunt officia officiis omnis, quaerat recusandae repellat repellendus reprehenderit sed soluta ullam vel veritatis vero? Assumenda ea similique velit vero. Adipisci at delectus distinctio in officiis perspiciatis rem repudiandae! A animi culpa dolores eum magni nesciunt nobis voluptatibus. Delectus deserunt, dolorem doloremque facilis hic incidunt minus molestiae molestias necessitatibus nesciunt perferendis provident quas quidem recusandae saepe veritatis voluptatum. Ad delectus hic tempore veritatis voluptatum. Cum ducimus maxime perspiciatis quibusdam.
-                    </p>
+                   <h2 className={classes.mainTextHeader}>{props.data.title}</h2>
+                    <p className={classes.mainText}>{props.data.text}</p>
                 </Box>
-                <div className="contDate">
-                    <div className="date1">
-                        <DatePickers />
-                    </div>
-                    <div className="date2">
-                        <DatePickers />
-                    </div>
+                <div className={classes.root}>
+                    <Button variant="contained" onClick={props.handleClickForm}>
+                        Оформить
+                    </Button>
                 </div>
-
             </Box>
         );
-    }
 }
-
-export default FullCard;
+{/*function UserInfoOrder(props) {*/}
+{/*    console.log(props);*/}
+{/*}*/}
