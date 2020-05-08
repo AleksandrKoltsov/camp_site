@@ -10,8 +10,9 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-// import MomentUtils from '@date-io/moment';
+import MomentUtils from '@date-io/moment';
 import { DatePicker } from '@material-ui/pickers';
+import  onValidation from './Validator.js';
 
 function Copyright() {
     return (
@@ -52,31 +53,64 @@ export default function FormContainer (props) {
     const [name, setName] = useState();
     const [phone, setPhone] = useState();
     const [email, setEmail] = useState();
-    const [arrivalDate, handleArrivalChange] = useState();
-    const [departureDate, handleDepartureChange] = useState();
+    const [arrivalDate, handleArrivalChange] = useState(new Date());
+    const [departureDate, handleDepartureChange] = useState(new Date());
 
     const handleSubmit = (e) => {
-            e.preventDefault();
-      props.handleClickOrder({
-          h: '15',
-          d: {
-              cd: new Date(),
-              ad: arrivalDate,
-              dd: departureDate,
-          },
-          n: name,
-          p: phone,
-          e: email,
-          dob: selectedDate,
-          cid: '123321',
-          oid: '101',
-          hid: props.data,
-          dop: '01.04.2020',
-          am: '1000'
-      })
+        e.preventDefault();
+
+        if(onValidation({name})) {
+            if(onValidation({phone})) {
+                if(onValidation({email})) {
+                    // if(onValidation({selectedDate})) {
+                        props.handleClickOrder({
+                            h: '15',
+                            d: {
+                                cd: new Date(),
+                                ad: arrivalDate,
+                                dd: departureDate,
+                            },
+                            n: name,
+                            p: phone,
+                            e: email,
+                            dob: selectedDate,
+                            cid: '123321',
+                            oid: '101',
+                            hid: props.data,
+                            dop: '01.04.2020',
+                            am: '1000'
+                        })
+                    // }else return console.log('в дате недопустимое значение');
+                } else return console.log('в почте недопустимое значение');
+            } else return console.log('в телефоне недопустимое значение');
+        } else return console.log('в имени недопустимое значение');
+
+        if(onValidation(name,phone,email,selectedDate,arrivalDate,departureDate)) {
+            props.handleClickOrder({
+              h: '15',
+              d: {
+                  cd: new Date(),
+                  ad: arrivalDate,
+                  dd: departureDate,
+              },
+              n: name,
+              p: phone,
+              e: email,
+              dob: selectedDate,
+              cid: '123321',
+              oid: '101',
+              hid: props.data,
+              dop: '01.04.2020',
+              am: '1000'
+          })
+        } else {
+            return 'Не корректный ввод данных';
+        }
+
+
     };
 
-    const handleChange = () => {
+    // const handleChange = () => {
         // props.handleClickOrder({
         //     h: '15',
         //     d: {
@@ -94,7 +128,7 @@ export default function FormContainer (props) {
         //     dop: '01.04.2020',
         //     am: '1000'
         // });
-    };
+    // };
 
     return (
         <Container component="main" maxWidth="xs">
@@ -193,7 +227,7 @@ export default function FormContainer (props) {
                         variant="contained"
                         color="primary"
                         className={classes.submit}
-                        onClick={handleChange(props)}
+                        // onClick={handleChange(props)}
                     >
                         Оформить
                     </Button>
