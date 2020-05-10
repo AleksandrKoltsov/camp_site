@@ -54,71 +54,49 @@ export default function FormContainer (props) {
     const [email, setEmail] = useState();
     const [arrivalDate, handleArrivalChange] = useState(new Date());
     const [departureDate, handleDepartureChange] = useState(new Date());
-    const [errors, setErrors] = useState({
-        val: false,
-        text: ''
-    });
+    const [errorText, setErrorText] = useState({name: '', phone: '', email: ''});
+    const [errorState, setErrorState] = useState({name: false, phone: false, email: false});
 
-    const checkValid = () => {
-        let onCheckError = false;
-        if(onValidation({name})) {
-            setErrors({val: false, text: ''});
-            onCheckError = true;
-        } else {
-            setErrors({val: true, text: 'некорректное имя'});
-            onCheckError = false;
-        }
-
-        if(onValidation({phone})) {
-            setErrors({val: false, text: ''});
-            onCheckError = true;
-        } else  {
-            setErrors({val: true, text: 'некорректный номер'});
-            onCheckError = false;
-        };
-
-        if(onValidation({email})) {
-            setErrors({val: false, text: ''});
-            onCheckError = true;
-        } else  {
-            setErrors({val: true, text: 'некорректная почта'});
-            onCheckError = false;
-        }
-
-        if(onValidation({selectedDate})) {
-            onCheckError = true;
-            console.log('норм дата');
-        }else {
-            console.log('в дате недопустимое значение');
-            onCheckError = false;
-        }
-
-        return onCheckError;
-    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
-        if(checkValid()){
-            props.handleClickOrder({
-                h: '15',
-                d: {
-                    cd: new Date(),
-                    ad: arrivalDate,
-                    dd: departureDate,
-                },
-                n: name,
-                p: phone,
-                e: email,
-                dob: selectedDate,
-                cid: '123321',
-                oid: '101',
-                hid: props.data,
-                dop: '01.04.2020',
-                am: '1000'
-            })
-        } else console.log('error validation');
-
+        switch(onValidation(name, phone, email)) {
+            case true:
+                setErrorState({name: '', phone: '', email: ''});
+                setErrorText({name: false, phone: false, email: false});
+                props.handleClickOrder({
+                    h: '15',
+                    d: {
+                        cd: new Date(),
+                        ad: arrivalDate,
+                        dd: departureDate,
+                    },
+                    n: name,
+                    p: phone,
+                    e: email,
+                    dob: selectedDate,
+                    cid: '123321',
+                    oid: '101',
+                    hid: props.data,
+                    dop: '01.04.2020',
+                    am: '1000'
+                });
+                break;
+            case 'name':
+                setErrorState({name: true});
+                setErrorText({name: 'Упс! Ошибочка!'});
+                break;
+            case 'phone':
+                setErrorState({phone: true});
+                setErrorText({phone: 'Упс! Ошибочка!'});
+                break;
+            case 'email':
+                setErrorState({email: true});
+                setErrorText({email: 'Упс! Ошибочка!'});
+                break;
+            default:
+                break;
+        }
     };
 
     return (
@@ -134,8 +112,8 @@ export default function FormContainer (props) {
                                 variant="outlined"
                                 required
                                 fullWidth
-                                error={errors.val}
-                                helperText={errors.text}
+                                error={errorState.name}
+                                helperText={errorText.name}
                                 id="firstName"
                                 label="Ф.И.О."
                                 autoFocus
@@ -152,8 +130,9 @@ export default function FormContainer (props) {
                                 label="Тел."
                                 name="lastName"
                                 autoComplete="lname"
-                                error={errors.val}
-                                helperText={errors.text}
+                                error={errorState.phone}
+                                placeholder="+380XXXXXXXXX"
+                                helperText={errorText.phone}
                                 value={phone}
                                 onChange={(e)=>setPhone(e.target.value)}
                             />
@@ -167,8 +146,8 @@ export default function FormContainer (props) {
                                 label="E-mail"
                                 name="email"
                                 autoComplete="email"
-                                error={errors.val}
-                                helperText={errors.text}
+                                error={errorState.email}
+                                helperText={errorText.email}
                                 value={email}
                                 onChange={(e)=>setEmail(e.target.value)}
                             />
@@ -239,25 +218,3 @@ export default function FormContainer (props) {
         </Container>
     );
 }
-
-
-//         // props.handleOrder({
-//         //     h: '15',
-//         //     d: {
-//         //         cd: 'current date 08/04/2020',
-//         //         ad: 'arrival date 09/04/2020',
-//         //         dd: 'departure date 10/04/2020'
-//         //     },
-//         //     n: 'Vasya',
-//         //     p: '380953333333',
-//         //     e: 'Vasya@i.ua',
-//         //     dob: '30.03.2020',
-//         //     cid: '123321',
-//         //     oid: '101',
-//         //     hid: props.data,
-//         //     dop: '01.04.2020',
-//         //     am: '1000'
-//         // })
-//     }
-//
-//         {/*                    onClick={(props)=>handleSubmit(props)}*/}
