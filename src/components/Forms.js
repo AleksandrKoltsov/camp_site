@@ -82,17 +82,18 @@ export default function FormContainer (props) {
                 dop: '01.04.2020',
                 am: '1000'
             });
-        } else if (!resultValid.name) {
+        }
+        if (!resultValid.name) {
             setErrorState({name: true});
             setErrorText({name: 'Упс! Ошибочка!'});
-        } else if(!resultValid.phone) {
+        }
+        if (!resultValid.phone) {
             setErrorState({phone: true});
             setErrorText({phone: 'Упс! Ошибочка!'});
-        } else if (!resultValid.email) {
+        }
+        if (!resultValid.email) {
                 setErrorState({email: true});
                 setErrorText({email: 'Упс! Ошибочка!'});
-        } else {
-            console.log('что пошло не так!');
         }
     };
 
@@ -173,7 +174,6 @@ export default function FormContainer (props) {
                                 inputVariant="outlined"
                                 format="DD/MM/YYYY"
                             />
-
                         </Grid>
                         <Grid item xs={4}>
                             <DatePicker
@@ -193,6 +193,12 @@ export default function FormContainer (props) {
                                 label="Я хочу получать новости и промоакции на свою почту"
                             />
                         </Grid>
+                        <Grid item xs={12}>
+                            <FormControlLabel
+                                control={<Checkbox value="allowExtraEmails" color="primary" />}
+                                label="оплатить сейчас"
+                            />
+                        </Grid>
                     </Grid>
                     <Button
                         type="submit"
@@ -202,7 +208,7 @@ export default function FormContainer (props) {
                         className={classes.submit}
                         // onClick={handleChange(props)}
                     >
-                        Оформить
+                        Забронировать
                     </Button>
                 </form>
             </div>
