@@ -1,4 +1,4 @@
-import React, { useState }  from 'react';
+import React, {useState} from 'react';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
@@ -8,11 +8,10 @@ import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import MomentUtils from '@date-io/moment';
-import { DatePicker } from '@material-ui/pickers';
-import  onValidation from './Validator.js';
+import {DatePicker} from '@material-ui/pickers';
+import onValidation from './Validator.js';
 
 function Copyright() {
     return (
@@ -55,80 +54,47 @@ export default function FormContainer (props) {
     const [email, setEmail] = useState();
     const [arrivalDate, handleArrivalChange] = useState(new Date());
     const [departureDate, handleDepartureChange] = useState(new Date());
+    const [errorText, setErrorText] = useState({name: '', phone: '', email: ''});
+    const [errorState, setErrorState] = useState({name: false, phone: false, email: false});
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
-        if(onValidation({name})) {
-            if(onValidation({phone})) {
-                if(onValidation({email})) {
-                    // if(onValidation({selectedDate})) {
-                        props.handleClickOrder({
-                            h: '15',
-                            d: {
-                                cd: new Date(),
-                                ad: arrivalDate,
-                                dd: departureDate,
-                            },
-                            n: name,
-                            p: phone,
-                            e: email,
-                            dob: selectedDate,
-                            cid: '123321',
-                            oid: '101',
-                            hid: props.data,
-                            dop: '01.04.2020',
-                            am: '1000'
-                        })
-                    // }else return console.log('в дате недопустимое значение');
-                } else return console.log('в почте недопустимое значение');
-            } else return console.log('в телефоне недопустимое значение');
-        } else return console.log('в имени недопустимое значение');
-
-        if(onValidation(name,phone,email,selectedDate,arrivalDate,departureDate)) {
+        const resultValid = onValidation(name, phone, email);
+        console.log(resultValid);
+        if (resultValid.name && resultValid.phone && resultValid.email) {
+            setErrorState({name: false, phone: false, email: false});
+            setErrorText({name: '', phone: '', email: ''});
             props.handleClickOrder({
-              h: '15',
-              d: {
-                  cd: new Date(),
-                  ad: arrivalDate,
-                  dd: departureDate,
-              },
-              n: name,
-              p: phone,
-              e: email,
-              dob: selectedDate,
-              cid: '123321',
-              oid: '101',
-              hid: props.data,
-              dop: '01.04.2020',
-              am: '1000'
-          })
+                h: '15',
+                d: {
+                    cd: new Date(),
+                    ad: arrivalDate,
+                    dd: departureDate,
+                },
+                n: name,
+                p: phone,
+                e: email,
+                dob: selectedDate,
+                cid: '123321',
+                oid: '101',
+                hid: props.data,
+                dop: '01.04.2020',
+                am: '1000'
+            });
+        } else if (!resultValid.name) {
+            setErrorState({name: true});
+            setErrorText({name: 'Упс! Ошибочка!'});
+        } else if(!resultValid.phone) {
+            setErrorState({phone: true});
+            setErrorText({phone: 'Упс! Ошибочка!'});
+        } else if (!resultValid.email) {
+                setErrorState({email: true});
+                setErrorText({email: 'Упс! Ошибочка!'});
         } else {
-            return 'Не корректный ввод данных';
+            console.log('что пошло не так!');
         }
-
-
     };
-
-    // const handleChange = () => {
-        // props.handleClickOrder({
-        //     h: '15',
-        //     d: {
-        //         cd: new Date(),
-        //         ad: 'arrival date 09/04/2020',
-        //         dd: 'departure date 10/04/2020'
-        //     },
-        //     n: name,
-        //     p: phone,
-        //     e: email,
-        //     dob: selectedDate,
-        //     cid: '123321',
-        //     oid: '101',
-        //     hid: props.data,
-        //     dop: '01.04.2020',
-        //     am: '1000'
-        // });
-    // };
 
     return (
         <Container component="main" maxWidth="xs">
@@ -143,6 +109,8 @@ export default function FormContainer (props) {
                                 variant="outlined"
                                 required
                                 fullWidth
+                                error={errorState.name}
+                                helperText={errorText.name}
                                 id="firstName"
                                 label="Ф.И.О."
                                 autoFocus
@@ -159,6 +127,9 @@ export default function FormContainer (props) {
                                 label="Тел."
                                 name="lastName"
                                 autoComplete="lname"
+                                error={errorState.phone}
+                                placeholder="+380XXXXXXXXX"
+                                helperText={errorText.phone}
                                 value={phone}
                                 onChange={(e)=>setPhone(e.target.value)}
                             />
@@ -172,6 +143,8 @@ export default function FormContainer (props) {
                                 label="E-mail"
                                 name="email"
                                 autoComplete="email"
+                                error={errorState.email}
+                                helperText={errorText.email}
                                 value={email}
                                 onChange={(e)=>setEmail(e.target.value)}
                             />
@@ -242,25 +215,3 @@ export default function FormContainer (props) {
         </Container>
     );
 }
-
-
-//         // props.handleOrder({
-//         //     h: '15',
-//         //     d: {
-//         //         cd: 'current date 08/04/2020',
-//         //         ad: 'arrival date 09/04/2020',
-//         //         dd: 'departure date 10/04/2020'
-//         //     },
-//         //     n: 'Vasya',
-//         //     p: '380953333333',
-//         //     e: 'Vasya@i.ua',
-//         //     dob: '30.03.2020',
-//         //     cid: '123321',
-//         //     oid: '101',
-//         //     hid: props.data,
-//         //     dop: '01.04.2020',
-//         //     am: '1000'
-//         // })
-//     }
-//
-//         {/*                    onClick={(props)=>handleSubmit(props)}*/}
