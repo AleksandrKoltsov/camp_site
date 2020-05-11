@@ -14,13 +14,4 @@ export default function onValidation(...data) {
         phone: isPhone,
         email: isEmail
     };
-    // if (isName === true && isPhone === true && isEmail === true) {
-    //     return true;
-    // }else if (isName === false) {
-    //     return 'name';
-    // }else if (isPhone === false) {
-    //     return 'phone';
-    // }else if (isEmail === false) {
-    //     return 'email';
-    // }
 }
