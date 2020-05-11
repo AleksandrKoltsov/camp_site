@@ -1,10 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Box from '@material-ui/core/Box';
 import TransitionsModal from './fullCardComponent/Modal.js'
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-// import TextField from '@material-ui/core/TextField';
-// import FormContainer from  './Forms'
+
+import 'react-date-range/dist/styles.css'; // main css file
+import 'react-date-range/dist/theme/default.css'; // theme css file
+import { DateRange } from 'react-date-range';
+import { addDays } from 'date-fns';
+
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -33,26 +38,37 @@ const useStyles = makeStyles((theme) => ({
 
 export default function FullCard (props) {
 
-        function handleClickForm () {
-
+    const [state, setState] = useState([
+        {
+            startDate: new Date(),
+            endDate: null,
+            key: 'selection'
         }
+    ]);
 
-        const classes = useStyles();
-        return (
-            <Box component="div" m={2}>
-                <TransitionsModal img={props.data.img}
-                                mini={props.data.mini}
-                />
-                <Box component="span" m={1}>
-                   <h2 className={classes.mainTextHeader}>{props.data.title}</h2>
-                    <p className={classes.mainText}>{props.data.text}</p>
-                </Box>
-                <div className={classes.root}>
-                    <Button variant="contained" onClick={props.handleClickForm}>
-                        Оформить
-                    </Button>
-                </div>
+    const classes = useStyles();
+    return (
+        <Box component="div" m={2}>
+            <TransitionsModal img={props.data.img}
+                            mini={props.data.mini}
+            />
+            <Box component="span" m={1}>
+               <h2 className={classes.mainTextHeader}>{props.data.title}</h2>
+                <p className={classes.mainText}>{props.data.text}</p>
             </Box>
-        );
+            <DateRange
+                editableDateInputs={true}
+                onChange={item => setState([item.selection])}
+                moveRangeOnFirstSelection={false}
+                ranges={state}
+            />
+            <div className={classes.root}>
+                <Button variant="contained" onClick={props.handleClickForm}>
+                    Оформить
+                </Button>
+            </div>
+
+        </Box>
+    );
 }
 

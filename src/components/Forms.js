@@ -60,42 +60,39 @@ export default function FormContainer (props) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        switch(onValidation(name, phone, email)) {
-            case true:
-                setErrorState({name: '', phone: '', email: ''});
-                setErrorText({name: false, phone: false, email: false});
-                props.handleClickOrder({
-                    h: '15',
-                    d: {
-                        cd: new Date(),
-                        ad: arrivalDate,
-                        dd: departureDate,
-                    },
-                    n: name,
-                    p: phone,
-                    e: email,
-                    dob: selectedDate,
-                    cid: '123321',
-                    oid: '101',
-                    hid: props.data,
-                    dop: '01.04.2020',
-                    am: '1000'
-                });
-                break;
-            case 'name':
-                setErrorState({name: true});
-                setErrorText({name: 'Упс! Ошибочка!'});
-                break;
-            case 'phone':
-                setErrorState({phone: true});
-                setErrorText({phone: 'Упс! Ошибочка!'});
-                break;
-            case 'email':
+        const resultValid = onValidation(name, phone, email);
+        console.log(resultValid);
+        if (resultValid.name && resultValid.phone && resultValid.email) {
+            setErrorState({name: false, phone: false, email: false});
+            setErrorText({name: '', phone: '', email: ''});
+            props.handleClickOrder({
+                h: '15',
+                d: {
+                    cd: new Date(),
+                    ad: arrivalDate,
+                    dd: departureDate,
+                },
+                n: name,
+                p: phone,
+                e: email,
+                dob: selectedDate,
+                cid: '123321',
+                oid: '101',
+                hid: props.data,
+                dop: '01.04.2020',
+                am: '1000'
+            });
+        } else if (!resultValid.name) {
+            setErrorState({name: true});
+            setErrorText({name: 'Упс! Ошибочка!'});
+        } else if(!resultValid.phone) {
+            setErrorState({phone: true});
+            setErrorText({phone: 'Упс! Ошибочка!'});
+        } else if (!resultValid.email) {
                 setErrorState({email: true});
                 setErrorText({email: 'Упс! Ошибочка!'});
-                break;
-            default:
-                break;
+        } else {
+            console.log('что пошло не так!');
         }
     };
 
