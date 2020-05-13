@@ -15,10 +15,12 @@
     "moment": "^2.25.3",
     "normalize.css": "^8.0.1",
     "react": "^16.13.1",
-    "react-date-range": "^1.0.3",
     "react-dom": "^16.13.0",
+    "react-flatpickr": "^3.10.0",
     "react-scripts": "3.4.0",
-    "react-swipeable-views": "^0.13.9"
+    "react-swipeable-views": "^0.13.9",
+    "rsuite": "^4.5.0",
+    "uuid": "^8.0.0"
   },
   "scripts": {
     "start": "react-scripts start",

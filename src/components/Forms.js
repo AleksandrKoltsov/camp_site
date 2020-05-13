@@ -12,6 +12,7 @@ import {makeStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import {DatePicker} from '@material-ui/pickers';
 import onValidation from './Validator.js';
+import { v4 as uuidv4 } from 'uuid';
 
 function Copyright() {
     return (
@@ -60,6 +61,8 @@ export default function FormContainer (props) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        const oid = uuidv4(); // получаю uuid заказа
+        console.log(oid);
         const resultValid = onValidation(name, phone, email);
         console.log(resultValid);
         if (resultValid.name && resultValid.phone && resultValid.email) {
@@ -77,7 +80,7 @@ export default function FormContainer (props) {
                 e: email,
                 dob: selectedDate,
                 cid: '123321',
-                oid: '101',
+                oid: oid,
                 hid: props.data,
                 dop: '01.04.2020',
                 am: '1000'
