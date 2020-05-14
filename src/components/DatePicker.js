@@ -8,19 +8,20 @@ flatpickr.localize(Russian);
 export default class DatePicker extends Component {
     constructor(props) {
         super(props);
+        this.props = props;
         // this.state = {
         //     date: new Date()
         // };
         console.log(props);
     }
-    render(props) {
-        const { changedDate } = props.date.isFullCardDateSet.changedDate;
+    render() {
+        const changedDate = this.props.dateState.changedDate;
 
         return (
             <Flatpickr
                 value={changedDate}
                 onChange={changedDate => {
-                    props.date.isFullCardDateGet.handleChangeDate({ changedDate });
+                    this.props.dateSetState.handleChangeDate({ changedDate });
                 }}
                 options={{
                     locale: "Russian",
