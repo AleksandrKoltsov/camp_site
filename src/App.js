@@ -6,8 +6,8 @@ import AdvancedGridList from './components/AdvancedGridList.js';
 import SwipeableTextMobileStepper from './components/Slider.js';
 import Box from '@material-ui/core/Box';
 import SliderCards from './components/SliderCards.js';
-import FullCard from "./components/FullCard";
-import FormContainer from "./components/Forms";
+import FullCard from "./components/FullCard.js";
+import FormContainer from "./components/Forms.js";
 import TerritoryMap from "./components/TerritoryMap.js"
 
 class App extends React.Component {
@@ -16,6 +16,7 @@ class App extends React.Component {
     this.state = {
       data:[],//массив данных о домах и картинок
       content:[], // отображаемый на странице в данный момент контент
+      changedDate: {}, // занятые даты домов
     };
     // ссылка на таблицу
     this.link = 'https://spreadsheets.google.com/feeds/list/1BuePN0GHsl2ig48EYF2Z9Amx6aA94tE9lYTTy-tg4dY/2/public/full?alt=json';
@@ -92,10 +93,13 @@ class App extends React.Component {
   handleClickInfo(ev){
     const id = ev.currentTarget.dataset.id;
     const data = this.state.data.filter(elem => elem.id === id);
-    this.setState({...this.state,content:(<div><Box mt={0}><FullCard data={data[0]} handleClickForm={this.handleClickBtnOrder.bind(this, id)}
+    // console.log(data);
+    this.setState({...this.state,content:(<div><Box mt={0}><FullCard data={data[0]} handleClickForm={this.handleClickBtnOrder.bind(this, id)} isFullCardDateSet={this.state.changedDate} isFullcardDateGet={this.handleChangeDate.bind(this)}
       /></Box></div>)});
   }
-
+  handleChangeDate () {
+    this.setState({...this.state, changedDate: new Date()});
+  }
   handleClickBtnOrder(id){
     // console.log(id);
     this.setState({...this.state,content:(<div><Box mt={0}><FormContainer data={id} handleClickOrder={this.handleClickForm.bind(this)}

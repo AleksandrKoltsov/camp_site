@@ -48,6 +48,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function FormContainer (props) {
+    console.log(props);
     const classes = useStyles();
     const [selectedDate, handleDateChange] = useState(new Date());
     const [name, setName] = useState();

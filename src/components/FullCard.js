@@ -33,11 +33,6 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         flexWrap: 'wrap',
     },
-    textField: {
-        marginLeft: theme.spacing(1),
-        marginRight: theme.spacing(1),
-        width: 200,
-    },
 }));
 
 export default function FullCard (props) {
@@ -56,7 +51,7 @@ export default function FullCard (props) {
                     <p className={classes.mainText}>{props.data.text}</p>
                 </Box>
                 <Box>
-                    <DatePicker />
+                    <DatePicker date={props}/>
                 </Box>
                 <div className={classes.root}>
                     <Button variant="contained" onClick={props.handleClickForm}>
