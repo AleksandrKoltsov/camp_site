@@ -97,8 +97,10 @@ class App extends React.Component {
     this.setState({...this.state,content:(<div><Box mt={0}><FullCard data={data[0]} handleClickForm={this.handleClickBtnOrder.bind(this, id)} isFullCardDateSet={this.state.changedDate} isFullcardDateGet={this.handleChangeDate.bind(this)}
       /></Box></div>)});
   }
+  //метод для обработки календаря
   handleChangeDate () {
-    this.setState({...this.state, changedDate: new Date()});
+    this.setState({...this.state, changedDate: {}});
+    console.log(this.state.changedDate);
   }
   handleClickBtnOrder(id){
     // console.log(id);

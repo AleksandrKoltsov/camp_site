@@ -51,10 +51,8 @@ export default function FullCard (props) {
                     <p className={classes.mainText}>{props.data.text}</p>
                 </Box>
                 <Box>
-                    <DatePicker date={props.data.booked}
-                                dateState={props.isFullCardDateSet}
-                                dateSetState={props.isFullcardDateGet}
-                    />
+
+                    <DatePicker />
                 </Box>
                 <div className={classes.root}>
                     <Button variant="contained" onClick={props.handleClickForm}>

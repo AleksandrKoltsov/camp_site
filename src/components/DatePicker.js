@@ -1,41 +1,35 @@
-import React, { Component } from "react";
-import "flatpickr/dist/themes/material_blue.css";
-import Flatpickr from "react-flatpickr";
-import flatpickr from "flatpickr";
-import { Russian } from "flatpickr/dist/l10n/ru.js";
-flatpickr.localize(Russian);
+import * as React from "react";
+import addWeeks from "date-fns/addWeeks";
+import { Dayjs } from "dayjs";
+import { Moment } from "moment";
+import { DateTime } from "luxon";
+import { TextField } from "@material-ui/core";
+import { makeJSDateObject } from "../../../utils/helpers";
+import { DateRangePicker, DateRangeDelimiter, DateRange } from "@material-ui/pickers";
 
-export default class DatePicker extends Component {
-    constructor(props) {
-        super(props);
-        this.props = props;
-        // this.state = {
-        //     date: new Date()
-        // };
-        console.log(props);
-    }
-    render() {
-        const changedDate = this.props.dateState.changedDate;
-
-        return (
-            <Flatpickr
-                value={changedDate}
-                onChange={changedDate => {
-                    this.props.dateSetState.handleChangeDate({ changedDate });
-                }}
-                options={{
-                    locale: "Russian",
-                    inline: true,
-                    mode: "range",
-                    minDate: "today",
-                    dateFormat: "d.m.Y",
-                    disable: [{
-                        from: '',
-                        to: ''
-                    }]
-                }}
-            />
-        );
-    }
+function getWeeksAfter(date: Moment, amount: number) {
+    // TODO: replace with implementation for your date library
+    return date ? addWeeks(makeJSDateObject(date), amount) : undefined;
 }
 
+function MinMaxDateRangePicker() {
+    const [selectedRange, handleDateChange] = React.useState<DateRange>([null, null]);
+
+    return (
+        <DateRangePicker
+            disablePast
+            value={selectedRange}
+            maxDate={getWeeksAfter(selectedRange[0], 4)}
+            onChange={date => handleDateChange(date)}
+            renderInput={(startProps, endProps) => (
+                <>
+                    <TextField {...startProps} />
+                    <DateRangeDelimiter> to </DateRangeDelimiter>
+                    <TextField {...endProps} />
+                </>
+            )}
+        />
+    );
+}
+
+export default MinMaxDateRangePicker;
