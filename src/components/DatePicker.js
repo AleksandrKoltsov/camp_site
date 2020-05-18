@@ -1,11 +1,10 @@
 import moment from "moment";
 import MomentUtils from "@date-io/moment";
 import MoreIcon from "@material-ui/icons/MoreVert";
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, Fragment } from "react";
 import { IconButton, Menu, MenuItem } from "@material-ui/core";
-import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
+import { DatePicker, MuiPickersUtilsProvider, KeyboardDatePicker } from "@material-ui/pickers";
 import "moment/locale/ru";
-
 moment.locale("ru"); // it is required to select default locale manually
 
 const localeMap = {
@@ -35,13 +34,15 @@ function MomentLocalizationExample() {
 
     return (
         <MuiPickersUtilsProvider libInstance={moment} utils={MomentUtils} locale={locale}>
-            <DatePicker
-                value={selectedDate}
-                onChange={date => handleDateChange(date)}
+            <KeyboardDatePicker
                 autoOk
-                orientation="landscape"
-                variant="static"
-                openTo="date"
+                variant="inline"
+                inputVariant="outlined"
+                label="With keyboard"
+                format="DD/MM/yyyy"
+                value={selectedDate}
+                InputAdornmentProps={{ position: "start" }}
+                onChange={date => handleDateChange(date)}
                 shouldDisableDate={getDisableDate}
             />
 

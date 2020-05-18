@@ -48,10 +48,13 @@ const useStyles = makeStyles((theme) => ({
     submit: {
         margin: theme.spacing(3, 0, 2),
     },
-    mainText:{
+    mainText: {
         textAlign: 'justify',
     },
     mainTextHeader: {
+        textAlign: 'center',
+    },
+    dataPicCont: {
         textAlign: 'center',
     },
 }));
@@ -63,9 +66,7 @@ export default function FullCard (props) {
         <Grid container component="main" className={classes.root}>
             <CssBaseline />
             <Grid item xs={false} sm={4} md={7} className={classes.image}>
-                <TransitionsModal img={props.data.img}
-                                  mini={props.data.mini}
-                />
+                <TransitionsModal img={props.data.img} mini={props.data.mini}/>
             </Grid>
             <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
                 <div className={classes.paper}>
@@ -74,7 +75,8 @@ export default function FullCard (props) {
                             <h2 className={classes.mainTextHeader}>{props.data.title}</h2>
                             <p className={classes.mainText}>{props.data.text}</p>
                         </Box>
-                        <Box>
+                        <Box className={classes.dataPicCont}>
+                            <InlineDatePicker />
                             <InlineDatePicker />
                         </Box>
                         <Button
