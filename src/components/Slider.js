@@ -26,39 +26,36 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const img = {
-    display: 'block',
-    maxWidth: 1920,
-    overflow: 'hidden',
-    width: '100%',
-}
-
 const tutorialSteps = [
   {
       imgPath:
-          'https://www.videvo.net/videvo_files/converted/2016_01/preview/Forest_15_3b_Videvo.mov47209.webm',
+      'https://drive.google.com/uc?export=download&id=1l-BlVYJAxpo1loXzHQd9V1QhJKnx-nkO#.mp4',
+          // 'https://www.videvo.net/videvo_files/converted/2016_01/preview/Forest_15_3b_Videvo.mov47209.webm',
   },
     {
         imgPath:
-            'https://www.videvo.net/videvo_files/converted/2016_11/preview/GOPR6239_1.mov34724.webm',
+        'https://drive.google.com/uc?export=download&id=1QnThvRoMSy34uJpyOneLnS2JwgMaopKm#.mp4',
+            // 'https://www.videvo.net/videvo_files/converted/2016_11/preview/GOPR6239_1.mov34724.webm',
     },
     {
         imgPath:
-            'https://cdn.videvo.net/videvo_files/video/free/2019-05/small_watermarked/190416_10_Drone1_04_preview.webm',
+        'https://drive.google.com/uc?export=download&id=1EQf8oVc5BInmTQSA10Mb5rMc18tVWHHz#.mp4',
+            // 'https://cdn.videvo.net/videvo_files/video/free/2019-05/small_watermarked/190416_10_Drone1_04_preview.webm',
     },
     {
         imgPath:
-            'https://www.videvo.net/videvo_files/converted/2017_12/preview/171124_B1_HD_001.mp494977.webm',
+        'https://drive.google.com/uc?export=download&id=1BAdWLh87TgKSfjgg0V9IMcDN92haClzD#.mp4',
+            // 'https://www.videvo.net/videvo_files/converted/2017_12/preview/171124_B1_HD_001.mp494977.webm',
     },
     {
         imgPath:
-            'https://www.videvo.net/videvo_files/converted/2015_05/preview/Barley_3_Videvo.mov94814.webm',
+        'https://drive.google.com/uc?export=download&id=1igSFDPSvXZyx-7YOvyg3DfjmxqmfC_Y7#.mp4',
+            // 'https://www.videvo.net/videvo_files/converted/2015_05/preview/Barley_3_Videvo.mov94814.webm',
     },
 ];
 
 function SwipeableTextMobileStepper() {
     const classes = useStyles();
-    const theme = useTheme();
     const [activeStep, setActiveStep] = React.useState(0);
 
     const handleStepChange = step => {
@@ -68,18 +65,16 @@ function SwipeableTextMobileStepper() {
     return (
         <div className={classes.root}>
             <AutoPlaySwipeableViews
-                axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
+                axis={'x'}
                 index={activeStep}
                 onChangeIndex={handleStepChange}
                 enableMouseEvents
             >
                 {tutorialSteps.map((step, index) => (
                     <div key={index}>
-                        {Math.abs(activeStep - index) <= 2 ? (
-                          <video autoPlay style={img} muted>
-                          <source src={tutorialSteps[activeStep].imgPath}></source>
+                          <video autoPlay className={classes.img} muted loop>
+                          <source src={step.imgPath}></source>
                           </video>
-                        ) : null}
                     </div>
                 ))}
             </AutoPlaySwipeableViews>
