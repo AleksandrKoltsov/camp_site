@@ -9,7 +9,10 @@ import SliderCards from './components/SliderCards.js';
 import FullCard from "./components/FullCard.js";
 import FormContainer from "./components/Forms.js";
 import TerritoryMap from "./components/TerritoryMap.js"
-
+//date-picker-range
+import { LocalizationProvider } from '@material-ui/pickers';
+import DateFnsUtils from '@material-ui/pickers/adapter/date-fns';
+//
 class App extends React.Component {
   constructor(props){
     super(props);
@@ -153,13 +156,14 @@ class App extends React.Component {
 
   render(){
     return (
-      <div>
+
+    <LocalizationProvider dateAdapter={DateFnsUtils}>
         <MainPage
             content={this.state.content}
             handleClick={this.handleClickMenu.bind(this)}
             menuItems={this.menu}
         />
-    </div>
+    </LocalizationProvider>
     );
   }
 }
