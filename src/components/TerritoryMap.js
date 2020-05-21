@@ -1,8 +1,8 @@
 import React from 'react';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import TextMap from './territoryMapComponents/TextMap.js';
-import HouseMap from './territoryMapComponents/HouseMap.js';
-import RoadMap from './territoryMapComponents/RoadMap.js';
+import TextMap from './territoryMapComponents/TextMap';
+import HouseMap from './territoryMapComponents/HouseMap';
+import RoadMap from './territoryMapComponents/RoadMap';
 import IconButton from '@material-ui/core/IconButton';
 import FullscreenIcon from '@material-ui/icons/Fullscreen';
 import FullscreenExitIcon from '@material-ui/icons/FullscreenExit';
@@ -18,6 +18,7 @@ import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
+import StaticDateRangePickerExample from './DatePicker'
 
 
 const useStyles = makeStyles(theme => ({
@@ -119,7 +120,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function TerritoryMap(){
+export default function TerritoryMap(props){
     const classes = useStyles();
     const theme = useTheme();
     const [selectedDate, setSelectedDate] = React.useState(new Date('2014-08-18T21:11:54'));
@@ -132,31 +133,7 @@ export default function TerritoryMap(){
   })
 
 const date = (
-<div>
-<Typography>
-Выберите желаемые даты
-</Typography>
-  <TextField
-    id="arrival"
-    label="Arrival"
-    type="date"
-    defaultValue="2017-05-24"
-    className={classes.textField}
-    InputLabelProps={{
-      shrink: true,
-    }}
-  />
-  <TextField
-    id="departure"
-    label="Departure"
-    type="date"
-    defaultValue="2017-05-24"
-    className={classes.textField}
-    InputLabelProps={{
-      shrink: true,
-    }}
-  />
-  </div>
+  <StaticDateRangePickerExample handlerRange = {props.handlerRange}/>
 );
 
 const handleClickHouse = (ev)=>{
