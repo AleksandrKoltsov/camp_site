@@ -2,16 +2,16 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import { LocalizationProvider } from '@material-ui/pickers';
 import MomentUtils from '@date-io/moment';
 import * as serviceWorker from './serviceWorker';
 
 
 
 ReactDOM.render(
-    <MuiPickersUtilsProvider utils={MomentUtils}>
+    <LocalizationProvider dateAdapter={MomentUtils}>
         <App />
-    </MuiPickersUtilsProvider>,
+    </LocalizationProvider>,
      document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
