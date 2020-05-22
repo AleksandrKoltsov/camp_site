@@ -1,15 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import "moment/locale/uk";
+import moment from "moment";
 import './index.css';
 import App from './App';
 import { LocalizationProvider } from '@material-ui/pickers';
-import MomentUtils from '@date-io/moment';
+import MomentAdapter from "@material-ui/pickers/adapter/moment";
 import * as serviceWorker from './serviceWorker';
 
 
-
+const locale = 'uk';
+moment.locale(locale)
 ReactDOM.render(
-    <LocalizationProvider dateAdapter={MomentUtils}>
+    <LocalizationProvider dateLibInstance={moment} dateAdapter={MomentAdapter} locale={locale}>
         <App />
     </LocalizationProvider>,
      document.getElementById('root'));
