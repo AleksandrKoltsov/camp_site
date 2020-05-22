@@ -16,7 +16,7 @@ class App extends React.Component {
     this.state = {
       data:[],//массив данных о домах и картинок
       content:[], // отображаемый на странице в данный момент контент
-      changedDate:{},
+      changedDate:{ad:null, dd:null, cd:null},
     };
     // ссылка на таблицу
     this.link = 'https://spreadsheets.google.com/feeds/list/1BuePN0GHsl2ig48EYF2Z9Amx6aA94tE9lYTTy-tg4dY/2/public/full?alt=json';
@@ -37,12 +37,19 @@ class App extends React.Component {
         <Box mb={2}>
           <SliderCards
               handleClickInfo={this.handleClickInfo.bind(this)}
-              data={this.state.data}/>
+              data={this.state.data}
+              />
         </Box>
         <Box mb={50}>TEXT CONTENT</Box>
       </div>),
       (<div>
-        <Box my={15} boxShadow={5}><TerritoryMap handlerRange = {this.changedDate.bind(this)}/></Box>
+        <Box my={15} boxShadow={5}>
+        <TerritoryMap
+        data={this.state.data}
+        handlerChangedDate = {this.handlerChangedDate.bind(this)}
+        date={this.state.changedDate}
+        />
+        </Box>
         <Box>
         <AdvancedGridList
             data={this.state.data}
@@ -60,17 +67,21 @@ class App extends React.Component {
     ];
     return structure[pos];
   }
-  changedDate(date){
+  // обработчик датапикера - получает массив из двух дат - и меняет стейт changedDate
+  // даты - это обьект Moment имеющий метод toDate() возвращающий дату в виде строки
+  handlerChangedDate(date){
     const [momentStart, momentEnd] = date;
-    const start = momentStart.toDate();
-    const end = momentEnd.toDate();
-    this.setState({...this.state, changedDate:{cd:new Date(),ad:start, dd:end}})
+    const ad = momentStart.toDate();
+    const dd = momentEnd.toDate();
+    this.setState({...this.state, changedDate:{ad, dd}})
+    console.log(this.state.changedDate)
   }
   //метод для загрузки информации из таблицы
   loadCards(){
     fetch(this.link)
         .then(response => response.json())
         .then(({feed}) => {
+          const booked = [];
           const data = [...feed.entry].sort((a,b)=>{
             if(a.gsx$text.$t > b.gsx$text.$t){
               return 1;
@@ -91,7 +102,6 @@ class App extends React.Component {
             };//Data - обьект данных для карточки
           });
           //полученные данные записываем в state data и записываем в контент для отображения первую страницу
-          // console.log(data);
           this.setState({...this.state, data:data});
           this.setState({...this.state, content:this.getContent(0)});
         })}
@@ -99,14 +109,26 @@ class App extends React.Component {
   handleClickInfo(ev){
     const id = ev.currentTarget.dataset.id;
     const data = this.state.data.filter(elem => elem.id === id);
-    this.setState({...this.state,content:(<div><Box mt={0}><FullCard data={data[0]} handleClickForm={this.handleClickBtnOrder.bind(this, id)}
-      /></Box></div>)});
+    this.setState({...this.state,content:(<div>
+      <Box mt={0}>
+      <FullCard
+      data={data[0]}
+      handleClickForm={this.handleClickBtnOrder.bind(this, id)}
+      />
+      </Box>
+      </div>)});
   }
 
   handleClickBtnOrder(id){
     // console.log(id);
-    this.setState({...this.state,content:(<div><Box mt={0}><FormContainer data={id} handleClickOrder={this.handleClickForm.bind(this)}
-      /></Box></div>)});
+    this.setState({...this.state,content:(<div>
+      <Box mt={0}>
+      <FormContainer
+      data={id}
+      handleClickOrder={this.handleClickForm.bind(this)}
+      />
+      </Box>
+      </div>)});
   }
   //метод обработчик клика по карточке
   handleClickStar(ev){
