@@ -181,9 +181,9 @@ function HouseMap(props){
     const classes = useStyles();
     return houses.map((e,i)=>{
       let num = e.id.split('-')[2];
-      console.log(num)
+      // console.log(num)
       c.push(num)
-      console.log(c)
+      // console.log(c)
       return (<path className={classes[props.id]}
         data-id={num}
         onClick={props.handleClick}
