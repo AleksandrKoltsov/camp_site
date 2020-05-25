@@ -36,9 +36,10 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function SliderCards(props) {//получаем массив данных для карточек
+export default function SliderCards(props) {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
+  const {handleClickInfo, data} = props;
 
   const handleStepChange = step => {
       setActiveStep(step);
@@ -51,7 +52,7 @@ export default function SliderCards(props) {//получаем массив да
         index={activeStep}
         onChangeIndex={handleStepChange}
         enableMouseEvents
-    >{props.data.map((tile, index) => (
+    >{data.map((tile, index) => (
       <GridList cellHeight={400} spacing={1} className={classes.gridList} key={index}>
           <GridListTile>
             <img src={tile.img} alt={tile.title}/>
@@ -65,8 +66,8 @@ export default function SliderCards(props) {//получаем массив да
               actionIcon={
                 <IconButton
                 aria-label={`star ${tile.title}`}
-                onClick={props.handleClickInfo}
-                data-id={tile.id}
+                onClick={handleClickInfo}
+                data-id={tile.house}
                 >
                   <InfoIcon
                   className={classes.title}
