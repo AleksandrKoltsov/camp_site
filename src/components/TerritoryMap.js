@@ -19,6 +19,8 @@ import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import StaticDateRangePickerExample from './DatePicker';
+import isWithinInterval from "date-fns/isWithinInterval";
+import DescriptionAlerts from "./Alert";
 
 
 const useStyles = makeStyles(theme => ({
@@ -123,26 +125,52 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 export default function TerritoryMap(props){
     const classes = useStyles();
     const theme = useTheme();
-    const {data, date, handlerChangedDate, probeDate} = props;
-    const handleClickHouse = (ev)=>{
-      console.log(ev.target.dataset.id);
+    const {data, date, handleChangedDate, handleClickInfo} = props;
+    const [error, setError] = React.useState(<div></div>);
+    const [errorMessage, setErrorMessage] = React.useState('Нажаль будинок зайнятий');
+
+    const handleError = (ev)=>{
+      const house = ev.target.dataset.id;
+      setError(<DescriptionAlerts title='Error'
+      message={`Нажаль обраний Вами будинок №${house} зарезервований у вказані дати.`}
+      isOpen={true}/>);
     }
-    const [houses, setHouses] = React.useState(<HouseMap booked={[]} handleClick={handleClickHouse} id={'starFree'}/>);
+    const [houses, setHouses] = React.useState(<HouseMap
+      booked={[]}
+      handleError={handleError}
+      handleClick={handleClickInfo}
+      id={'starFree'}/>);
     const [isOpen, setIsOpen] = React.useState(false);
     const [button, setButton] = React.useState(<FullscreenIcon/>);
-    const getBookedHouses = (start, end)=>{
-      console.log(start, end)
+    const getBookedHouses = (start, end, arr)=>{
+
+      return arr.map(({house,booked})=>{
+        const isBook = booked.some(({ad,dd})=>{
+          return isWithinInterval(new Date(ad), {start, end})||
+          isWithinInterval(new Date(dd), {start, end})||
+          isWithinInterval(start, {start:new Date(ad), end:new Date(dd)})||
+          isWithinInterval(end, {start:new Date(ad), end:new Date(dd)})
+        });
+        if(isBook){
+          return house;
+        }
+      });
     }
     const showBookedHouses = (date)=>{
       const start = date[0].toDate();
-      const end = date[1].toDate()
-      setHouses(<HouseMap booked={getBookedHouses(start, end)} handleClick={handleClickHouse} id={'starFree'}/>)
+      const end = date[1].toDate();
+      setError(<div></div>)
+      setHouses(<HouseMap
+        handleError={handleError}
+         booked={getBookedHouses(start, end, data)}
+         handleClick={handleClickInfo}
+         id={'starFree'}/>)
     }
 
     const rangePicker = (
       <StaticDateRangePickerExample
       date = {date}
-      handlerChangedDate = {handlerChangedDate}
+      handleChangedDate = {handleChangedDate}
       componentHandler = {showBookedHouses}
       disabledDates = {[]}/>
     );
@@ -209,6 +237,7 @@ export default function TerritoryMap(props){
      };
 
       return (<div>
+    {error}
     <Card className={classes.card}>
     <CardContent className={classes.cardContent}>
     <Grid
