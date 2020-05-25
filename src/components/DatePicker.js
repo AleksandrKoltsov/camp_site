@@ -8,9 +8,9 @@ import DescriptionAlerts from "./Alert";
 // - disabledDates - это массив с обьектами - датами бронирований
 // - componentHandler - обработчик из вызвавшего компонента - принимает массив с
 // обьектами Moment(для получения строки даты обьект Moment имеет метод toDate())
-// - handlerChangedDate - обработчик из App handlerChangedDate - для изменения state.changedDate
+// - handleChangedDate - обработчик из App handleChangedDate - для изменения state.changedDate
 function StaticDateRangePickerExample(props) {
-  const {componentHandler, handlerChangedDate, date, disabledDates} = props;
+  const {componentHandler, handleChangedDate, date, disabledDates} = props;
   const {ad, dd} = date;
   let isDisabledDates = disabledDates.length>0;
   const [selectedDate, setSelectedDate] = React.useState([ad, dd]);
@@ -23,8 +23,7 @@ function StaticDateRangePickerExample(props) {
     return bookedArray.some((el)=>isWithinInterval(new Date(el.ad), {start:new Date(ad), end:new Date(dd)}))
   }
 
-  console.log('disabled', isDisabledDates)
-  const handlerDisabledDate = (date) =>{
+  const handleDisabledDate = (date) =>{
     if(isDisabledDates){
       let cloneDate = date.toDate();
       return checkDisabled(cloneDate, disabledDates);
@@ -42,7 +41,7 @@ function StaticDateRangePickerExample(props) {
     }else{
       setAlert(<div></div>);
       setSelectedDate(date);
-      handlerChangedDate(date);
+      handleChangedDate(date);
       componentHandler(date);
     }
   }
@@ -51,7 +50,7 @@ function StaticDateRangePickerExample(props) {
       <StaticDateRangePicker
         disablePast
         height={100}
-        shouldDisableDate={handlerDisabledDate}
+        shouldDisableDate={handleDisabledDate}
         displayStaticWrapperAs="mobile"
         value={selectedDate}
         onChange={range}

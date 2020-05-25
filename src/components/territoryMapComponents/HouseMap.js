@@ -17,9 +17,9 @@ const useStyles = makeStyles(theme => ({
       }
   },
   starBookd:{
-      fill: 'rgba(20, 255, 20, 0.678)',
+      fill: 'rgba(255, 0, 0, 0.678)',
       fillOpacity: .5,
-      stroke: 'rgba(20, 255, 20, 0.678)',
+      stroke: 'rgba(255, 0, 0, 0.678)',
       strokeWidth: 1,
       strokeMiterlimit: 4,
       strokeDasharray: 'none',
@@ -174,19 +174,17 @@ d:"m -404.65105,102.95794 -4.29697,0.51839 -1.82085,-3.92647 3.17162,-2.945077 3
  },
 ];
 
-let c=[];
-
 function HouseMap(props){
   const theme = useTheme();
     const classes = useStyles();
+    const {booked, handleClick, handleError, id} = props;
     return houses.map((e,i)=>{
       let num = e.id.split('-')[2];
-      // console.log(num)
-      c.push(num)
-      // console.log(c)
-      return (<path className={classes[props.id]}
+      const isBooked = booked.some((e)=>e===num);
+      const bookedClass = isBooked?'starBookd':'starFree';
+      return (<path className={classes[bookedClass]}
         data-id={num}
-        onClick={props.handleClick}
+        onClick={isBooked?handleError:handleClick}
         key={e.id}
           id={e.id}
           d={e.d}

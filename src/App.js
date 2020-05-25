@@ -46,8 +46,9 @@ class App extends React.Component {
         <Box my={15} boxShadow={5}>
         <TerritoryMap
         data={this.state.data}
-        handlerChangedDate = {this.handlerChangedDate.bind(this)}
+        handleChangedDate = {this.handleChangedDate.bind(this)}
         date={this.state.changedDate}
+        handleClickInfo={this.handleClickInfo.bind(this)}
         />
         </Box>
         <Box>
@@ -69,12 +70,11 @@ class App extends React.Component {
   }
   // обработчик датапикера - получает массив из двух дат - и меняет стейт changedDate
   // даты - это обьект Moment имеющий метод toDate() возвращающий дату в виде строки
-  handlerChangedDate(date){
+  handleChangedDate(date){
     const [momentStart, momentEnd] = date;
     const ad = momentStart.toDate();
     const dd = momentEnd.toDate();
-    this.setState({...this.state, changedDate:{ad, dd}})
-    console.log(this.state.changedDate)
+    this.setState({...this.state, changedDate:{ad, dd}});
   }
   //метод для загрузки информации из таблицы
   loadCards(){
@@ -90,8 +90,9 @@ class App extends React.Component {
               return -1;
             }
             return 0;
-          }).map(({gsx$text,gsx$id,gsx$image,gsx$title, gsx$price, gsx$booked, gsx$mini}) => {
+          }).map(({gsx$house,gsx$text,gsx$id,gsx$image,gsx$title, gsx$price, gsx$booked, gsx$mini}) => {
             return {
+              house:gsx$house.$t,
               id:gsx$id.$t,
               text:gsx$text.$t,
               img:gsx$image.$t,
@@ -107,13 +108,13 @@ class App extends React.Component {
         })}
   //метод обработчик клика по карточке
   handleClickInfo(ev){
-    const id = ev.currentTarget.dataset.id;
-    const data = this.state.data.filter(elem => elem.id === id);
+    const house = ev.currentTarget.dataset.id;
+    const data = this.state.data.filter(elem => elem.house === house);
     this.setState({...this.state,content:(<div>
       <Box mt={0}>
       <FullCard
       data={data[0]}
-      handleClickForm={this.handleClickBtnOrder.bind(this, id)}
+      handleClickForm={this.handleClickBtnOrder.bind(this, data[0].id)}
       />
       </Box>
       </div>)});
