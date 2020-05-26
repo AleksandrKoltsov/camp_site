@@ -20,17 +20,17 @@ const useStyles = makeStyles(theme => ({
     },
     contPic: {
         overflow: 'hidden',
-        height: '200px',
+        height: '100vh',
     },
     picHouse: {
         // background:  'url("https://www.polotskvodokanal.by/wp-content/uploads/2015/07/1009.jpg")',
         // backgroundRepeat: 'no-repeat',
         // backgroundPosition: 'center',
-        width: '100%',
+        // width: '100%',
         height: '100vh',
         opacity: '50%',
         position: 'relative',
-        top: '-50vh',
+        top: '0vh',
         cursor: 'pointer',
         '&:hover': {
             transition: 'all 0.5s',

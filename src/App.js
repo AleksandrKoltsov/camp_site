@@ -6,8 +6,8 @@ import AdvancedGridList from './components/AdvancedGridList.js';
 import SwipeableTextMobileStepper from './components/Slider.js';
 import Box from '@material-ui/core/Box';
 import SliderCards from './components/SliderCards.js';
-import FullCard from "./components/FullCard";
-import FormContainer from "./components/Forms";
+import FullCard from "./components/FullCard.js";
+import FormContainer from "./components/Forms.js";
 import TerritoryMap from "./components/TerritoryMap.js"
 
 class App extends React.Component {
@@ -119,7 +119,11 @@ class App extends React.Component {
       </Box>
       </div>)});
   }
-
+  //метод для обработки календаря
+  handleChangeDate () {
+    this.setState({...this.state, changedDate: {}});
+    console.log(this.state.changedDate);
+  }
   handleClickBtnOrder(id){
     // console.log(id);
     this.setState({...this.state,content:(<div>
