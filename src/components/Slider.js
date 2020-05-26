@@ -92,7 +92,7 @@ function SwipeableTextMobileStepper() {
                 {tutorialSteps.map((step, index) => (
                     <div key={index}>
                         {Math.abs(activeStep - index) <= 2 ? (
-                          <video autoPlay style={img}>
+                          <video autoPlay muted style={img}>
                           <source src={tutorialSteps[activeStep].imgPath}></source>
                           </video>
                         ) : null}

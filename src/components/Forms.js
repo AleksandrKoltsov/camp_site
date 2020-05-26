@@ -48,6 +48,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function FormContainer (props) {
+    // console.log(props);
     const classes = useStyles();
     const [selectedDate, handleDateChange] = useState(new Date());
     const [name, setName] = useState();
@@ -62,7 +63,8 @@ export default function FormContainer (props) {
     const handleSubmit = (e) => {
         e.preventDefault();
         const oid = uuidv4(); // получаю uuid заказа
-        console.log(oid);
+        const cid = uuidv4(); // получаю uuid клиента
+        // console.log(oid);
         const resultValid = onValidation(name, phone, email);
         console.log(resultValid);
         if (resultValid.name && resultValid.phone && resultValid.email) {
@@ -72,15 +74,15 @@ export default function FormContainer (props) {
                 h: '15',
                 d: {
                     cd: new Date(),
-                    ad: arrivalDate,
-                    dd: departureDate,
+                    ad: '',
+                    dd: '',
                 },
                 n: name,
                 p: phone,
                 e: email,
                 dob: selectedDate,
-                cid: '123321',
-                oid: oid,
+                cid: `client-customer-${cid}-${Date.now()}`,
+                oid: `client-order-${oid}-${Date.now()}`,
                 hid: props.data,
                 dop: '01.04.2020',
                 am: '1000'
