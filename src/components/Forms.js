@@ -1,4 +1,4 @@
-import React, { useState }  from 'react';
+import React, {useState} from 'react';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
@@ -8,10 +8,11 @@ import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-// import MomentUtils from '@date-io/moment';
-import { DatePicker } from '@material-ui/pickers';
+import {DatePicker} from '@material-ui/pickers';
+import onValidation from './Validator.js';
+import { v4 as uuidv4 } from 'uuid';
 
 function Copyright() {
     return (
@@ -47,53 +48,58 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function FormContainer (props) {
+    // console.log(props);
     const classes = useStyles();
     const [selectedDate, handleDateChange] = useState(new Date());
     const [name, setName] = useState();
     const [phone, setPhone] = useState();
     const [email, setEmail] = useState();
-    const [arrivalDate, handleArrivalChange] = useState();
-    const [departureDate, handleDepartureChange] = useState();
+    const [arrivalDate, handleArrivalChange] = useState(new Date());
+    const [departureDate, handleDepartureChange] = useState(new Date());
+    const [errorText, setErrorText] = useState({name: '', phone: '', email: ''});
+    const [errorState, setErrorState] = useState({name: false, phone: false, email: false});
+
 
     const handleSubmit = (e) => {
-            e.preventDefault();
-      props.handleClickOrder({
-          h: '15',
-          d: {
-              cd: new Date(),
-              ad: arrivalDate,
-              dd: departureDate,
-          },
-          n: name,
-          p: phone,
-          e: email,
-          dob: selectedDate,
-          cid: '123321',
-          oid: '101',
-          hid: props.data,
-          dop: '01.04.2020',
-          am: '1000'
-      })
-    };
-
-    const handleChange = () => {
-        // props.handleClickOrder({
-        //     h: '15',
-        //     d: {
-        //         cd: new Date(),
-        //         ad: 'arrival date 09/04/2020',
-        //         dd: 'departure date 10/04/2020'
-        //     },
-        //     n: name,
-        //     p: phone,
-        //     e: email,
-        //     dob: selectedDate,
-        //     cid: '123321',
-        //     oid: '101',
-        //     hid: props.data,
-        //     dop: '01.04.2020',
-        //     am: '1000'
-        // });
+        e.preventDefault();
+        const oid = uuidv4(); // получаю uuid заказа
+        const cid = uuidv4(); // получаю uuid клиента
+        // console.log(oid);
+        const resultValid = onValidation(name, phone, email);
+        console.log(resultValid);
+        if (resultValid.name && resultValid.phone && resultValid.email) {
+            setErrorState({name: false, phone: false, email: false});
+            setErrorText({name: '', phone: '', email: ''});
+            props.handleClickOrder({
+                h: '15',
+                d: {
+                    cd: new Date(),
+                    ad: '',
+                    dd: '',
+                },
+                n: name,
+                p: phone,
+                e: email,
+                dob: selectedDate,
+                cid: `client-customer-${cid}-${Date.now()}`,
+                oid: `client-order-${oid}-${Date.now()}`,
+                hid: props.data,
+                dop: '01.04.2020',
+                am: '1000'
+            });
+        }
+        if (!resultValid.name) {
+            setErrorState({name: true});
+            setErrorText({name: 'Упс! Ошибочка!'});
+        }
+        if (!resultValid.phone) {
+            setErrorState({phone: true});
+            setErrorText({phone: 'Упс! Ошибочка!'});
+        }
+        if (!resultValid.email) {
+                setErrorState({email: true});
+                setErrorText({email: 'Упс! Ошибочка!'});
+        }
     };
 
     return (
@@ -109,6 +115,8 @@ export default function FormContainer (props) {
                                 variant="outlined"
                                 required
                                 fullWidth
+                                error={errorState.name}
+                                helperText={errorText.name}
                                 id="firstName"
                                 label="Ф.И.О."
                                 autoFocus
@@ -125,6 +133,9 @@ export default function FormContainer (props) {
                                 label="Тел."
                                 name="lastName"
                                 autoComplete="lname"
+                                error={errorState.phone}
+                                placeholder="+380XXXXXXXXX"
+                                helperText={errorText.phone}
                                 value={phone}
                                 onChange={(e)=>setPhone(e.target.value)}
                             />
@@ -138,6 +149,8 @@ export default function FormContainer (props) {
                                 label="E-mail"
                                 name="email"
                                 autoComplete="email"
+                                error={errorState.email}
+                                helperText={errorText.email}
                                 value={email}
                                 onChange={(e)=>setEmail(e.target.value)}
                             />
@@ -166,7 +179,6 @@ export default function FormContainer (props) {
                                 inputVariant="outlined"
                                 format="DD/MM/YYYY"
                             />
-
                         </Grid>
                         <Grid item xs={4}>
                             <DatePicker
@@ -186,6 +198,12 @@ export default function FormContainer (props) {
                                 label="Я хочу получать новости и промоакции на свою почту"
                             />
                         </Grid>
+                        <Grid item xs={12}>
+                            <FormControlLabel
+                                control={<Checkbox value="allowExtraEmails" color="primary" />}
+                                label="оплатить сейчас"
+                            />
+                        </Grid>
                     </Grid>
                     <Button
                         type="submit"
@@ -193,9 +211,9 @@ export default function FormContainer (props) {
                         variant="contained"
                         color="primary"
                         className={classes.submit}
-                        onClick={handleChange(props)}
+                        // onClick={handleChange(props)}
                     >
-                        Оформить
+                        Забронировать
                     </Button>
                 </form>
             </div>
@@ -208,25 +226,3 @@ export default function FormContainer (props) {
         </Container>
     );
 }
-
-
-//         // props.handleOrder({
-//         //     h: '15',
-//         //     d: {
-//         //         cd: 'current date 08/04/2020',
-//         //         ad: 'arrival date 09/04/2020',
-//         //         dd: 'departure date 10/04/2020'
-//         //     },
-//         //     n: 'Vasya',
-//         //     p: '380953333333',
-//         //     e: 'Vasya@i.ua',
-//         //     dob: '30.03.2020',
-//         //     cid: '123321',
-//         //     oid: '101',
-//         //     hid: props.data,
-//         //     dop: '01.04.2020',
-//         //     am: '1000'
-//         // })
-//     }
-//
-//         {/*                    onClick={(props)=>handleSubmit(props)}*/}
