@@ -57,7 +57,7 @@ export default function FormContainer (props) {
     const [phone, setPhone] = useState();
     const [email, setEmail] = useState();
     // new
-    const {changedDate, handleChangedDate, disabledDates, data} = props;
+    const {changedDate, handleChangedDate, data} = props;
     const [date, handleDate] = useState(changedDate);
     const handleDateRange = (range) =>{
       const cd = new Date();
