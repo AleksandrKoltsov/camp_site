@@ -13,6 +13,8 @@ import Container from '@material-ui/core/Container';
 import {DatePicker} from '@material-ui/pickers';
 import onValidation from './Validator.js';
 import { v4 as uuidv4 } from 'uuid';
+// new
+import StaticDateRangePickerExample from "./DatePicker";
 
 function Copyright() {
     return (
@@ -54,8 +56,15 @@ export default function FormContainer (props) {
     const [name, setName] = useState();
     const [phone, setPhone] = useState();
     const [email, setEmail] = useState();
-    const [arrivalDate, handleArrivalChange] = useState(new Date());
-    const [departureDate, handleDepartureChange] = useState(new Date());
+    // new
+    const {changedDate, handleChangedDate, disabledDates, data} = props;
+    const [date, handleDate] = useState(changedDate);
+    const handleDateRange = (range) =>{
+      const cd = new Date();
+      const ad = range[0].toDate();
+      const dd = range[1].toDate();
+      handleDate({cd,ad,dd});
+    }
     const [errorText, setErrorText] = useState({name: '', phone: '', email: ''});
     const [errorState, setErrorState] = useState({name: false, phone: false, email: false});
 
@@ -73,17 +82,17 @@ export default function FormContainer (props) {
             props.handleClickOrder({
                 h: '15',
                 d: {
-                    cd: new Date(),
-                    ad: '',
-                    dd: '',
+                    cd: new Date().toLocaleString('uk-UA'),
+                    ad: new Date(date.ad).toLocaleString('uk-UA'),//new
+                    dd: new Date(date.dd).toLocaleString('uk-UA'),//new
                 },
                 n: name,
                 p: phone,
                 e: email,
-                dob: selectedDate,
+                dob: new Date(selectedDate).toLocaleString('uk-UA'),
                 cid: `client-customer-${cid}-${Date.now()}`,
                 oid: `client-order-${oid}-${Date.now()}`,
-                hid: props.data,
+                hid: props.id,
                 dop: '01.04.2020',
                 am: '1000'
             });
@@ -155,42 +164,22 @@ export default function FormContainer (props) {
                                 onChange={(e)=>setEmail(e.target.value)}
                             />
                         </Grid>
-                        <Grid item xs={4}>
-                            <DatePicker
-                                id="birdth"
-                                label="Дата рождения"
-                                value={selectedDate}
-                                onChange={handleDateChange}
-                                orientation="portrait"
-                                disableFuture={true}
-                                inputVariant="outlined"
-                                format="DD/MM/YYYY"
-                            />
-
+                        <Grid item xs={12}>
+                        <DatePicker
+                             disableFuture
+                             label="Date of birth"
+                             value={selectedDate}
+                             onChange={date => handleDateChange(date)}
+                             renderInput={props => <TextField {...props} />}
+                           />
                         </Grid>
-                        <Grid item xs={4}>
-                            <DatePicker
-                                id="arrivalDate"
-                                label="Дата заезда"
-                                value={arrivalDate}
-                                onChange={handleArrivalChange}
-                                orientation="portrait"
-                                disablePast={true}
-                                inputVariant="outlined"
-                                format="DD/MM/YYYY"
-                            />
-                        </Grid>
-                        <Grid item xs={4}>
-                            <DatePicker
-                                id="departureDate"
-                                label="Дата выезда"
-                                value={departureDate}
-                                onChange={handleDepartureChange}
-                                disablePast={true}
-                                orientation="portrait"
-                                inputVariant="outlined"
-                                format="DD/MM/YYYY"
-                            />
+                        <Grid item xs={12}>
+                        <StaticDateRangePickerExample
+                        handleChangedDate={handleChangedDate}
+                        date={changedDate}
+                        componentHandler={handleDateRange}
+                        disabledDates={data.booked}
+                        />
                         </Grid>
                         <Grid item xs={12}>
                             <FormControlLabel
