@@ -81,7 +81,6 @@ class App extends React.Component {
     fetch(this.link)
         .then(response => response.json())
         .then(({feed}) => {
-          const booked = [];
           const data = [...feed.entry].sort((a,b)=>{
             if(a.gsx$text.$t > b.gsx$text.$t){
               return 1;
