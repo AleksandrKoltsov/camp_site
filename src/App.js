@@ -8,7 +8,7 @@ import Box from '@material-ui/core/Box';
 import SliderCards from './components/SliderCards.js';
 import FullCard from "./components/FullCard.js";
 import FormContainer from "./components/Forms.js";
-import TerritoryMap from "./components/TerritoryMap.js"
+import TerritoryMap from "./components/TerritoryMap.js";
 
 class App extends React.Component {
   constructor(props){
@@ -114,22 +114,23 @@ class App extends React.Component {
       <Box mt={0}>
       <FullCard
       data={data[0]}
-      handleClickForm={this.handleClickBtnOrder.bind(this, data[0].id)}
+      changedDate={this.state.changedDate}
+      handleChangedDate={this.handleChangedDate.bind(this)}
+      handleClickForm={this.handleClickBtnOrder.bind(this, data[0])}
       />
       </Box>
       </div>)});
   }
-  //метод для обработки календаря
-  handleChangeDate () {
-    this.setState({...this.state, changedDate: {}});
-    console.log(this.state.changedDate);
-  }
-  handleClickBtnOrder(id){
+
+  handleClickBtnOrder(data){
     // console.log(id);
     this.setState({...this.state,content:(<div>
       <Box mt={0}>
       <FormContainer
-      data={id}
+      id={data.id}
+      data={data}
+      changedDate={this.state.changedDate}
+      handleChangedDate={this.handleChangedDate.bind(this)}
       handleClickOrder={this.handleClickForm.bind(this)}
       />
       </Box>
