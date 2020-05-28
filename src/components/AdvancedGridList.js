@@ -7,6 +7,7 @@ import IconButton from '@material-ui/core/IconButton';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 // import StarIcon from '@material-ui/icons/Star'; возможно будет использован для показа состояния отмеченной звездочки в карточке
 import InfoIcon from '@material-ui/icons/Info';
+import Grid from '@material-ui/core/Grid';
 
 const useStyles = makeStyles(theme => ({
   gridList: {
@@ -34,9 +35,10 @@ export default function AdvancedGridList(props) {//принимает масси
   const {data, handleClickStar, handleClickInfo} = props;
 return (
   <div>
+
       <GridList cellHeight={200} spacing={1} className={classes.gridList}>
         {data.map(tile => (
-          <GridListTile key={tile.img} cols={1} rows={2}>
+          <GridListTile key={tile.img} cols={2} rows={2}>
             <img src={tile.img} alt={tile.title} />
             <GridListTileBar
               titlePosition="top"
