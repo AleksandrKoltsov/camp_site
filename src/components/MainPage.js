@@ -12,7 +12,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 // import Logo from './Whiskey_Kings_alfa.png';
 import Link from '@material-ui/core/Link';
-import Logo from './Logo';
+import Logo from './LogoNav';
 
 const useStyles = makeStyles({
   list: {
