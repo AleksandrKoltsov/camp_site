@@ -10,8 +10,9 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import Logo from './Whiskey_Kings_alfa.png';
+// import Logo from './Whiskey_Kings_alfa.png';
 import Link from '@material-ui/core/Link';
+import Logo from './Logo';
 
 const useStyles = makeStyles({
   list: {
@@ -22,7 +23,7 @@ const useStyles = makeStyles({
     position:"fixed",
     justifyContent:"center",
     color:'white',
-    backgroundImage:`url('${Logo}')`,
+    // backgroundImage:`url('${Logo}')`,
     backgroundPosition:'center',
     backgroundRepeat:'no-repeat',
     backgroundSize:'contain',
@@ -104,6 +105,7 @@ export default function MainPage(props) {//принимает список по�
           >
             <MenuIcon />
           </IconButton>
+          <Logo/>
           <Box component="div" display="block">
             <Typography>
             <Link href="https://drive.google.com/open?id=1BuePN0GHsl2ig48EYF2Z9Amx6aA94tE9lYTTy-tg4dY" color='inherit'>

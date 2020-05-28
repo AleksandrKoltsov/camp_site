@@ -17,12 +17,13 @@ class App extends React.Component {
       data:[],//массив данных о домах и картинок
       content:[], // отображаемый на странице в данный момент контент
       changedDate:{ad:null, dd:null, cd:null},
+      loaded:false,
     };
     // ссылка на таблицу
     this.link = 'https://spreadsheets.google.com/feeds/list/1BuePN0GHsl2ig48EYF2Z9Amx6aA94tE9lYTTy-tg4dY/2/public/full?alt=json';
     this.formLink = 'https://script.google.com/macros/s/AKfycbx64rdwZnavnYIdDmbUXC3BxzWEEzCv_7B7_ngqkDr9SbPfD3E/exec';
     // this.formLink = 'https://script.google.com/macros/s/AKfycbxIjKe8TfxxsbfZle-_G_uWFs7qZa5TkSVDosNVC9EtclMbSao/exec?';
-    this.loadCards();//метод для загрузки данных из таблицы
+    //метод для загрузки данных из таблицы
     this.menu = ['HOME', 'CHOOSE A HOUSE', 'MAP', 'ABOUT US', 'GALLERY']; // список пунктов для меню - передаем в MainPage
     this.favorite = localStorage.getItem('fav')||[];
   }
@@ -77,6 +78,11 @@ class App extends React.Component {
     this.setState({...this.state, changedDate:{ad, dd}});
   }
   //метод для загрузки информации из таблицы
+  componentDidMount() {
+    document.addEventListener("DOMContentLoaded", (event) => {
+      this.loadCards()
+   });
+ }
   loadCards(){
     fetch(this.link)
         .then(response => response.json())
@@ -101,9 +107,10 @@ class App extends React.Component {
               booked:JSON.parse(gsx$booked.$t),
             };//Data - обьект данных для карточки
           });
-          //полученные данные записываем в state data и записываем в контент для отображения первую страницу
           this.setState({...this.state, data:data});
-          this.setState({...this.state, content:this.getContent(0)});
+          const content = this.getContent(0);
+          this.setState({...this.state, content:content});
+          //полученные данные записываем в state data и записываем в контент для отображения первую страницу
         })}
   //метод обработчик клика по карточке
   handleClickInfo(ev){
@@ -180,15 +187,15 @@ class App extends React.Component {
   }
 
   render(){
-    return (
-      <div>
-        <MainPage
-            content={this.state.content}
-            handleClick={this.handleClickMenu.bind(this)}
-            menuItems={this.menu}
-        />
-    </div>
-    );
-  }
+      return (
+        <div>
+          <MainPage
+              content={this.state.content}
+              handleClick={this.handleClickMenu.bind(this)}
+              menuItems={this.menu}
+          />
+      </div>
+      );
+}
 }
 export default App;
