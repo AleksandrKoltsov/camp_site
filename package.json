@@ -3,6 +3,10 @@
   "name": "camp_site",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "12.x",
+    "npm": "6.x"
+  },
   "dependencies": {
     "@date-io/date-fns": "^2.6.1",
     "@date-io/dayjs": "^2.6.0",
