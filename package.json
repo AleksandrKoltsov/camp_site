@@ -21,7 +21,7 @@
     "react-dom": "^16.13.0",
     "react-flatpickr": "^3.10.0",
     "rsuite": "^4.5.0",
-    "uuid": "^8.0.0"
+    "uuid": "^8.0.0",
     "react-material-ui-form-validator": "^2.0.10",
     "react-scripts": "3.4.0",
     "react-swipeable-views": "^0.13.9",
