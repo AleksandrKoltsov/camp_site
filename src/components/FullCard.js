@@ -9,7 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 //old components
 import TransitionsModal from './fullCardComponent/Modal.js'
-import InlineDatePicker from "./DatePicker";
+import StaticDateRangePickerExample from "./DatePicker";
 
 // function Copyright() {
 //     return (
@@ -61,6 +61,12 @@ const useStyles = makeStyles((theme) => ({
 
 export default function FullCard (props) {
     const classes = useStyles();
+// Начал делать деструктуризацию пропса - чтоб было понятно что компонент получает
+// добавил хендлер - чтоб передать датапикеру
+    const {changedDate, handleChangedDate} = props;
+    const handleDate = (arr) =>{
+
+    }
 
     return (
         <Grid container component="main" className={classes.root}>
@@ -76,8 +82,12 @@ export default function FullCard (props) {
                             <p className={classes.mainText}>{props.data.text}</p>
                         </Box>
                         <Box className={classes.dataPicCont}>
-                            <InlineDatePicker />
-                            <InlineDatePicker />
+                            <StaticDateRangePickerExample
+                            handleChangedDate={handleChangedDate}
+                            date={changedDate}
+                            componentHandler={handleDate}
+                            disabledDates={props.data.booked}
+                            />
                         </Box>
                         <Button
                             // type="submit"
@@ -169,12 +179,3 @@ export default function FullCard (props) {
 //     </Container>
 //     );
 // }
-
-
-
-
-
-
-
-
-

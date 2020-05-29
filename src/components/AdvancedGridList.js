@@ -31,21 +31,21 @@ const useStyles = makeStyles(theme => ({
 
 export default function AdvancedGridList(props) {//принимает массив информации карточек(data),
   const classes = useStyles();                   //методы App.js handleClickInfo, handleClickStar
-
+  const {data, handleClickStar, handleClickInfo} = props;
 return (
   <div>
       <GridList cellHeight={200} spacing={1} className={classes.gridList}>
-        {props.data.map(tile => (
+        {data.map(tile => (
           <GridListTile key={tile.img} cols={1} rows={2}>
             <img src={tile.img} alt={tile.title} />
             <GridListTileBar
               titlePosition="top"
               actionIcon={
                 <IconButton
-                onClick={props.handleClickStar}
+                onClick={handleClickStar}
                 aria-label={`star ${tile.title}`}
                 className={classes.icon}
-                data-id={tile.id}>
+                data-id={tile.house}>
                   <StarBorderIcon/>
                 </IconButton>
               }
@@ -58,10 +58,10 @@ return (
               titlePosition="bottom"
               actionIcon={
               <IconButton
-              onClick={props.handleClickInfo}
+              onClick={handleClickInfo}
               aria-label={`info about ${tile.title}`}
               className={classes.icon}
-              data-id={tile.id}
+              data-id={tile.house}
               >
                 <InfoIcon />
               </IconButton>

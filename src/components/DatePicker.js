@@ -1,69 +1,70 @@
-import moment from "moment";
-import MomentUtils from "@date-io/moment";
-import MoreIcon from "@material-ui/icons/MoreVert";
-import React, { useState, useCallback, Fragment } from "react";
-import { IconButton, Menu, MenuItem } from "@material-ui/core";
-import { DatePicker, MuiPickersUtilsProvider, KeyboardDatePicker } from "@material-ui/pickers";
-import "moment/locale/ru";
-moment.locale("ru"); // it is required to select default locale manually
+import * as React from "react";
+import { TextField } from "@material-ui/core";
+import { StaticDateRangePicker, DateRangeDelimiter} from "@material-ui/pickers";
+import isWithinInterval from "date-fns/isWithinInterval";
+import DescriptionAlerts from "./Alert";
+// Компонент принимает четыре пропса
+// - date - это стейт из App
+// - disabledDates - это массив с обьектами - датами бронирований
+// - componentHandler - обработчик из вызвавшего компонента - принимает массив с
+// обьектами Moment(для получения строки даты обьект Moment имеет метод toDate())
+// - handleChangedDate - обработчик из App handleChangedDate - для изменения state.changedDate
+function StaticDateRangePickerExample(props) {
+  const {componentHandler, handleChangedDate, date, disabledDates} = props;
+  const {ad, dd} = date;
+  let isDisabledDates = disabledDates.length>0;
+  const [selectedDate, setSelectedDate] = React.useState([ad, dd]);
+  const [alert, setAlert] = React.useState((<div></div>))
+  const checkDisabled = (date, bookedArray) =>{
+    return bookedArray.some(({ad,dd})=>isWithinInterval(date, {start:new Date(ad), end:new Date(dd)}))
+  }
 
-const localeMap = {
-    ru: "ru",
-};
+  const checkInterval = ({ad,dd}, bookedArray) =>{
+    return bookedArray.some((el)=>isWithinInterval(new Date(el.ad), {start:new Date(ad), end:new Date(dd)}))
+  }
 
-function MomentLocalizationExample() {
-    const [locale, setLocale] = useState("fr");
-    const [anchorEl, setAnchorEl] = useState(null);
-    const [selectedDate, handleDateChange] = useState(new Date());
+  const handleDisabledDate = (date) =>{
+    if(isDisabledDates){
+      let cloneDate = date.toDate();
+      return checkDisabled(cloneDate, disabledDates);
+    }
+    return false;
+  }
 
-    const handleMenuOpen = useCallback(e => {
-        e.stopPropagation();
-        setAnchorEl(e.currentTarget);
-    }, []);
-
-    const selectLocale = useCallback(locale => {
-        moment.locale(locale);
-
-        setLocale(locale);
-        setAnchorEl(null);
-    }, []);
-
-    const getDisableDate = () => {
-        return Math.random() > 0.7;
-    };
-
-    return (
-        <MuiPickersUtilsProvider libInstance={moment} utils={MomentUtils} locale={locale}>
-            <KeyboardDatePicker
-                autoOk
-                variant="inline"
-                inputVariant="outlined"
-                label="With keyboard"
-                format="DD/MM/yyyy"
-                value={selectedDate}
-                InputAdornmentProps={{ position: "start" }}
-                onChange={date => handleDateChange(date)}
-                shouldDisableDate={getDisableDate}
-            />
-
-            <Menu
-                id="locale-menu"
-                anchorEl={anchorEl}
-                open={Boolean(anchorEl)}
-                onClose={() => setAnchorEl(null)}
-            >
-                {Object.keys(localeMap).map(localeItem => (
-                    <MenuItem
-                        key={localeItem}
-                        selected={localeItem === locale}
-                        onClick={() => selectLocale(localeItem)}
-                    >
-                        {localeItem}
-                    </MenuItem>
-                ))}
-            </Menu>
-        </MuiPickersUtilsProvider>
-    );
+  const range = (date)=>{
+    const ad = date[0];
+    const dd = date[1];
+    if(checkInterval({ad,dd}, disabledDates)){
+      setAlert(<DescriptionAlerts title='Error'
+      message='Обраний інтервал має заброньовані дати. Виберіть будь ласка інший інтервал'
+      isOpen={true}/>);
+    }else{
+      setAlert(<div></div>);
+      setSelectedDate(date);
+      handleChangedDate(date);
+      componentHandler(date);
+    }
+  }
+  return (
+    <>
+      <StaticDateRangePicker
+        disablePast
+        height={100}
+        shouldDisableDate={handleDisabledDate}
+        displayStaticWrapperAs="mobile"
+        value={selectedDate}
+        onChange={range}
+        renderInput={(startProps, endProps) => (
+          <>
+            <TextField {...startProps} />
+            <DateRangeDelimiter> to </DateRangeDelimiter>
+            <TextField {...endProps} />
+          </>
+        )}
+      />
+      {alert}
+    </>
+  );
 }
 
-export default MomentLocalizationExample;
+export default StaticDateRangePickerExample;
