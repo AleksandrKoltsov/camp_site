@@ -9,6 +9,7 @@ import SliderCards from './components/SliderCards.js';
 import FullCard from "./components/FullCard.js";
 import FormContainer from "./components/Forms.js";
 import TerritoryMap from "./components/TerritoryMap.js";
+import Raiting from "./components/Raiting";
 
 class App extends React.Component {
   constructor(props){
@@ -34,13 +35,15 @@ class App extends React.Component {
       (<div><Box mb={2}>
         <SwipeableTextMobileStepper/>
       </Box>
-        <Box mb={2}>
-          <SliderCards
-              handleClickInfo={this.handleClickInfo.bind(this)}
-              data={this.state.data}
-              />
-        </Box>
-        <Box mb={50}>TEXT CONTENT</Box>
+      <Box mb={2}>
+        <SliderCards
+            handleClickInfo={this.handleClickInfo.bind(this)}
+            data={this.state.data}
+            />
+      </Box>
+      <Box mb={50}>
+        <Raiting/>
+      </Box>
       </div>),
       (<div>
         <Box my={15} boxShadow={5}>
