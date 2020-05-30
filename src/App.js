@@ -9,7 +9,7 @@ import SliderCards from './components/SliderCards.js';
 import FullCard from "./components/FullCard.js";
 import FormContainer from "./components/Forms.js";
 import TerritoryMap from "./components/TerritoryMap.js";
-import Raiting from "./components/Raiting";
+import Fitback from "./components/Fitback/Fitback.js";
 
 class App extends React.Component {
   constructor(props){
@@ -26,6 +26,11 @@ class App extends React.Component {
     this.loadCards();//метод для загрузки данных из таблицы
     this.menu = ['HOME', 'CHOOSE A HOUSE', 'MAP', 'ABOUT US', 'GALLERY']; // список пунктов для меню - передаем в MainPage
     this.favorite = localStorage.getItem('fav')||[];
+    //ссылка для получения объекта отзывов
+    this.getReviewLink = 'https://spreadsheets.google.com/feeds/list/1sZPcAjPYYH3gm8-DJQlDf-5ndS7ZHJGWaqL3TFbfkzc/1/public/full?alt=json';
+    //ссылка для отправки ПОСТ запроса с объектом отзывов
+    this.postReviewLink = 'https://script.google.com/macros/s/AKfycbzMGcjPUDRrA9YOsIa98Ou5urysQYMWMybtI9ETuYDHyABnaPE/exec';
+    this.loadReview();
   }
   // метод для получения контента для отображения
   //принимает число-позицию в массиве);
@@ -42,7 +47,7 @@ class App extends React.Component {
             />
       </Box>
       <Box mb={50}>
-        <Raiting/>
+        <Fitback/>
       </Box>
       </div>),
       (<div>
@@ -109,6 +114,10 @@ class App extends React.Component {
           this.setState({...this.state, data:data});
           this.setState({...this.state, content:this.getContent(0)});
         })}
+  //метод для получения объекта отзыва
+  loadReview() {
+
+  }
   //метод обработчик клика по карточке
   handleClickInfo(ev){
     const house = ev.currentTarget.dataset.id;
