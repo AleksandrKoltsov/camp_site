@@ -32,7 +32,7 @@ const useStyles = makeStyles(theme => ({
       'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
   },
   textBlock:{
-    color:'white',
+    color:'#221F1F',
   },
 }));
 
