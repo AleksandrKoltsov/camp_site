@@ -1,14 +1,15 @@
 import React from 'react';
-import MainPage from './components/MainPage.js';
+import MainPage from './components/MainPage';
 // import logo from './logo.svg';
 import './App.css';
-import AdvancedGridList from './components/AdvancedGridList.js';
-import SwipeableTextMobileStepper from './components/Slider.js';
+import AdvancedGridList from './components/AdvancedGridList';
+import SwipeableTextMobileStepper from './components/Slider';
 import Box from '@material-ui/core/Box';
-import SliderCards from './components/SliderCards.js';
-import FullCard from "./components/FullCard.js";
-import FormContainer from "./components/Forms.js";
-import TerritoryMap from "./components/TerritoryMap.js";
+import SliderCards from './components/SliderCards';
+import FullCard from "./components/FullCard";
+import FormContainer from "./components/Forms";
+import TerritoryMap from "./components/TerritoryMap";
+import SimpleBackdrop from "./components/Loader"
 
 class App extends React.Component {
   constructor(props){
@@ -17,7 +18,7 @@ class App extends React.Component {
       data:[],//массив данных о домах и картинок
       content:[], // отображаемый на странице в данный момент контент
       changedDate:{ad:null, dd:null, cd:null},
-      loaded:false,
+      isLoading:false,
     };
     // ссылка на таблицу
     this.link = 'https://spreadsheets.google.com/feeds/list/1BuePN0GHsl2ig48EYF2Z9Amx6aA94tE9lYTTy-tg4dY/2/public/full?alt=json';
@@ -78,11 +79,7 @@ class App extends React.Component {
     this.setState({...this.state, changedDate:{ad, dd}});
   }
   //метод для загрузки информации из таблицы
-  componentDidMount() {
-    document.addEventListener("DOMContentLoaded", (event) => {
-      this.loadCards()
-   });
- }
+
   loadCards(){
     fetch(this.link)
         .then(response => response.json())
@@ -186,14 +183,29 @@ class App extends React.Component {
     this.setState({...this.state,content:this.getContent(this.menu.indexOf(ev.currentTarget.dataset.name))});
   }
 
+  componentWillMount(){
+    //show Loader
+    this.loadCards();
+    this.setState({...this.state, isLoading:true});
+  }
+
+  componentDidMount(){
+    // hide Loader
+    setTimeout(()=>{
+      this.setState({...this.state, isLoading:false})
+    },6000)
+  }
+
   render(){
       return (
         <div>
-          <MainPage
+        {this.state.isLoading
+          ?<SimpleBackdrop open={true}/>
+          :<MainPage
               content={this.state.content}
               handleClick={this.handleClickMenu.bind(this)}
-              menuItems={this.menu}
-          />
+              menuItems={this.menu}/>
+        }
       </div>
       );
 }
