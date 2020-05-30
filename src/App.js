@@ -1,14 +1,15 @@
 import React from 'react';
-import MainPage from './components/MainPage.js';
+import MainPage from './components/MainPage';
 // import logo from './logo.svg';
 import './App.css';
-import AdvancedGridList from './components/AdvancedGridList.js';
-import SwipeableTextMobileStepper from './components/Slider.js';
+import AdvancedGridList from './components/AdvancedGridList';
+import SwipeableTextMobileStepper from './components/Slider';
 import Box from '@material-ui/core/Box';
-import SliderCards from './components/SliderCards.js';
-import FullCard from "./components/FullCard.js";
-import FormContainer from "./components/Forms.js";
-import TerritoryMap from "./components/TerritoryMap.js";
+import SliderCards from './components/SliderCards';
+import FullCard from "./components/FullCard";
+import FormContainer from "./components/Forms";
+import TerritoryMap from "./components/TerritoryMap";
+import SimpleBackdrop from "./components/Loader"
 
 class App extends React.Component {
   constructor(props){
@@ -17,12 +18,13 @@ class App extends React.Component {
       data:[],//массив данных о домах и картинок
       content:[], // отображаемый на странице в данный момент контент
       changedDate:{ad:null, dd:null, cd:null},
+      isLoading:false,
     };
     // ссылка на таблицу
     this.link = 'https://spreadsheets.google.com/feeds/list/1BuePN0GHsl2ig48EYF2Z9Amx6aA94tE9lYTTy-tg4dY/2/public/full?alt=json';
     this.formLink = 'https://script.google.com/macros/s/AKfycbx64rdwZnavnYIdDmbUXC3BxzWEEzCv_7B7_ngqkDr9SbPfD3E/exec';
     // this.formLink = 'https://script.google.com/macros/s/AKfycbxIjKe8TfxxsbfZle-_G_uWFs7qZa5TkSVDosNVC9EtclMbSao/exec?';
-    this.loadCards();//метод для загрузки данных из таблицы
+    //метод для загрузки данных из таблицы
     this.menu = ['HOME', 'CHOOSE A HOUSE', 'MAP', 'ABOUT US', 'GALLERY']; // список пунктов для меню - передаем в MainPage
     this.favorite = localStorage.getItem('fav')||[];
   }
@@ -77,6 +79,7 @@ class App extends React.Component {
     this.setState({...this.state, changedDate:{ad, dd}});
   }
   //метод для загрузки информации из таблицы
+
   loadCards(){
     fetch(this.link)
         .then(response => response.json())
@@ -101,9 +104,10 @@ class App extends React.Component {
               booked:JSON.parse(gsx$booked.$t),
             };//Data - обьект данных для карточки
           });
-          //полученные данные записываем в state data и записываем в контент для отображения первую страницу
           this.setState({...this.state, data:data});
-          this.setState({...this.state, content:this.getContent(0)});
+          const content = this.getContent(0);
+          this.setState({...this.state, content:content});
+          //полученные данные записываем в state data и записываем в контент для отображения первую страницу
         })}
   //метод обработчик клика по карточке
   handleClickInfo(ev){
@@ -179,16 +183,31 @@ class App extends React.Component {
     this.setState({...this.state,content:this.getContent(this.menu.indexOf(ev.currentTarget.dataset.name))});
   }
 
-  render(){
-    return (
-      <div>
-        <MainPage
-            content={this.state.content}
-            handleClick={this.handleClickMenu.bind(this)}
-            menuItems={this.menu}
-        />
-    </div>
-    );
+  componentWillMount(){
+    //show Loader
+    this.loadCards();
+    this.setState({...this.state, isLoading:true});
   }
+
+  componentDidMount(){
+    // hide Loader
+    setTimeout(()=>{
+      this.setState({...this.state, isLoading:false})
+    },6000)
+  }
+
+  render(){
+      return (
+        <div>
+        {this.state.isLoading
+          ?<SimpleBackdrop open={true}/>
+          :<MainPage
+              content={this.state.content}
+              handleClick={this.handleClickMenu.bind(this)}
+              menuItems={this.menu}/>
+        }
+      </div>
+      );
+}
 }
 export default App;
