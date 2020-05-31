@@ -183,14 +183,10 @@ class App extends React.Component {
     this.setState({...this.state,content:this.getContent(this.menu.indexOf(ev.currentTarget.dataset.name))});
   }
 
-  componentWillMount(){
-    //show Loader
-    this.loadCards();
-    this.setState({...this.state, isLoading:true});
-  }
-
   componentDidMount(){
     // hide Loader
+    this.loadCards();
+    this.setState({...this.state, isLoading:true});
     setTimeout(()=>{
       this.setState({...this.state, isLoading:false})
     },6000)
