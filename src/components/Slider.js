@@ -74,6 +74,7 @@ function SwipeableTextMobileStepper() {
             >
                 {tutorialSteps.map((step, index) => (
                   <video
+                  key={index}
                   autoPlay
                   loop
                   src={step.imgPath}
