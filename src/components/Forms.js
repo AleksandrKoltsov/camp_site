@@ -57,7 +57,7 @@ export default function FormContainer (props) {
     const [phone, setPhone] = useState();
     const [email, setEmail] = useState();
     // new
-    const {changedDate, handleChangedDate, disabledDates, data} = props;
+    const {changedDate, handleChangedDate, data} = props;
     const [date, handleDate] = useState(changedDate);
     const handleDateRange = (range) =>{
       const cd = new Date();
@@ -82,14 +82,14 @@ export default function FormContainer (props) {
             props.handleClickOrder({
                 h: '15',
                 d: {
-                    cd: new Date().toLocaleString('uk-UA'),
-                    ad: new Date(date.ad).toLocaleString('uk-UA'),//new
-                    dd: new Date(date.dd).toLocaleString('uk-UA'),//new
+                    cd: new Date(),
+                    ad: new Date(date.ad).toString(),//new
+                    dd: new Date(date.dd).toString(),//new
                 },
                 n: name,
                 p: phone,
                 e: email,
-                dob: new Date(selectedDate).toLocaleString('uk-UA'),
+                dob: new Date(selectedDate).toString(),
                 cid: `client-customer-${cid}-${Date.now()}`,
                 oid: `client-order-${oid}-${Date.now()}`,
                 hid: props.id,
