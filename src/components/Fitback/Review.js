@@ -1,9 +1,9 @@
 import React from "react";
-import { Grid } from "@material-ui/core";
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import  { fullStar, emptyStar } from './stars.js'
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -27,25 +27,50 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Review (props) {
+    console.log(props);
     const classes = useStyles();
-    const renderStar = (props) => {
+
+    const renderStar = (rat) => {
+        let star = rat;
+        let str = '';
+        for(let i = 10; i < 10; i++){
+            if(star > 0) {
+                str += fullStar;
+                star--;
+            }else {
+                str += emptyStar
+            }
+        }
+        console.log(str);
         return (
-            <div>
-                тут будут звезды полные и пустые
-            </div>
+            <span>
+                {str}
+            </span>
         );
     };
+
+    // const formatDate = () => {
+    //     let date = new Date();
+    //     let dd = date.getDate();
+    //     if (dd < 10) dd = "0" + dd;
+    //
+    //     let mm = date.getMonth() + 1;
+    //     if (mm < 10) mm = "0" + mm;
+    //
+    //     let yyyy = date.getFullYear();
+    //
+    //     return dd + "." + mm + "." + yyyy;
+    // };
+
     return (
         <Box
             className={classes.paper}
             component={Paper}
         >
             <CssBaseline />
-                <span className={classes.name}>Aleks Petrov</span>
-                <div className={classes.star}>тут будут звезды</div>
-                <span className={classes.text}>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. A ad aliquam animi architecto blanditiis corporis cumque delectus deleniti dicta dolore exercitationem explicabo fugiat harum hic inventore ipsum, iure laboriosam libero nemo nisi nulla, odit officiis placeat praesentium provident quidem ratione reiciendis reprehenderit repudiandae rerum sit suscipit temporibus tenetur vel veniam veritatis voluptas! Esse eveniet id laudantium nisi placeat recusandae sit?
-                </span>
+                <span className={classes.name}>{props.item.name}</span>
+                <div className={classes.star}>{renderStar(props.item.rating)}&nbsp;{props.item.date}</div>
+                <span className={classes.text}>{props.item.review}</span>
         </Box>
     );
 }

@@ -45,36 +45,46 @@ const useStyles = makeStyles((theme) => ({
         width: '100%'
     },
     review: {
-        width: '67%'
+        width: '67%',
+        height: '100vh',
+        overflowY: 'scroll'
     }
 }));
 
 export default function Fitback (props) {
-    console.log(props);
+    const data = props.data;
     const classes = useStyles();
-    const [name, setName] = useState();
-    const [email, setEmail] = useState();
-    const [text, setText] = useState();
-    const [rate, setRate] = useState();
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [text, setText] = useState('');
+    const [rate, setRate] = useState(5);
 
     const [errorText, setErrorText] = useState({name: '', email: '', text: ''});
     const [errorState, setErrorState] = useState({name: false,  email: false, text: false});
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
         const resultValid = onValidation('rev',name, email);
-        let txt = text;
         // console.log(resultValid);
         if (resultValid.name && resultValid.email) {
             setErrorState({name: false, email: false});
             setErrorText({name: '', email: ''});
-            props.handleClickReview({
+
+            props.handleReview({
                 rating: rate,
                 name: name,
                 email: email,
-                review: txt.textContent
+                review: text,
+                date: new Date().toLocaleString('uk-UA')
             });
+
+            setRate(5);
+            setName( '');
+            setEmail('');
+            setText('');
         }
+
         if (!resultValid.name) {
             setErrorState({name: true});
             setErrorText({name: 'Упс! Помилочка!'});
@@ -83,7 +93,6 @@ export default function Fitback (props) {
             setErrorState({email: true});
             setErrorText({email: 'Упс! Помилочка!'});
         }
-
     };
 
     return (
@@ -186,7 +195,12 @@ export default function Fitback (props) {
                  ml={2}
 
             >
-                <Review />
+            <div>
+                {data.map((el, i) => {
+                   return (
+                       <Review key={i} item={el} />
+                )}).reverse()}
+            </div>
             </Box>
         </Grid>
     );

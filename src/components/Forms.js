@@ -156,12 +156,12 @@ export default function FormContainer (props) {
                            />
                         </Grid>
                         <Grid item xs={12}>
-                        <StaticDateRangePickerExample
-                        handleChangedDate={handleChangedDate}
-                        date={changedDate}
-                        componentHandler={handleDateRange}
-                        disabledDates={data.booked}
-                        />
+                            <StaticDateRangePickerExample
+                                handleChangedDate={handleChangedDate}
+                                date={changedDate}
+                                componentHandler={handleDateRange}
+                                disabledDates={data.booked}
+                            />
                         </Grid>
                         <Grid item xs={12}>
                             <FormControlLabel

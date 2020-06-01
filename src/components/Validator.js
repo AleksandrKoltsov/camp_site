@@ -1,6 +1,6 @@
-export default function onValidation(data) {
-    const arrData = [...data];
-
+export default function onValidation(...data) {
+    const arrData = data;
+    console.log(arrData);
     const form = (arrData) => {
         console.log(arrData);
         let isName = false, isPhone = false, isEmail = false;
