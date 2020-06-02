@@ -134,7 +134,6 @@ export default function Fitback (props) {
                                 helperText={errorText.name}
                                 id="firstName"
                                 label="П.І.Б."
-                                autoFocus
                                 value={name}
                                 onChange={(e)=>setName(e.target.value)}
                             />
