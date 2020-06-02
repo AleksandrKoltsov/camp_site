@@ -5,11 +5,12 @@ import './App.css';
 import AdvancedGridList from './components/AdvancedGridList';
 import SwipeableTextMobileStepper from './components/Slider';
 import Box from '@material-ui/core/Box';
+import Fitback from "./components/Fitback/Fitback.js";
 import SliderCards from './components/SliderCards';
 import FullCard from "./components/FullCard";
 import FormContainer from "./components/Forms";
 import TerritoryMap from "./components/TerritoryMap";
-import SimpleBackdrop from "./components/Loader"
+import SimpleBackdrop from "./components/Loader";
 
 class App extends React.Component {
   constructor(props){
@@ -18,6 +19,7 @@ class App extends React.Component {
       data:[],//массив данных о домах и картинок
       content:[], // отображаемый на странице в данный момент контент
       changedDate:{ad:null, dd:null, cd:null},
+      rev:[],
       isLoading:false,
     };
     // ссылка на таблицу
@@ -27,6 +29,11 @@ class App extends React.Component {
     //метод для загрузки данных из таблицы
     this.menu = ['HOME', 'CHOOSE A HOUSE', 'MAP', 'ABOUT US', 'GALLERY']; // список пунктов для меню - передаем в MainPage
     this.favorite = localStorage.getItem('fav')||[];
+    //ссылка для получения объекта отзывов
+    this.getReviewLink = 'https://spreadsheets.google.com/feeds/list/1sZPcAjPYYH3gm8-DJQlDf-5ndS7ZHJGWaqL3TFbfkzc/1/public/full?alt=json';
+    //ссылка для отправки ПОСТ запроса с объектом отзывов
+    this.postReviewLink = 'https://script.google.com/macros/s/AKfycbzMGcjPUDRrA9YOsIa98Ou5urysQYMWMybtI9ETuYDHyABnaPE/exec';
+    this.loadReview();
   }
   // метод для получения контента для отображения
   //принимает число-позицию в массиве);
@@ -36,29 +43,34 @@ class App extends React.Component {
       (<div><Box mb={2}>
         <SwipeableTextMobileStepper/>
       </Box>
-        <Box mb={2}>
-          <SliderCards
-              handleClickInfo={this.handleClickInfo.bind(this)}
-              data={this.state.data}
-              />
-        </Box>
-        <Box mb={50}>TEXT CONTENT</Box>
+      <Box mb={2}>
+        <SliderCards
+            handleClickInfo={this.handleClickInfo.bind(this)}
+            data={this.state.data}
+            />
+      </Box>
+      <Box mb={50}>
+        <Fitback
+            handleReview={this.handleReview.bind(this)}
+            data={this.state.rev}
+        />
+      </Box>
       </div>),
       (<div>
-        <Box my={15} boxShadow={5}>
-        <TerritoryMap
-        data={this.state.data}
-        handleChangedDate = {this.handleChangedDate.bind(this)}
-        date={this.state.changedDate}
-        handleClickInfo={this.handleClickInfo.bind(this)}
-        />
-        </Box>
+          <Box my={15} boxShadow={5}>
+            <TerritoryMap
+              data={this.state.data}
+              handleChangedDate = {this.handleChangedDate.bind(this)}
+              date={this.state.changedDate}
+              handleClickInfo={this.handleClickInfo.bind(this)}
+            />
+          </Box>
         <Box>
-        <AdvancedGridList
-            data={this.state.data}
-            handleClickInfo={this.handleClickInfo.bind(this)}
-            handleClickStar={this.handleClickStar.bind(this)}
-        />
+          <AdvancedGridList
+              data={this.state.data}
+              handleClickInfo={this.handleClickInfo.bind(this)}
+              handleClickStar={this.handleClickStar.bind(this)}
+          />
         </Box>
       </div>),
       (<div><Box mt={15}>MAP</Box>
@@ -109,35 +121,75 @@ class App extends React.Component {
           this.setState({...this.state, content:content});
           //полученные данные записываем в state data и записываем в контент для отображения первую страницу
         })}
+  //метод для получения объекта отзыва
+  loadReview() {
+          fetch(this.getReviewLink)
+              .then(response => response.json())
+              // .then(data => console.log(data));
+              .then(({feed}) => {
+                  const data = [...feed.entry].map(({gsx$rating, gsx$name, gsx$email, gsx$review, gsx$date}) => {
+                      return {
+                          rating: gsx$rating.$t,
+                          name: gsx$name.$t,
+                          email: gsx$email.$t,
+                          review: gsx$review.$t,
+                          date: gsx$date.$t
+                      };//Data - обьект данных для review
+                  });
+                  //полученные данные записываем в state rev
+                  this.setState({...this.state, rev: data});
+                  // }else {
+                  //     return 'Нажаль відгуків ніхто не залишив'
+                  // }
+                  // console.log(this.state.rev);
+              }).catch (error => {
+              console.error(error)
+          })
+          // .then(data => console.log(data))
+  }
+  //передача объекта отзывов методом POST
+  handleReview(data){
+    // console.log(data);
+    fetch(this.postReviewLink, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: JSON.stringify(data),
+    }).then(result=>result.json()).then(data=>console.log(data));
+  }
   //метод обработчик клика по карточке
   handleClickInfo(ev){
     const house = ev.currentTarget.dataset.id;
     const data = this.state.data.filter(elem => elem.house === house);
-    this.setState({...this.state,content:(<div>
-      <Box mt={0}>
-      <FullCard
-      data={data[0]}
-      changedDate={this.state.changedDate}
-      handleChangedDate={this.handleChangedDate.bind(this)}
-      handleClickForm={this.handleClickBtnOrder.bind(this, data[0])}
-      />
-      </Box>
+    this.setState({...this.state,content:(
+      <div>
+        <Box mt={0}>
+          <FullCard
+            data={data[0]}
+            changedDate={this.state.changedDate}
+            handleChangedDate={this.handleChangedDate.bind(this)}
+            handleClickForm={this.handleClickBtnOrder.bind(this, data[0])}
+          />
+        </Box>
       </div>)});
   }
 
   handleClickBtnOrder(data){
     // console.log(id);
-    this.setState({...this.state,content:(<div>
-      <Box mt={0}>
-      <FormContainer
-      id={data.id}
-      data={data}
-      changedDate={this.state.changedDate}
-      handleChangedDate={this.handleChangedDate.bind(this)}
-      handleClickOrder={this.handleClickForm.bind(this)}
-      />
-      </Box>
-      </div>)});
+    this.setState({...this.state,content:(
+      <div>
+        <Box mt={0}>
+          <FormContainer
+            id={data.id}
+            data={data}
+            changedDate={this.state.changedDate}
+            handleChangedDate={this.handleChangedDate.bind(this)}
+            handleClickOrder={this.handleClickForm.bind(this)}
+          />
+        </Box>
+      </div>
+    )});
   }
   //метод обработчик клика по карточке
   handleClickStar(ev){
