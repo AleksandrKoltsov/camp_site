@@ -11,6 +11,8 @@ import FullCard from "./components/FullCard";
 import FormContainer from "./components/Forms";
 import TerritoryMap from "./components/TerritoryMap";
 import SimpleBackdrop from "./components/Loader";
+import Grid from '@material-ui/core/Grid';
+
 
 class App extends React.Component {
   constructor(props){
@@ -21,6 +23,7 @@ class App extends React.Component {
       changedDate:{ad:null, dd:null, cd:null},
       rev:[],
       isLoading:false,
+      error:false,
     };
     // ссылка на таблицу
     this.link = 'https://spreadsheets.google.com/feeds/list/1BuePN0GHsl2ig48EYF2Z9Amx6aA94tE9lYTTy-tg4dY/2/public/full?alt=json';
@@ -33,7 +36,7 @@ class App extends React.Component {
     this.getReviewLink = 'https://spreadsheets.google.com/feeds/list/1sZPcAjPYYH3gm8-DJQlDf-5ndS7ZHJGWaqL3TFbfkzc/1/public/full?alt=json';
     //ссылка для отправки ПОСТ запроса с объектом отзывов
     this.postReviewLink = 'https://script.google.com/macros/s/AKfycbzMGcjPUDRrA9YOsIa98Ou5urysQYMWMybtI9ETuYDHyABnaPE/exec';
-    this.loadReview();
+    // this.loadReview();
   }
   // метод для получения контента для отображения
   //принимает число-позицию в массиве);
@@ -44,10 +47,15 @@ class App extends React.Component {
         <SwipeableTextMobileStepper/>
       </Box>
       <Box mb={2}>
+      <Grid
+      direction="column"
+      container
+      >
         <SliderCards
             handleClickInfo={this.handleClickInfo.bind(this)}
             data={this.state.data}
             />
+      </Grid>
       </Box>
       <Box mb={50}>
         <Fitback
@@ -92,61 +100,64 @@ class App extends React.Component {
   }
   //метод для загрузки информации из таблицы
 
-  loadCards(){
-    fetch(this.link)
-        .then(response => response.json())
-        .then(({feed}) => {
-          const data = [...feed.entry].sort((a,b)=>{
-            if(a.gsx$text.$t > b.gsx$text.$t){
-              return 1;
-            }
-            if(a.gsx$text.$t < b.gsx$text.$t){
-              return -1;
-            }
-            return 0;
-          }).map(({gsx$house,gsx$text,gsx$id,gsx$image,gsx$title, gsx$price, gsx$booked, gsx$mini}) => {
-            return {
-              house:gsx$house.$t,
-              id:gsx$id.$t,
-              text:gsx$text.$t,
-              img:gsx$image.$t,
-              title:gsx$title.$t,
-              price:gsx$price.$t,
-              mini:JSON.parse(gsx$mini.$t),
-              booked:JSON.parse(gsx$booked.$t),
-            };//Data - обьект данных для карточки
-          });
-          this.setState({...this.state, data:data});
-          const content = this.getContent(0);
-          this.setState({...this.state, content:content});
-          //полученные данные записываем в state data и записываем в контент для отображения первую страницу
-        })}
-  //метод для получения объекта отзыва
-  loadReview() {
-          fetch(this.getReviewLink)
-              .then(response => response.json())
-              // .then(data => console.log(data));
-              .then(({feed}) => {
-                  const data = [...feed.entry].map(({gsx$rating, gsx$name, gsx$email, gsx$review, gsx$date}) => {
-                      return {
-                          rating: gsx$rating.$t,
-                          name: gsx$name.$t,
-                          email: gsx$email.$t,
-                          review: gsx$review.$t,
-                          date: gsx$date.$t
-                      };//Data - обьект данных для review
-                  });
-                  //полученные данные записываем в state rev
-                  this.setState({...this.state, rev: data});
-                  // }else {
-                  //     return 'Нажаль відгуків ніхто не залишив'
-                  // }
-                  // console.log(this.state.rev);
-              }).catch (error => {
-              console.error(error)
-          })
-          // .then(data => console.log(data))
+  async dataLoader(){
+      try{let [data, review] = await Promise.all([
+    fetch(this.link).then(value => value.json()),
+    fetch(this.getReviewLink).then(value => value.json())
+  ]);
+      const parsedData = this.parseCards(data);
+      const parsedReview = this.parseReview(review);
+      this.setState({...this.state, data:parsedData});
+      this.setState({...this.state, rev: parsedReview});
+      this.setState({...this.state, content:this.getContent(0)});
+      this.setState({...this.state, isLoading:false});
+    }catch(e){
+      this.setState({...this.state, error:true});
+      this.setState({...this.state, isLoading:false});
+    }
   }
+
+  parseCards({feed}){
+    if(feed.entry){
+      return [...feed.entry].sort((a,b)=>{
+      if(a.gsx$text.$t > b.gsx$text.$t){
+        return 1;
+      }
+      if(a.gsx$text.$t < b.gsx$text.$t){
+        return -1;
+      }
+      return 0;
+    }).map(({gsx$house,gsx$text,gsx$id,gsx$image,gsx$title, gsx$price, gsx$booked, gsx$mini}) => {
+      return {
+        house:gsx$house.$t,
+        id:gsx$id.$t,
+        text:gsx$text.$t,
+        img:gsx$image.$t,
+        title:gsx$title.$t,
+        price:gsx$price.$t,
+        mini:JSON.parse(gsx$mini.$t),
+        booked:JSON.parse(gsx$booked.$t),
+      };//Data - обьект данных для карточки
+    });
+    }
+    return [];
+  }
+  //метод для получения объекта отзыва
+  parseReview({feed}) {
+    if(feed.entry){
+      return [...feed.entry].map(({gsx$rating, gsx$name, gsx$email, gsx$review, gsx$date}) => {
+                    return {
+                        rating: gsx$rating.$t,
+                        name: gsx$name.$t,
+                        email: gsx$email.$t,
+                        review: gsx$review.$t,
+                        date: gsx$date.$t
+                    };//Data - обьект данных для review
+                });
+    }
+    return [];
+              }
+
   //передача объекта отзывов методом POST
   handleReview(data){
     // console.log(data);
@@ -237,14 +248,15 @@ class App extends React.Component {
 
   componentDidMount(){
     // hide Loader
-    this.loadCards();
+    // this.loadCards();
     this.setState({...this.state, isLoading:true});
-    setTimeout(()=>{
-      this.setState({...this.state, isLoading:false})
-    },6000)
+    this.dataLoader();
   }
 
   render(){
+    if(this.state.error){
+      return (<h1>Something went wrong...</h1>)
+    }else{
       return (
         <div>
         {this.state.isLoading
@@ -256,6 +268,7 @@ class App extends React.Component {
         }
       </div>
       );
+    }
 }
 }
 export default App;
