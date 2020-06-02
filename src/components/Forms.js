@@ -14,7 +14,7 @@ import { DatePicker } from '@material-ui/pickers';
 import onValidation from './Validator.js';
 import { v4 as uuidv4 } from 'uuid';
 import StaticDateRangePickerExample from "./DatePicker";
-
+// import SimpleBackdrop from './Loader'
 const useStyles = makeStyles((theme) => ({
     paper: {
         marginTop: theme.spacing(15),
@@ -38,6 +38,7 @@ export default function FormContainer (props) {
     const [name, setName] = useState();
     const [phone, setPhone] = useState();
     const [email, setEmail] = useState();
+    // const [loadSpinner, setLoadSpinner] = useState(false);
     // new
     const {changedDate, handleChangedDate, data} = props;
     const [date, handleDate] = useState(changedDate);
@@ -78,6 +79,11 @@ export default function FormContainer (props) {
                 dop: '01.04.2020',
                 am: '1000'
             });
+
+            handleDateChange(new Date());
+            setName('');
+            setPhone('');
+            setEmail('');
         }
         if (!resultValid.name) {
             setErrorState({name: true});
@@ -96,6 +102,7 @@ export default function FormContainer (props) {
     return (
         <Container component="main" maxWidth="xs">
             <CssBaseline />
+            {/*<SimpleBackdrop open={true}/>&&{loadSpinner}*/}
             <div className={classes.paper}>
                 <form className={classes.form} onSubmit={handleSubmit}>
                     <Grid container spacing={2}>
@@ -189,9 +196,7 @@ export default function FormContainer (props) {
                 </form>
             </div>
             <Box mt={5}>
-                {/*<p>*/}
-                {/*    {JSON.stringify(`name:{${name}} <br/> phohe:{${phone}} <br/>  email:{${email}} <br/> date:{${selectedDate}}`, null, 2)}*/}
-                {/*</p>*/}
+
             </Box>
         </Container>
     );

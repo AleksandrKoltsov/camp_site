@@ -24,6 +24,7 @@ class App extends React.Component {
       rev:[],
       isLoading:false,
       error:false,
+      isLoadReview: false,
     };
     // ссылка на таблицу
     this.link = 'https://spreadsheets.google.com/feeds/list/1BuePN0GHsl2ig48EYF2Z9Amx6aA94tE9lYTTy-tg4dY/2/public/full?alt=json';
@@ -58,10 +59,13 @@ class App extends React.Component {
       </Grid>
       </Box>
       <Box mb={50}>
-        <Fitback
-            handleReview={this.handleReview.bind(this)}
-            data={this.state.rev}
-        />
+        {this.state.isLoadReview
+            ? <SimpleBackdrop open={true}/>
+            : <Fitback
+                handleReview={this.handleReview.bind(this)}
+                data={this.state.rev}
+              />
+        }
       </Box>
       </div>),
       (<div>
@@ -164,6 +168,7 @@ class App extends React.Component {
 
   //передача объекта отзывов методом POST
   handleReview(data){
+    this.setState({...this.state, isLoadReview: true});
     // console.log(data);
     fetch(this.postReviewLink, {
       method: 'POST',
@@ -171,7 +176,10 @@ class App extends React.Component {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
       body: JSON.stringify(data),
-    }).then(result=>result.json()).then(data=>console.log(data));
+    }).then(result=>result.json()).then(data=>{
+        console.log(data);
+        this.setState({...this.state, isLoadReview: false})
+    });
   }
   //метод обработчик клика по карточке
   handleClickInfo(ev){
