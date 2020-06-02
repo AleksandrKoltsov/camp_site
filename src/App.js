@@ -110,10 +110,14 @@ class App extends React.Component {
       this.setState({...this.state, data:parsedData});
       this.setState({...this.state, rev: parsedReview});
       this.setState({...this.state, content:this.getContent(0)});
-      this.setState({...this.state, isLoading:false});
+      setTimeout(()=>{
+        this.setState({...this.state, isLoading:false});
+      },6000)
     }catch(e){
       this.setState({...this.state, error:true});
-      this.setState({...this.state, isLoading:false});
+      setTimeout(()=>{
+        this.setState({...this.state, isLoading:false});
+      },6000)
     }
   }
 
