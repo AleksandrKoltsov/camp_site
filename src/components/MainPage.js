@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { makeStyles} from '@material-ui/core/styles';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import AppBar from '@material-ui/core/AppBar';
@@ -10,8 +10,13 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import Logo from './Whiskey_Kings_alfa.png';
+// import Logo from './Whiskey_Kings_alfa.png';
 import Link from '@material-ui/core/Link';
+import Logo from './LogoNav';
+import ScrollHandler from './Scroll'
+import { useState } from 'react';
+import SimpleBackdrop from './Loader';
+
 
 const useStyles = makeStyles({
   list: {
@@ -21,21 +26,27 @@ const useStyles = makeStyles({
     width:"100%",
     position:"fixed",
     justifyContent:"center",
-    color:'white',
-    backgroundImage:`url('${Logo}')`,
+    // backgroundImage:`url('${Logo}')`,
     backgroundPosition:'center',
     backgroundRepeat:'no-repeat',
     backgroundSize:'contain',
-    transition:'all .1s linear',
     },
   hiddenBar:{
     backgroundColor:'transparent',
     height:"20vh",
+    color:'#221F1F',
     boxShadow:"none",
+    paddingTop:"25px",
+    paddingBottom:"25px",
+    transition:'all .1s linear',
   },
   visibleBar:{
     backgroundColor:'#221F1F',
+    color:'white',
     height:"inherit",
+    paddingTop:0,
+    paddingBottom:0,
+    transition:'all .1s linear',
   },
   fullList: {
     width: 'auto',
@@ -49,21 +60,36 @@ const useStyles = makeStyles({
   },
 });
 
-export default function MainPage(props) {//принимает список позиций меню, handleClick для обработки клика по меню,
-  const classes = useStyles();            //и контент для отрисовки
+export default function MainPage(props) {//принимает список позиций меню, handleClick для обработки клика по меню,и контент для отрисовки
+  const {menuItems, handleClick, content} = props;
+  const classes = useStyles();
+  const [renderContent, setRenderContent] = React.useState();
+  const [isLoader, setIsLoader] = React.useState(true);
   const [state, setState] = React.useState({
     menu: false,// состояние меню - открыто закрыто
-    bar: 'hiddenBar', // состояние хедера
   });
+  const [svgColor, setSvgColor] = React.useState('#221F1F');
+  const [shouldHideHeader, setShouldHideHeader] = useState('hiddenBar');
 
-  const handleScroll = ()=>{ //обработчик скролла для изменения состояния хедера
-    window.removeEventListener('scroll', handleScroll);
-    window.scrollY<50?setState({...state, bar:'hiddenBar'}):setState({...state, bar:'visibleBar'});
-  }
-  window.addEventListener('scroll', handleScroll);
+    const MINIMUM_SCROLL = 50;
+    const TIMEOUT_DELAY = 100;
+    ScrollHandler(callbackData => {
+      const { currentScrollTop } = callbackData;
+      const isMinimumScrolled = currentScrollTop > MINIMUM_SCROLL;
+        if(isMinimumScrolled){
+          setTimeout(() => {
+            setShouldHideHeader('visibleBar');
+            setSvgColor('white');
+          }, TIMEOUT_DELAY);
+        }else{
+          setTimeout(() => {
+            setShouldHideHeader('hiddenBar');
+            setSvgColor('#221F1F');
+          }, TIMEOUT_DELAY);
+        }
+    });
 
   const toggleDrawer = (open) => event => { // обработчик событий для изменения состояния меню(открыть свернуть )
-    window.removeEventListener('scroll', handleScroll);
     if (event && event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return;
     }
@@ -77,10 +103,11 @@ export default function MainPage(props) {//принимает список по�
       onKeyDown={toggleDrawer(false)}
     >
       <List>
-        {props.menuItems.map((text, index) => (//массив названий меню преобразуется в список
+        {menuItems.map((text, index) => (//массив названий меню преобразуется в список
           <ListItem
           button key={text}
-          onClick={props.handleClick}
+          onClick={(ev)=>{
+            handleClick(ev)}}
           data-name={text}
           >
             <ListItemText primary={text}/>
@@ -93,7 +120,7 @@ export default function MainPage(props) {//принимает список по�
   return (//возвращает хедер, меню, и контент(получен из props)
     <div>
       <AppBar
-        className={`${classes[state.bar]} ${classes.bar}`}
+        className={`bar ${classes[shouldHideHeader]} ${classes[shouldHideHeader]}`}
       >
         <Toolbar className={classes.toolbarGroup}>
           <IconButton
@@ -104,6 +131,7 @@ export default function MainPage(props) {//принимает список по�
           >
             <MenuIcon />
           </IconButton>
+          <Logo color={svgColor}/>
           <Box component="div" display="block">
             <Typography>
             <Link href="https://drive.google.com/open?id=1BuePN0GHsl2ig48EYF2Z9Amx6aA94tE9lYTTy-tg4dY" color='inherit'>
@@ -126,7 +154,7 @@ export default function MainPage(props) {//принимает список по�
         {list()}
       </SwipeableDrawer>
       <main  className={classes.content}>
-        {props.content}
+        {content}
       </main>
     </div>
   );

@@ -9,6 +9,8 @@ const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 const useStyles = makeStyles(theme => ({
     root: {
         maxWidth: 1920,
+        maxHeight:'100vh',
+        overflow: 'hidden',
         flexGrow: 1,
     },
     header: {
@@ -59,7 +61,7 @@ function SwipeableTextMobileStepper() {
     const [activeStep, setActiveStep] = React.useState(0);
 
     const handleStepChange = step => {
-        setActiveStep(step);
+          setActiveStep(step);
     };
 
     return (
@@ -71,11 +73,15 @@ function SwipeableTextMobileStepper() {
                 enableMouseEvents
             >
                 {tutorialSteps.map((step, index) => (
-                    <div key={index}>
-                          <video autoPlay className={classes.img} muted loop>
-                          <source src={step.imgPath}></source>
-                          </video>
-                    </div>
+                  <video
+                  key={index}
+                  autoPlay
+                  loop
+                  src={step.imgPath}
+                  muted
+                  className={classes.img}
+                  >
+                  </video>
                 ))}
             </AutoPlaySwipeableViews>
         </div>
