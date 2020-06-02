@@ -54,15 +54,10 @@ export default function SliderCards(props) {
       setActiveStep(step);
   };
 
-  return (
-    <div>
-    <Grid
-    direction="column"
-    container>
-    {textForRows.map((e,i)=>{
+  return textForRows.map((e,i)=>{
       return (<Grid item container
         key={i}
-        direction={i%2===0?"row-reverse":"row"}
+        direction={i%2===0?"row":"row-reverse"}
         className={classes.row}
         >
       <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
@@ -110,7 +105,5 @@ export default function SliderCards(props) {
           {e}
         </Typography>
       </Grid>
-      </Grid>)})}
-      </Grid>
-    </div>)
+      </Grid>)})
   }
