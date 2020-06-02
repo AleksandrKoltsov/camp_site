@@ -9,20 +9,18 @@ import InfoIcon from '@material-ui/icons/Info';
 import SwipeableViews from 'react-swipeable-views';
 import { autoPlay } from 'react-swipeable-views-utils';
 import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
 const useStyles = makeStyles(theme => ({
-  root: {
-    display: 'flex',
-    flexWrap: 'nowrap',
-    justifyContent: 'space-around',
-    overflow: 'hidden',
+  tile:{
+    height: '100% !important',
   },
-  gridList: {
-    width: "100%",
-    // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
+  gridList:{
+    width:'100%',
     transform: 'translateZ(0)',
+    height:'calc(100vh / 3)',
   },
   title: {
     color: 'white',
@@ -36,56 +34,83 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+const textForRows = [
+  'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+];
+const sliderForRows = [];
+
 export default function SliderCards(props) {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
   const {handleClickInfo, data} = props;
+  sliderForRows.push(data.slice(0, Math.floor(data.length / 3)))
+  sliderForRows.push(data.slice(Math.floor(data.length / 3), Math.floor((data.length * 2)/3)))
+  sliderForRows.push(data.slice(Math.floor((data.length * 2)/3)))
+
 
   const handleStepChange = step => {
       setActiveStep(step);
   };
 
   return (
-    <div className={classes.root}>
-    <AutoPlaySwipeableViews
-        axis={'x-reverse'}
-        index={activeStep}
-        onChangeIndex={handleStepChange}
-        enableMouseEvents
-    >{data.map((tile, index) => (
-      <GridList cellHeight={400} spacing={1} className={classes.gridList} key={index}>
-          <GridListTile>
-            <img src={tile.img} alt={tile.title}/>
-            <GridListTileBar
-            subtitle={`от ${tile.price}`}
-              title={tile.title}
-              classes={{
-                root: classes.titleBar,
-                title: classes.title,
-              }}
-              actionIcon={
-                <IconButton
-                aria-label={`star ${tile.title}`}
-                onClick={handleClickInfo}
-                data-id={tile.house}
-                >
-                  <InfoIcon
-                  className={classes.title}
-                  />
-                </IconButton>
-              }
-            />
-          </GridListTile>
-          <GridListTile className={classes.textBlock}>
-          <Typography paragraph>
-            Это описание Домика
-          </Typography>
-          <Typography>
-            {tile.text}
-          </Typography>
-          </GridListTile>
-          </GridList>
-        ))}
-      </AutoPlaySwipeableViews>
+    <div>
+    <Grid
+    direction="column"
+    container>
+    {textForRows.map((e,i)=>{
+      return (<Grid item container
+        key={i}
+        direction={i%2===0?"row-reverse":"row"}
+        className={classes.row}
+        >
+      <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+      <AutoPlaySwipeableViews
+          axis={i%2===0?'x':'x-reverse'}
+          index={activeStep}
+          onChangeIndex={handleStepChange}
+          enableMouseEvents
+          className={classes.slider}
+
+      >{sliderForRows[i].map((tile, index) => (
+        <GridList
+        className={classes.gridList}
+        spacing={1}
+        key={index}
+        >
+            <GridListTile cols={2} className={classes.tile} >
+              <img src={tile.img} alt={tile.title}/>
+              <GridListTileBar
+              subtitle={`от ${tile.price}`}
+                title={tile.title}
+                classes={{
+                  root: classes.titleBar,
+                  title: classes.title,
+                }}
+                actionIcon={
+                  <IconButton
+                  aria-label={`star ${tile.title}`}
+                  onClick={handleClickInfo}
+                  data-id={tile.house}
+                  >
+                    <InfoIcon
+                    className={classes.title}
+                    />
+                  </IconButton>
+                }
+              />
+            </GridListTile>
+            </GridList>
+          ))}
+        </AutoPlaySwipeableViews>
+      </Grid>
+      <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+        <Typography className={classes.textBlock}>
+          {e}
+        </Typography>
+      </Grid>
+      </Grid>)})}
+      </Grid>
     </div>)
   }
