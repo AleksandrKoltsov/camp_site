@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
         fontSize: '1.2rem'
     },
     star: {
-        margin: '0 0 0 0'
+        margin: '0'
     },
     text: {
         textIndent: '1.5rem',
@@ -36,7 +36,6 @@ export default function Review (props) {
     const classes = useStyles();
 
     const renderStar = (rat) => {
-        console.log(rat);
         let str = [];
         for(let i = 1, star = rat; i < 10; i++){
 
@@ -47,7 +46,6 @@ export default function Review (props) {
                 str.push(<span key={i}><StarBorderIcon color='primary' fontSize='small' /></span>);
             }
         }
-        console.log(str);
         return str;
     };
 

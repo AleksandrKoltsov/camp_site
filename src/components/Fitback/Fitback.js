@@ -98,7 +98,7 @@ export default function Fitback (props) {
     return (
         <Grid container component="main" className={classes.root}>
             <CssBaseline />
-            <Box container
+            <Box
                  xs={4}
                  sm={12}
                  component={Paper}
@@ -107,7 +107,7 @@ export default function Fitback (props) {
                  justify="center"
                  ml={2}
             >
-                <form className={classes.form} onSubmit={handleSubmit}>
+                <form className={classes.form} onSubmit={handleSubmit} noValidate>
                     <div className={classes.paper}>
                         <Typography component="h1" variant="h5">
                             Залиште свій відгук
@@ -122,7 +122,7 @@ export default function Fitback (props) {
                                 onChange={(e)=>setRate(e.target.value)}
                             />
                         </div>
-                        <form className={classes.form} noValidate>
+                        <div className={classes.form}>
                             <Box mt={1}>
                             <TextField
                                 autoComplete="fname"
@@ -179,12 +179,11 @@ export default function Fitback (props) {
                                 className={classes.submit}
                             >Відправити
                             </Button>
-                        </form>
+                        </div>
                     </div>
                 </form>
             </Box>
             <Box
-                container
                 className={classes.review}
                  xs={8}
                  sm={12}
