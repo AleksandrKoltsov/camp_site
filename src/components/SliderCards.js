@@ -20,7 +20,7 @@ const useStyles = makeStyles(theme => ({
   gridList:{
     width:'100%',
     transform: 'translateZ(0)',
-    height:'calc(100vh / 3)',
+    height:'calc(100vh / 2)',
   },
   title: {
     color: 'white',
@@ -31,6 +31,9 @@ const useStyles = makeStyles(theme => ({
   },
   textBlock:{
     color:'#221F1F',
+    padding:'1rem',
+    fontWeight:'bold',
+    fontStyle:'italic',
   },
 }));
 
