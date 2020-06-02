@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
@@ -8,26 +8,12 @@ import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
-import {makeStyles} from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import {DatePicker} from '@material-ui/pickers';
+import { DatePicker } from '@material-ui/pickers';
 import onValidation from './Validator.js';
 import { v4 as uuidv4 } from 'uuid';
-// new
 import StaticDateRangePickerExample from "./DatePicker";
-
-function Copyright() {
-    return (
-        <Typography variant="body2" color="textSecondary" align="center">
-            {'Copyright © '}
-            <Link color="inherit" href="https://material-ui.com/">
-                Your Website
-            </Link>{' '}
-            {new Date().getFullYear()}
-            {'.'}
-        </Typography>
-    );
-}
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -35,10 +21,6 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-    },
-    avatar: {
-        margin: theme.spacing(1),
-        backgroundColor: theme.palette.secondary.main,
     },
     form: {
         width: '100%', // Fix IE 11 issue.
@@ -64,7 +46,7 @@ export default function FormContainer (props) {
       const ad = range[0].toDate();
       const dd = range[1].toDate();
       handleDate({cd,ad,dd});
-    }
+    };
     const [errorText, setErrorText] = useState({name: '', phone: '', email: ''});
     const [errorState, setErrorState] = useState({name: false, phone: false, email: false});
 
@@ -74,7 +56,7 @@ export default function FormContainer (props) {
         const oid = uuidv4(); // получаю uuid заказа
         const cid = uuidv4(); // получаю uuid клиента
         // console.log(oid);
-        const resultValid = onValidation(name, phone, email);
+        const resultValid = onValidation('form',name, phone, email);
         console.log(resultValid);
         if (resultValid.name && resultValid.phone && resultValid.email) {
             setErrorState({name: false, phone: false, email: false});
@@ -99,15 +81,15 @@ export default function FormContainer (props) {
         }
         if (!resultValid.name) {
             setErrorState({name: true});
-            setErrorText({name: 'Упс! Ошибочка!'});
+            setErrorText({name: 'Упс! Помилочка!'});
         }
         if (!resultValid.phone) {
             setErrorState({phone: true});
-            setErrorText({phone: 'Упс! Ошибочка!'});
+            setErrorText({phone: 'Упс! Помилочка!'});
         }
         if (!resultValid.email) {
                 setErrorState({email: true});
-                setErrorText({email: 'Упс! Ошибочка!'});
+                setErrorText({email: 'Упс! Помилочка!'});
         }
     };
 
@@ -127,7 +109,7 @@ export default function FormContainer (props) {
                                 error={errorState.name}
                                 helperText={errorText.name}
                                 id="firstName"
-                                label="Ф.И.О."
+                                label="П.І.Б."
                                 autoFocus
                                 value={name}
                                 onChange={(e)=>setName(e.target.value)}
@@ -138,10 +120,10 @@ export default function FormContainer (props) {
                                 variant="outlined"
                                 required
                                 fullWidth
-                                id="lastName"
+                                id="phone"
                                 label="Тел."
-                                name="lastName"
-                                autoComplete="lname"
+                                name="phone"
+                                autoComplete="phone"
                                 error={errorState.phone}
                                 placeholder="+380XXXXXXXXX"
                                 helperText={errorText.phone}
@@ -174,12 +156,12 @@ export default function FormContainer (props) {
                            />
                         </Grid>
                         <Grid item xs={12}>
-                        <StaticDateRangePickerExample
-                        handleChangedDate={handleChangedDate}
-                        date={changedDate}
-                        componentHandler={handleDateRange}
-                        disabledDates={data.booked}
-                        />
+                            <StaticDateRangePickerExample
+                                handleChangedDate={handleChangedDate}
+                                date={changedDate}
+                                componentHandler={handleDateRange}
+                                disabledDates={data.booked}
+                            />
                         </Grid>
                         <Grid item xs={12}>
                             <FormControlLabel
@@ -202,7 +184,7 @@ export default function FormContainer (props) {
                         className={classes.submit}
                         // onClick={handleChange(props)}
                     >
-                        Забронировать
+                        Забронювати
                     </Button>
                 </form>
             </div>
@@ -210,7 +192,6 @@ export default function FormContainer (props) {
                 {/*<p>*/}
                 {/*    {JSON.stringify(`name:{${name}} <br/> phohe:{${phone}} <br/>  email:{${email}} <br/> date:{${selectedDate}}`, null, 2)}*/}
                 {/*</p>*/}
-                <Copyright />
             </Box>
         </Container>
     );
