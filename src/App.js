@@ -120,29 +120,29 @@ class App extends React.Component {
         })}
   //метод для получения объекта отзыва
   loadReview() {
-      fetch(this.getReviewLink)
-        .then(response => response.json())
-          // .then(data => console.log(data));
-        .then(({feed}) => {
-            try{
-                const data = [...feed.entry].map(({gsx$rating, gsx$name, gsx$email, gsx$review, gsx$date}) => {
-                    return {
-                        rating: gsx$rating.$t,
-                        name: gsx$name.$t,
-                        email: gsx$email.$t,
-                        review: gsx$review.$t,
-                        date: gsx$date.$t
-                    };//Data - обьект данных для review
-                });
-                //полученные данные записываем в state rev
-                this.setState({...this.state, rev: data});
-            // }else {
-            //     return 'Нажаль відгуків ніхто не залишив'
-            // }
-      // console.log(this.state.rev);
-      })
-            }catch(e){если ошибка}
-          .then(data => console.log(data))
+          fetch(this.getReviewLink)
+              .then(response => response.json())
+              // .then(data => console.log(data));
+              .then(({feed}) => {
+                  const data = [...feed.entry].map(({gsx$rating, gsx$name, gsx$email, gsx$review, gsx$date}) => {
+                      return {
+                          rating: gsx$rating.$t,
+                          name: gsx$name.$t,
+                          email: gsx$email.$t,
+                          review: gsx$review.$t,
+                          date: gsx$date.$t
+                      };//Data - обьект данных для review
+                  });
+                  //полученные данные записываем в state rev
+                  this.setState({...this.state, rev: data});
+                  // }else {
+                  //     return 'Нажаль відгуків ніхто не залишив'
+                  // }
+                  // console.log(this.state.rev);
+              }).catch (error => {
+              console.error(error)
+          })
+          // .then(data => console.log(data))
   }
   //передача объекта отзывов методом POST
   handleReview(data){

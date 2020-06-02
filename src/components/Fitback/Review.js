@@ -3,7 +3,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import  { fullStar, emptyStar } from './stars.js'
+import FullStar from "./FullStar";
+import EmptyStar from "./EmptyStar";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -14,8 +15,8 @@ const useStyles = makeStyles((theme) => ({
         padding: '1rem',
     },
     name: {
-        fontWeight: '800',
-        fontSize: '1.3rem'
+        fontWeight: '700',
+        fontSize: '1.2rem'
     },
     star: {
         margin: '0 0 0.5rem 0'
@@ -23,30 +24,32 @@ const useStyles = makeStyles((theme) => ({
     text: {
         textIndent: '1.5rem',
         textAlign: 'justify'
+    },
+    date: {
+        fontSize: '0.8em',
+        marginBottom: '0.5rem'
     }
 }));
 
 export default function Review (props) {
-    console.log(props);
+    // console.log(props);
+    // console.log(fullStar, emptyStar);
     const classes = useStyles();
 
     const renderStar = (rat) => {
-        let star = rat;
-        let str = '';
-        for(let i = 10; i < 10; i++){
+
+        let str = Array(10);
+        for(let i = 10, star = rat; i < 10; i++){
+
             if(star > 0) {
-                str += fullStar;
+                str.push(<FullStar key={i}/>);
                 star--;
+                console.log(str);
             }else {
-                str += emptyStar
+                str.push(<EmptyStar key={i}/>);
             }
         }
-        console.log(str);
-        return (
-            <span>
-                {str}
-            </span>
-        );
+        return str;
     };
 
     // const formatDate = () => {
@@ -69,7 +72,8 @@ export default function Review (props) {
         >
             <CssBaseline />
                 <span className={classes.name}>{props.item.name}</span>
-                <div className={classes.star}>{renderStar(props.item.rating)}&nbsp;{props.item.date}</div>
+                <div className={classes.star}>{renderStar(props.item.rating)}</div>
+                <span className={classes.date}>{props.item.date}</span>
                 <span className={classes.text}>{props.item.review}</span>
         </Box>
     );
