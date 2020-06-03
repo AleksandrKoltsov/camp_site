@@ -46,16 +46,14 @@ const sliderForRows = [];
 
 export default function SliderCards(props) {
   const classes = useStyles();
-  const [activeStep, setActiveStep] = React.useState(0);
+  const [steps, setSteps] = React.useState([0,0,0]);
   const {handleClickInfo, data} = props;
   sliderForRows.push(data.slice(0, Math.floor(data.length / 3)))
   sliderForRows.push(data.slice(Math.floor(data.length / 3), Math.floor((data.length * 2)/3)))
   sliderForRows.push(data.slice(Math.floor((data.length * 2)/3)))
-
-
-  const handleStepChange = step => {
-      setActiveStep(step);
-  };
+  const stepperHandler = (step, i)=>{
+    setSteps([...steps.slice(0,i),step,...steps.slice(i+1)])
+  }
 
   return textForRows.map((e,i)=>{
       return (<Grid item container
@@ -66,8 +64,8 @@ export default function SliderCards(props) {
       <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
       <AutoPlaySwipeableViews
           axis={i%2===0?'x':'x-reverse'}
-          index={activeStep}
-          onChangeIndex={handleStepChange}
+          index={steps[i]}
+          onChangeIndex={(step)=>stepperHandler(step, i)}
           enableMouseEvents
           className={classes.slider}
 
