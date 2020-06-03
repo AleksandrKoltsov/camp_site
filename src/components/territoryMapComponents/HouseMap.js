@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { makeStyles} from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
   starFree:{
@@ -175,9 +175,8 @@ d:"m -404.65105,102.95794 -4.29697,0.51839 -1.82085,-3.92647 3.17162,-2.945077 3
 ];
 
 function HouseMap(props){
-  const theme = useTheme();
     const classes = useStyles();
-    const {booked, handleClick, handleError, id} = props;
+    const {booked, handleClick, handleError} = props;
     return houses.map((e,i)=>{
       let num = e.id.split('-')[2];
       const isBooked = booked.some((e)=>e===num);

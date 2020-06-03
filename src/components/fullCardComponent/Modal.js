@@ -58,7 +58,7 @@ export default function TransitionsModal(props) {
         <div>
             <div className={classes.contPic}>
                 <a href="#" onClick={handleOpen}>
-                    <img src={props.img} className={classes.picHouse}/>
+                    <img src={props.img} className={classes.picHouse} alt=''/>
                 </a>
             </div>
             <Modal

@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import TextMap from './territoryMapComponents/TextMap';
 import HouseMap from './territoryMapComponents/HouseMap';
 import RoadMap from './territoryMapComponents/RoadMap';
@@ -9,15 +9,12 @@ import FullscreenExitIcon from '@material-ui/icons/FullscreenExit';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import Modal from '@material-ui/core/Modal';
 import Dialog from '@material-ui/core/Dialog';
 import Slide from '@material-ui/core/Slide';
 import Box from '@material-ui/core/Box';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
-import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
 import StaticDateRangePickerExample from './DatePicker';
 import isWithinInterval from "date-fns/isWithinInterval";
 import DescriptionAlerts from "./Alert";
@@ -124,10 +121,8 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 export default function TerritoryMap(props){
     const classes = useStyles();
-    const theme = useTheme();
     const {data, date, handleChangedDate, handleClickInfo} = props;
     const [error, setError] = React.useState(<div></div>);
-    const [errorMessage, setErrorMessage] = React.useState('Нажаль будинок зайнятий');
 
     const handleError = (ev)=>{
       const house = ev.target.dataset.id;
@@ -143,18 +138,15 @@ export default function TerritoryMap(props){
     const [isOpen, setIsOpen] = React.useState(false);
     const [button, setButton] = React.useState(<FullscreenIcon/>);
     const getBookedHouses = (start, end, arr)=>{
-
-      return arr.map(({house,booked})=>{
-        const isBook = booked.some(({ad,dd})=>{
+      const houses = arr.filter(({house,booked})=>{
+        return booked.some(({ad,dd})=>{
           return isWithinInterval(new Date(ad), {start, end})||
           isWithinInterval(new Date(dd), {start, end})||
           isWithinInterval(start, {start:new Date(ad), end:new Date(dd)})||
           isWithinInterval(end, {start:new Date(ad), end:new Date(dd)})
         });
-        if(isBook){
-          return house;
-        }
       });
+      return houses.map(({house})=>house)
     }
     const showBookedHouses = (date)=>{
       const start = date[0].toDate();

@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { makeStyles} from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
   road: {
@@ -135,7 +135,6 @@ const roads = [
 
 function RoadMap(props){
   const classes = useStyles();
-  const theme = useTheme();
   return roads.map((e,i)=>{
     return (<path
       key={e.id}
