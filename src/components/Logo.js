@@ -1,6 +1,5 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Box from '@material-ui/core/Box';
 
 // strokeDasharray, strokeDashoffset values for each path in svg
 // get from .getTotalLength() method of path.

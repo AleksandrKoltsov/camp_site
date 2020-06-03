@@ -23,7 +23,7 @@ function ScrollHandler(callback) {
 
     return () =>
       window.removeEventListener('scroll', handleDocumentScrollThrottled);
-  }, []);
+  }, [handleDocumentScrollThrottled]);
 }
 
 export default ScrollHandler;

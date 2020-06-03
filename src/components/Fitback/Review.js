@@ -37,7 +37,7 @@ export default function Review (props) {
 
     const renderStar = (rat) => {
         let str = [];
-        for(let i = 1, star = rat; i < 10; i++){
+        for(let i = 1, star = rat; i <= 10; i++){
 
             if(star > 0) {
                 str.push(<span key={i}><StarIcon color='primary' fontSize='small' /></span>);
