@@ -56,6 +56,7 @@ const useStyles = makeStyles((theme) => ({
     },
     dataPicCont: {
         textAlign: 'center',
+
     },
 }));
 
@@ -76,17 +77,17 @@ export default function FullCard (props) {
             </Grid>
             <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
                 <div className={classes.paper}>
-                    <Box className={classes.form} noValidate>
+                    <Box className={classes.form}>
                         <Box component="span" m={1}>
                             <h2 className={classes.mainTextHeader}>{props.data.title}</h2>
                             <p className={classes.mainText}>{props.data.text}</p>
                         </Box>
                         <Box className={classes.dataPicCont}>
                             <StaticDateRangePickerExample
-                            handleChangedDate={handleChangedDate}
-                            date={changedDate}
-                            componentHandler={handleDate}
-                            disabledDates={props.data.booked}
+                                handleChangedDate={handleChangedDate}
+                                date={changedDate}
+                                componentHandler={handleDate}
+                                disabledDates={props.data.booked}
                             />
                         </Box>
                         <Button

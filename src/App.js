@@ -25,6 +25,7 @@ class App extends React.Component {
       isLoading:false,
       error:false,
       isLoadReview: false,
+      isLoadForm: false
     };
     // ссылка на таблицу
     this.link = 'https://spreadsheets.google.com/feeds/list/1BuePN0GHsl2ig48EYF2Z9Amx6aA94tE9lYTTy-tg4dY/2/public/full?alt=json';
@@ -59,13 +60,10 @@ class App extends React.Component {
       </Grid>
       </Box>
       <Box mb={50}>
-        {this.state.isLoadReview
-            ? <SimpleBackdrop open={true}/>
-            : <Fitback
-                handleReview={this.handleReview.bind(this)}
-                data={this.state.rev}
-              />
-        }
+        <Fitback
+            handleReview={this.handleReview.bind(this)}
+            data={this.state.rev}
+        />
       </Box>
       </div>),
       (<div>
@@ -237,6 +235,7 @@ class App extends React.Component {
 // am//amount
 
   handleClickForm(data){
+    this.setState({...this.state, isLoadForm: true});
     console.log(data);
     fetch(this.formLink, {
       method: 'POST',
@@ -244,7 +243,10 @@ class App extends React.Component {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
       body: JSON.stringify(data),
-    }).then(result=>result.json()).then(data=>console.log(data));
+    }).then(result=>result.json()).then(data=>{
+      this.setState({...this.state, isLoadForm: false});
+      console.log(data)
+    });
   }
 //   handleClickForm(data){
 //     // console.log(data);
@@ -271,7 +273,7 @@ class App extends React.Component {
     }else{
       return (
         <div>
-        {this.state.isLoading
+        {this.state.isLoading || this.state.isLoadForm || this.state.isLoadReview
           ?<SimpleBackdrop open={true}/>
           :<MainPage
               content={this.state.content}
