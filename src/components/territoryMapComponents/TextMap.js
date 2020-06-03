@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { makeStyles} from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
   text : {
@@ -431,7 +431,6 @@ const text = [
 ];
 
 function TextMap(props){
-  const theme = useTheme();
     const classes = useStyles();
     return text.map((e,i)=>{
       return (<text
