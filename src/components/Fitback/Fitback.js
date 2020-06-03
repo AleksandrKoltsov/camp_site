@@ -45,9 +45,8 @@ const useStyles = makeStyles((theme) => ({
         width: '100%'
     },
     review: {
-        width: '67%',
         height: '100vh',
-        overflowY: 'scroll'
+        overflowY: 'scroll',
     }
 }));
 
@@ -98,11 +97,12 @@ export default function Fitback (props) {
     return (
         <Grid container component="main" className={classes.root}>
             <CssBaseline />
-            <Box
-                 xs={4}
-                 sm={12}
+            <Grid item
+                  xs={12}
+                  sm={4}
+                  md={4}
                  component={Paper}
-                 elevation={12}
+                 // elevation={12}
                  square
                  justify="center"
                  ml={2}
@@ -181,25 +181,24 @@ export default function Fitback (props) {
                         </div>
                     </div>
                 </form>
-            </Box>
-            <Box
+            </Grid>
+            <Grid item
                 className={classes.review}
-                 xs={8}
-                 sm={12}
-                 component={Paper}
-                 elevation={12}
-                 square
-                 justify="center"
-                 ml={2}
-
+                xs={12}
+                sm={8}
+                md={8}
+                component={Paper}
+                // elevation={12}
+                square
+                justify="center"
             >
-            <div>
-                {data.map((el, i) => {
-                   return (
-                       <Review key={i} item={el} />
-                )}).reverse()}
-            </div>
-            </Box>
+                <div>
+                    {data.map((el, i) => {
+                       return (
+                           <Review key={i} item={el} />
+                    )}).reverse()}
+                </div>
+            </Grid>
         </Grid>
     );
 }
