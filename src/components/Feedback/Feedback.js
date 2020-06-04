@@ -27,6 +27,7 @@ const useStyles = makeStyles((theme) => ({
     },
     submit: {
         margin: theme.spacing(3, 0, 2),
+        width: '100%',
     },
     rating: {
         display: 'flex',
@@ -104,7 +105,6 @@ export default function Feedback (props) {
                  component={Paper}
                  // elevation={12}
                  square
-                 justify="center"
                  ml={2}
             >
                 <form className={classes.form} onSubmit={handleSubmit} noValidate>
@@ -172,7 +172,7 @@ export default function Feedback (props) {
                             </Box>
                             <Button
                                 type="submit"
-                                fullWidth
+                                // fullWidth
                                 variant="contained"
                                 color="primary"
                                 className={classes.submit}
@@ -190,7 +190,6 @@ export default function Feedback (props) {
                 component={Paper}
                 // elevation={12}
                 square
-                justify="center"
             >
                 <div>
                     {data.map((el, i) => {

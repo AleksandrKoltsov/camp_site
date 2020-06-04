@@ -15,6 +15,7 @@ import Link from '@material-ui/core/Link';
 import Logo from './LogoNav';
 import ScrollHandler from './Scroll'
 import { useState } from 'react';
+import SimpleBackdrop from './Loader'
 
 
 const useStyles = makeStyles({
@@ -60,7 +61,7 @@ const useStyles = makeStyles({
 });
 
 export default function MainPage(props) {//принимает список позиций меню, handleClick для обработки клика по меню,и контент для отрисовки
-  const {menuItems, handleClick, content} = props;
+  const {menuItems, handleClick, content, isLoad} = props;
   const classes = useStyles();
   const [state, setState] = React.useState({
     menu: false,// состояние меню - открыто закрыто
@@ -151,6 +152,7 @@ export default function MainPage(props) {//принимает список по�
         {list()}
       </SwipeableDrawer>
       <main  className={classes.content}>
+        {isLoad&&<SimpleBackdrop/>}
         {content}
       </main>
     </div>

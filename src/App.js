@@ -25,7 +25,7 @@ class App extends React.Component {
       rev:[],
       isLoading:false,
       error:false,
-      isLoadReview: false,
+      // isLoadReview: false,
       isLoadForm: false
     };
     // ссылка на таблицу
@@ -61,13 +61,10 @@ class App extends React.Component {
       </Grid>
       </Box>
       <Box mb={50}>
-        {this.state.isLoadReview ?
-            <SimpleBackdrop open={true}/> :
-            <Feedback
-                handleReview={this.handleReview.bind(this)}
-                data={this.state.rev}
-            />
-        }
+          <Feedback
+              handleReview={this.handleReview.bind(this)}
+              data={this.state.rev}
+          />
       </Box>
       </div>),
       (<div>
@@ -170,9 +167,9 @@ class App extends React.Component {
 
   //передача объекта отзывов методом POST
   handleReview(data){
-    this.setState({...this.state, isLoadReview: true});
+    this.setState({...this.state, isLoadForm: true});
     // console.log(data);
-    fetch(this.postReviewLink, {
+    try{fetch(this.postReviewLink, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -180,9 +177,11 @@ class App extends React.Component {
       body: JSON.stringify(data),
     }).then(result=>result.json()).then(data=>{
         console.log(data);
-        this.setState({...this.state, isLoadReview: false})
-        this.setState({...this.state, content: <Message/>});
-    });
+        this.setState({...this.state, isLoadForm: false});
+        this.setState({...this.state, content: <Message state={true}/>});
+    })}catch(e){
+      this.setState({...this.state, content: <Message state={false}/>});
+    }
   }
   //метод обработчик клика по карточке
   handleClickInfo(ev){
@@ -242,7 +241,7 @@ class App extends React.Component {
   handleClickForm(data){
     this.setState({...this.state, isLoadForm: true});
     console.log(data);
-    fetch(this.formLink, {
+    try{fetch(this.formLink, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -250,9 +249,11 @@ class App extends React.Component {
       body: JSON.stringify(data),
     }).then(result=>result.json()).then(data=>{
       this.setState({...this.state, isLoadForm: false});
-      this.setState({...this.state, content: <Message/>});
+      this.setState({...this.state, content: <Message state={true}/>});
       console.log(data)
-    });
+    })}catch(e){
+      this.setState({...this.state, content: <Message state={false}/>});
+    }
   }
 //   handleClickForm(data){
 //     // console.log(data);
@@ -282,6 +283,7 @@ class App extends React.Component {
         {this.state.isLoading
           ?<SimpleBackdrop open={true}/>
           :<MainPage
+              isLoad={this.state.isLoadForm}
               content={this.state.content}
               handleClick={this.handleClickMenu.bind(this)}
               menuItems={this.menu}/>
