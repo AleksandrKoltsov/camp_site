@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function Fitback (props) {
+export default function Feedback (props) {
     const data = props.data;
     const classes = useStyles();
     const [name, setName] = useState('');

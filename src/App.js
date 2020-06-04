@@ -5,7 +5,7 @@ import './App.css';
 import AdvancedGridList from './components/AdvancedGridList';
 import SwipeableTextMobileStepper from './components/Slider';
 import Box from '@material-ui/core/Box';
-import Fitback from "./components/Fitback/Fitback.js";
+import Feedback from "./components/Feedback/Feedback.js";
 import SliderCards from './components/SliderCards';
 import FullCard from "./components/FullCard";
 import FormContainer from "./components/Forms";
@@ -60,7 +60,7 @@ class App extends React.Component {
       </Grid>
       </Box>
       <Box mb={50}>
-        <Fitback
+        <Feedback
             handleReview={this.handleReview.bind(this)}
             data={this.state.rev}
         />
