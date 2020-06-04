@@ -12,6 +12,7 @@ import FormContainer from "./components/Forms";
 import TerritoryMap from "./components/TerritoryMap";
 import SimpleBackdrop from "./components/Loader";
 import Grid from '@material-ui/core/Grid';
+import Message from "./components/Message";
 
 
 class App extends React.Component {
@@ -60,10 +61,13 @@ class App extends React.Component {
       </Grid>
       </Box>
       <Box mb={50}>
-        <Feedback
-            handleReview={this.handleReview.bind(this)}
-            data={this.state.rev}
-        />
+        {this.state.isLoadReview ?
+            <SimpleBackdrop open={true}/> :
+            <Feedback
+                handleReview={this.handleReview.bind(this)}
+                data={this.state.rev}
+            />
+        }
       </Box>
       </div>),
       (<div>
@@ -177,6 +181,7 @@ class App extends React.Component {
     }).then(result=>result.json()).then(data=>{
         console.log(data);
         this.setState({...this.state, isLoadReview: false})
+        this.setState({...this.state, content: <Message/>});
     });
   }
   //метод обработчик клика по карточке
@@ -245,6 +250,7 @@ class App extends React.Component {
       body: JSON.stringify(data),
     }).then(result=>result.json()).then(data=>{
       this.setState({...this.state, isLoadForm: false});
+      this.setState({...this.state, content: <Message/>});
       console.log(data)
     });
   }
@@ -273,7 +279,7 @@ class App extends React.Component {
     }else{
       return (
         <div>
-        {this.state.isLoading || this.state.isLoadForm || this.state.isLoadReview
+        {this.state.isLoading
           ?<SimpleBackdrop open={true}/>
           :<MainPage
               content={this.state.content}
