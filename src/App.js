@@ -5,13 +5,14 @@ import './App.css';
 import AdvancedGridList from './components/AdvancedGridList';
 import SwipeableTextMobileStepper from './components/Slider';
 import Box from '@material-ui/core/Box';
-import Fitback from "./components/Fitback/Fitback.js";
+import Feedback from "./components/Feedback/Feedback.js";
 import SliderCards from './components/SliderCards';
 import FullCard from "./components/FullCard";
 import FormContainer from "./components/Forms";
 import TerritoryMap from "./components/TerritoryMap";
 import SimpleBackdrop from "./components/Loader";
 import Grid from '@material-ui/core/Grid';
+import Message from "./components/Message";
 
 
 class App extends React.Component {
@@ -24,6 +25,8 @@ class App extends React.Component {
       rev:[],
       isLoading:false,
       error:false,
+      // isLoadReview: false,
+      isLoadForm: false
     };
     // ссылка на таблицу
     this.link = 'https://spreadsheets.google.com/feeds/list/1BuePN0GHsl2ig48EYF2Z9Amx6aA94tE9lYTTy-tg4dY/2/public/full?alt=json';
@@ -58,10 +61,10 @@ class App extends React.Component {
       </Grid>
       </Box>
       <Box mb={50}>
-        <Fitback
-            handleReview={this.handleReview.bind(this)}
-            data={this.state.rev}
-        />
+          <Feedback
+              handleReview={this.handleReview.bind(this)}
+              data={this.state.rev}
+          />
       </Box>
       </div>),
       (<div>
@@ -112,12 +115,12 @@ class App extends React.Component {
       this.setState({...this.state, content:this.getContent(0)});
       setTimeout(()=>{
         this.setState({...this.state, isLoading:false});
-      },6000)
+      },2000)
     }catch(e){
       this.setState({...this.state, error:true});
       setTimeout(()=>{
         this.setState({...this.state, isLoading:false});
-      },6000)
+      },2000)
     }
   }
 
@@ -164,14 +167,21 @@ class App extends React.Component {
 
   //передача объекта отзывов методом POST
   handleReview(data){
+    this.setState({...this.state, isLoadForm: true});
     // console.log(data);
-    fetch(this.postReviewLink, {
+    try{fetch(this.postReviewLink, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
       body: JSON.stringify(data),
-    }).then(result=>result.json()).then(data=>console.log(data));
+    }).then(result=>result.json()).then(data=>{
+        console.log(data);
+        this.setState({...this.state, isLoadForm: false});
+        this.setState({...this.state, content: <Message state={true}/>});
+    })}catch(e){
+      this.setState({...this.state, content: <Message state={false}/>});
+    }
   }
   //метод обработчик клика по карточке
   handleClickInfo(ev){
@@ -229,14 +239,21 @@ class App extends React.Component {
 // am//amount
 
   handleClickForm(data){
+    this.setState({...this.state, isLoadForm: true});
     console.log(data);
-    fetch(this.formLink, {
+    try{fetch(this.formLink, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
       body: JSON.stringify(data),
-    }).then(result=>result.json()).then(data=>console.log(data));
+    }).then(result=>result.json()).then(data=>{
+      this.setState({...this.state, isLoadForm: false});
+      this.setState({...this.state, content: <Message state={true}/>});
+      console.log(data)
+    })}catch(e){
+      this.setState({...this.state, content: <Message state={false}/>});
+    }
   }
 //   handleClickForm(data){
 //     // console.log(data);
@@ -266,6 +283,7 @@ class App extends React.Component {
         {this.state.isLoading
           ?<SimpleBackdrop open={true}/>
           :<MainPage
+              isLoad={this.state.isLoadForm}
               content={this.state.content}
               handleClick={this.handleClickMenu.bind(this)}
               menuItems={this.menu}/>
