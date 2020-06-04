@@ -152,7 +152,7 @@ export default function MainPage(props) {//принимает список по�
         {list()}
       </SwipeableDrawer>
       <main  className={classes.content}>
-        {isLoad&&<SimpleBackdrop/>}
+        {isLoad&&<SimpleBackdrop open={isLoad}/>}
         {content}
       </main>
     </div>
