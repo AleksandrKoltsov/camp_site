@@ -13,9 +13,10 @@ import ListItemText from '@material-ui/core/ListItemText';
 // import Logo from './Whiskey_Kings_alfa.png';
 import Link from '@material-ui/core/Link';
 import Logo from './LogoNav';
-import ScrollHandler from './Scroll'
+import ScrollHandler from './Scroll';
 import { useState } from 'react';
-import SimpleBackdrop from './Loader'
+import SimpleBackdrop from './Loader';
+import StickyFooter from './Footer';
 
 
 const useStyles = makeStyles({
@@ -155,6 +156,7 @@ export default function MainPage(props) {//принимает список по�
         {isLoad&&<SimpleBackdrop open={isLoad}/>}
         {content}
       </main>
+      <StickyFooter/>
     </div>
   );
 }
