@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import { GoogleMap, LoadScript, Marker, InfoWindow, DirectionsService, DirectionsRenderer } from '@react-google-maps/api';
 import Button from '@material-ui/core/Button';
+import DescriptionAlerts from './Alert';
 
 
 const MapContainer = () => {
@@ -16,7 +17,8 @@ const MapContainer = () => {
     lng: 35.329384
     }
   }
-
+  const [alert, setAlert] = useState({status:false, message:'', title:''});
+  const [isAlert, setIsAlert] = useState(false);
   const [ selected, setSelected ] = useState(defaultCenter);
   const [ currentPosition, setCurrentPosition ] = useState({});
   useEffect(() => {
@@ -34,6 +36,16 @@ const MapContainer = () => {
     setCurrentPosition(cp);
   };
 
+  const errMsg =_=>{
+    setAlert({status:true, message:'При копіюванні координат сталася помилка. Спробуйте скопіювати наступний текст: 48.673680, 35.329384', title:'Error'});
+    setIsAlert(true);
+  }
+
+  const succMsg =_=>{
+    setAlert({status:true, message:'Координати успішно скопійовано до буферу обміну.', title:'Success'})
+    setIsAlert(true);
+  }
+
   const fallbackCopyTextToClipboard = (text)=> {
   let textArea = document.createElement("textarea");
   textArea.value = text;
@@ -42,10 +54,9 @@ const MapContainer = () => {
   textArea.select();
   try {
     let successful = document.execCommand('copy');
-    let msg = successful ? 'successful' : 'unsuccessful';
-    console.log('Fallback: Copying text command was ' + msg);
+    successful?succMsg():errMsg();
   } catch (err) {
-    console.error('Fallback: Oops, unable to copy', err);
+    errMsg();
   }
   document.body.removeChild(textArea);
 }
@@ -55,9 +66,9 @@ const copyTextToClipboard = (text)=> {
     return;
   }
   navigator.clipboard.writeText(text).then(function() {
-    console.log('Async: Copying to clipboard was successful!');
+    succMsg();
   }, function(err) {
-    console.error('Async: Could not copy text: ', err);
+    errMsg();
   });
 }
 
@@ -70,9 +81,15 @@ const copyTextToClipboard = (text)=> {
     copyTextToClipboard(`${lat}, ${lng}`);
   }
 
+  const alertClick =_=>{
+    setAlert({status:false, message:'', title:''})
+    setIsAlert(false);
+  }
+
   return (
-     <LoadScript
+      <LoadScript
        googleMapsApiKey='AIzaSyBgikApP8Vqo9-rUEuis_fD5Wzsn9otlIY'>
+       {isAlert&&(<DescriptionAlerts title={alert.title}message={alert.message} isOpen={alert.status}/>)}
         <GoogleMap
           mapContainerStyle={mapStyles}
           zoom={10}
