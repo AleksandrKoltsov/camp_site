@@ -56,6 +56,9 @@ const useStyles = makeStyles((theme) => ({
     },
     dataPicCont: {
         textAlign: 'center',
+        justifyContent: 'center',
+        margin: '5rem 0 0 0',
+        height: '65vh'
     },
 }));
 
@@ -64,31 +67,29 @@ export default function FullCard (props) {
 // Начал делать деструктуризацию пропса - чтоб было понятно что компонент получает
 // добавил хендлер - чтоб передать датапикеру
     const {changedDate, handleChangedDate} = props;
+
     const handleDate = (arr) =>{
 
-    }
+    };
 
     return (
         <Grid container component="main" className={classes.root}>
             <CssBaseline />
-            <Grid item xs={false} sm={4} md={7} className={classes.image}>
+            <Grid item xs={12} sm={4} md={7} className={classes.image}>
                 <TransitionsModal img={props.data.img} mini={props.data.mini}/>
             </Grid>
-            <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+            <Grid item xs={12} sm={8} md={5} component={Paper} square>
                 <div className={classes.paper}>
-                    <Box className={classes.form} noValidate>
-                        <Box component="span" m={1}>
-                            <h2 className={classes.mainTextHeader}>{props.data.title}</h2>
-                            <p className={classes.mainText}>{props.data.text}</p>
-                        </Box>
-                        <Box className={classes.dataPicCont}>
+                    <Box className={classes.form}>
+                        <h2 className={classes.mainTextHeader}>{props.data.title}</h2>
+                        <Grid className={classes.dataPicCont}>
                             <StaticDateRangePickerExample
-                            handleChangedDate={handleChangedDate}
-                            date={changedDate}
-                            componentHandler={handleDate}
-                            disabledDates={props.data.booked}
+                                handleChangedDate={handleChangedDate}
+                                date={changedDate}
+                                componentHandler={handleDate}
+                                disabledDates={props.data.booked}
                             />
-                        </Box>
+                        </Grid>
                         <Button
                             // type="submit"
                             fullWidth
@@ -102,6 +103,13 @@ export default function FullCard (props) {
                         {/*<Box mt={5}>*/}
                         {/*    <Copyright />*/}
                         {/*</Box>*/}
+                    </Box>
+                </div>
+            </Grid>
+            <Grid item xs={12}>
+                <div className={classes.paper}>
+                    <Box component="span" m={1}>
+                        <p className={classes.mainText}>{props.data.text}</p>
                     </Box>
                 </div>
             </Grid>

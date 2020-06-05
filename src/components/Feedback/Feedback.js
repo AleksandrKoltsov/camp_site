@@ -27,6 +27,7 @@ const useStyles = makeStyles((theme) => ({
     },
     submit: {
         margin: theme.spacing(3, 0, 2),
+        width: '100%',
     },
     rating: {
         display: 'flex',
@@ -45,13 +46,12 @@ const useStyles = makeStyles((theme) => ({
         width: '100%'
     },
     review: {
-        width: '67%',
         height: '100vh',
-        overflowY: 'scroll'
+        overflowY: 'scroll',
     }
 }));
 
-export default function Fitback (props) {
+export default function Feedback (props) {
     const data = props.data;
     const classes = useStyles();
     const [name, setName] = useState('');
@@ -98,13 +98,13 @@ export default function Fitback (props) {
     return (
         <Grid container component="main" className={classes.root}>
             <CssBaseline />
-            <Box
-                 xs={4}
-                 sm={12}
+            <Grid item
+                  xs={12}
+                  sm={4}
+                  md={4}
                  component={Paper}
-                 elevation={12}
+                 // elevation={12}
                  square
-                 justify="center"
                  ml={2}
             >
                 <form className={classes.form} onSubmit={handleSubmit} noValidate>
@@ -172,7 +172,7 @@ export default function Fitback (props) {
                             </Box>
                             <Button
                                 type="submit"
-                                fullWidth
+                                // fullWidth
                                 variant="contained"
                                 color="primary"
                                 className={classes.submit}
@@ -181,25 +181,23 @@ export default function Fitback (props) {
                         </div>
                     </div>
                 </form>
-            </Box>
-            <Box
+            </Grid>
+            <Grid item
                 className={classes.review}
-                 xs={8}
-                 sm={12}
-                 component={Paper}
-                 elevation={12}
-                 square
-                 justify="center"
-                 ml={2}
-
+                xs={12}
+                sm={8}
+                md={8}
+                component={Paper}
+                // elevation={12}
+                square
             >
-            <div>
-                {data.map((el, i) => {
-                   return (
-                       <Review key={i} item={el} />
-                )}).reverse()}
-            </div>
-            </Box>
+                <div>
+                    {data.map((el, i) => {
+                       return (
+                           <Review key={i} item={el} />
+                    )}).reverse()}
+                </div>
+            </Grid>
         </Grid>
     );
 }
