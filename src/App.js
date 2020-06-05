@@ -12,6 +12,7 @@ import FormContainer from "./components/Forms";
 import TerritoryMap from "./components/TerritoryMap";
 import SimpleBackdrop from "./components/Loader";
 import Grid from '@material-ui/core/Grid';
+import MapContainer from './components/Map';
 
 
 class App extends React.Component {
@@ -30,7 +31,7 @@ class App extends React.Component {
     this.formLink = 'https://script.google.com/macros/s/AKfycbx64rdwZnavnYIdDmbUXC3BxzWEEzCv_7B7_ngqkDr9SbPfD3E/exec';
     // this.formLink = 'https://script.google.com/macros/s/AKfycbxIjKe8TfxxsbfZle-_G_uWFs7qZa5TkSVDosNVC9EtclMbSao/exec?';
     //метод для загрузки данных из таблицы
-    this.menu = ['HOME', 'CHOOSE A HOUSE', 'MAP', 'ABOUT US', 'GALLERY']; // список пунктов для меню - передаем в MainPage
+    this.menu = ['ГОЛОВНА', 'ВИБРАТИ БУДИНОК', 'ЯК ДІСТАТИСЯ', 'ПРО НАС', 'ГАЛЕРЕЯ']; // список пунктов для меню - передаем в MainPage
     this.favorite = localStorage.getItem('fav')||[];
     //ссылка для получения объекта отзывов
     this.getReviewLink = 'https://spreadsheets.google.com/feeds/list/1sZPcAjPYYH3gm8-DJQlDf-5ndS7ZHJGWaqL3TFbfkzc/1/public/full?alt=json';
@@ -81,7 +82,7 @@ class App extends React.Component {
           />
         </Box>
       </div>),
-      (<div><Box mt={15}>MAP</Box>
+      (<div><Box mt={15}><MapContainer/></Box>
       </div>),
       (<div><Box mt={15}>ABOUT US</Box>
       </div>),
