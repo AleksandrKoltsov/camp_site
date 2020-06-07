@@ -11,7 +11,7 @@ import TelegramIcon from '@material-ui/icons/Telegram';
 
 function Copyright() {
     return (
-        <Typography variant="body2" color="textSecondary">
+        <Typography variant="body2" color="white">
             {'Copyright © '}
             <Link color="inherit" href="#">
                 Your Website
@@ -33,7 +33,8 @@ const useStyles = makeStyles((theme) => ({
     },
     footer: {
         padding: theme.spacing(3, 2),
-        marginTop: 'auto',
+        width: '100%',
+        marginTop: '15rem',
         minHeight: '30vh',
         // backgroundColor: '#0d47a1',
         background: 'linear-gradient(#3241A2, #3241A2, #212121 100%);',
@@ -92,7 +93,7 @@ const useStyles = makeStyles((theme) => ({
     copyright: {
         display: 'block',
         textAlign: 'center',
-        width: '96.5vw',
+        width: '100%',
         // border: '1px solid red',
     },
     soc: {
