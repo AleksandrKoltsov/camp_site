@@ -42,7 +42,8 @@ const useStyles = makeStyles({
     transition:'all .1s linear',
   },
   visibleBar:{
-    backgroundColor:'#221F1F',
+    background: 'linear-gradient(#212121, #3241A2, #3241A2 100%);',
+    boxShadow: '0 10px 18px rgba(0,0,0,0.2), 0 10px 10px rgba(0,0,0,0.2)',
     color:'white',
     height:"inherit",
     paddingTop:0,

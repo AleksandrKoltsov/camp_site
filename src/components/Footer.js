@@ -11,7 +11,7 @@ import TelegramIcon from '@material-ui/icons/Telegram';
 
 function Copyright() {
     return (
-        <Typography variant="body2" color="white">
+        <Typography variant="body2" color="inherit">
             {'Copyright © '}
             <Link color="inherit" href="#">
                 Your Website
@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
     footer: {
         padding: theme.spacing(3, 2),
         width: '100%',
-        marginTop: '15rem',
+        marginTop: '7rem',
         minHeight: '30vh',
         // backgroundColor: '#0d47a1',
         background: 'linear-gradient(#3241A2, #3241A2, #212121 100%);',
@@ -97,7 +97,10 @@ const useStyles = makeStyles((theme) => ({
         // border: '1px solid red',
     },
     soc: {
-        padding: '2rem',
+        display: 'flex',
+        flexDirection: 'column',
+        margin: '1rem 0 0 0',
+        alignItems: 'center',
     },
 }));
 
@@ -112,8 +115,8 @@ export default function StickyFooter() {
                     <Grid container className={classes.smallCont}>
                         <span className={classes.header}>Проект</span>
                         <ul className={classes.text}>
-                            <li><a href="#">GitHub</a></li>
-                            <li><a href="#">Heroku</a></li>
+                            <li><a href="https://github.com/AleksandrKoltsov/camp_site">GitHub</a></li>
+                            <li><a href="https://camp-base.herokuapp.com/">Heroku</a></li>
                             <li><a href="#">Google</a></li>
                         </ul>
                     </Grid>
@@ -123,10 +126,10 @@ export default function StickyFooter() {
                             <li><a href="#">Зауваження</a></li>
                             <li><a href="#">Питання</a></li>
                             <li><a href="#">Сповістити про помилку</a></li>
-                            <li><a href="#">Отримати допомогу</a></li>
                         </ul>
                     </Grid>
                     <Grid container className={classes.smallCont}>
+                        <span className={classes.header}>Ми в соц. мережах</span>
                         <div className={classes.soc}>
                             <a href=""><FacebookIcon  fontSize='large'/></a>
                             <a href=""><InstagramIcon fontSize='large'/></a>
