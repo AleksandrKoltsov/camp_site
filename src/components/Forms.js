@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
         alignItems: 'center',
     },
     form: {
-        width: '100%', // Fix IE 11 issue.
+        width: '50vw', // Fix IE 11 issue.
         marginTop: theme.spacing(3),
     },
     submit: {
@@ -65,7 +65,7 @@ export default function FormContainer (props) {
             props.handleClickOrder({
                 h: '15',
                 d: {
-                    cd: new Date(),
+                    cd: new Date().toString(),//new
                     ad: new Date(date.ad).toString(),//new
                     dd: new Date(date.dd).toString(),//new
                 },
@@ -106,63 +106,65 @@ export default function FormContainer (props) {
             <div className={classes.paper}>
                 <form className={classes.form} onSubmit={handleSubmit}>
                     <Grid container spacing={2}>
-                        <Grid item xs={12}>
-                            <TextField
-                                autoComplete="fname"
-                                name="n"
-                                variant="outlined"
-                                required
-                                fullWidth
-                                error={errorState.name}
-                                helperText={errorText.name}
-                                id="firstName"
-                                label="П.І.Б."
-                                autoFocus
-                                value={name}
-                                onChange={(e)=>setName(e.target.value)}
-                            />
+                        <Grid container item xs={12} sm={6} md={6} lg={6} xl={6}>
+                            <Grid item xs={12}>
+                                <TextField
+                                    autoComplete="fname"
+                                    name="n"
+                                    variant="outlined"
+                                    required
+                                    fullWidth
+                                    error={errorState.name}
+                                    helperText={errorText.name}
+                                    id="firstName"
+                                    label="П.І.Б."
+                                    autoFocus
+                                    value={name}
+                                    onChange={(e)=>setName(e.target.value)}
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextField
+                                    variant="outlined"
+                                    required
+                                    fullWidth
+                                    id="phone"
+                                    label="Тел."
+                                    name="phone"
+                                    autoComplete="phone"
+                                    error={errorState.phone}
+                                    placeholder="+380XXXXXXXXX"
+                                    helperText={errorText.phone}
+                                    value={phone}
+                                    onChange={(e)=>setPhone(e.target.value)}
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextField
+                                    variant="outlined"
+                                    required
+                                    fullWidth
+                                    id="email"
+                                    label="E-mail"
+                                    name="email"
+                                    autoComplete="email"
+                                    error={errorState.email}
+                                    helperText={errorText.email}
+                                    value={email}
+                                    onChange={(e)=>setEmail(e.target.value)}
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <DatePicker
+                                     disableFuture
+                                     label="Date of birth"
+                                     value={selectedDate}
+                                     onChange={date => handleDateChange(date)}
+                                     renderInput={props => <TextField {...props} />}
+                                />
+                            </Grid>
                         </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                variant="outlined"
-                                required
-                                fullWidth
-                                id="phone"
-                                label="Тел."
-                                name="phone"
-                                autoComplete="phone"
-                                error={errorState.phone}
-                                placeholder="+380XXXXXXXXX"
-                                helperText={errorText.phone}
-                                value={phone}
-                                onChange={(e)=>setPhone(e.target.value)}
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                variant="outlined"
-                                required
-                                fullWidth
-                                id="email"
-                                label="E-mail"
-                                name="email"
-                                autoComplete="email"
-                                error={errorState.email}
-                                helperText={errorText.email}
-                                value={email}
-                                onChange={(e)=>setEmail(e.target.value)}
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                        <DatePicker
-                             disableFuture
-                             label="Date of birth"
-                             value={selectedDate}
-                             onChange={date => handleDateChange(date)}
-                             renderInput={props => <TextField {...props} />}
-                           />
-                        </Grid>
-                        <Grid item xs={12}>
+                        <Grid item container xs={12} sm={6} md={6} lg={6} xl={6}>
                             <StaticDateRangePickerExample
                                 handleChangedDate={handleChangedDate}
                                 date={changedDate}
