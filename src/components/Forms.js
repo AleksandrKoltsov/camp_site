@@ -65,6 +65,7 @@ export default function FormContainer (props) {
             props.handleClickOrder({
                 h: '15',
                 d: {
+
                     cd: new Date().toString(),//new
                     ad: new Date(date.ad).toString(),//new
                     dd: new Date(date.dd).toString(),//new
