@@ -13,9 +13,10 @@ import ListItemText from '@material-ui/core/ListItemText';
 // import Logo from './Whiskey_Kings_alfa.png';
 import Link from '@material-ui/core/Link';
 import Logo from './LogoNav';
-import ScrollHandler from './Scroll'
+import ScrollHandler from './Scroll';
 import { useState } from 'react';
-import SimpleBackdrop from './Loader'
+import SimpleBackdrop from './Loader';
+import StickyFooter from './Footer';
 
 
 const useStyles = makeStyles({
@@ -41,7 +42,8 @@ const useStyles = makeStyles({
     transition:'all .1s linear',
   },
   visibleBar:{
-    backgroundColor:'#221F1F',
+    background: 'linear-gradient(#212121, #3241A2, #3241A2 100%);',
+    boxShadow: '0 10px 18px rgba(0,0,0,0.2), 0 10px 10px rgba(0,0,0,0.2)',
     color:'white',
     height:"inherit",
     paddingTop:0,
@@ -155,6 +157,7 @@ export default function MainPage(props) {//принимает список по�
         {isLoad&&<SimpleBackdrop open={isLoad}/>}
         {content}
       </main>
+      <StickyFooter/>
     </div>
   );
 }
