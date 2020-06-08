@@ -14,6 +14,7 @@ import SimpleBackdrop from "./components/Loader";
 import Grid from '@material-ui/core/Grid';
 import MapContainer from './components/Map';
 import Message from "./components/Message";
+import News from "./components/News";
 
 
 
@@ -91,7 +92,7 @@ class App extends React.Component {
       </div>),
       (<div><Box mt={15}>ABOUT US</Box>
       </div>),
-      (<div><Box mt={15}>GALLERY</Box>
+      (<div><Box mt={15}><News /></Box>
       </div>),
     ];
     return structure[pos];
