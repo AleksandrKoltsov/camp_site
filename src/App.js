@@ -165,7 +165,7 @@ class App extends React.Component {
       });
     }
     return [];
-              }
+  }
 
   //передача объекта отзывов методом POST
   handleReview(data){
