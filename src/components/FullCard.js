@@ -1,32 +1,17 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Link from '@material-ui/core/Link';
 import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 //old components
 import TransitionsModal from './fullCardComponent/Modal.js'
 import StaticDateRangePickerExample from "./DatePicker";
 
-// function Copyright() {
-//     return (
-//         <Typography variant="body2" color="textSecondary" align="center">
-//             {'Copyright © '}
-//             <Link color="inherit" href="https://material-ui.com/">
-//                 Your Website
-//             </Link>{' '}
-//             {new Date().getFullYear()}
-//             {'.'}
-//         </Typography>
-//     );
-// }
-
 const useStyles = makeStyles((theme) => ({
     root: {
-        height: '100vh',
+        height: '100%',
     },
     image: {
         backgroundRepeat: 'no-repeat',
@@ -100,9 +85,6 @@ export default function FullCard (props) {
                         >
                             Оформить
                         </Button>
-                        {/*<Box mt={5}>*/}
-                        {/*    <Copyright />*/}
-                        {/*</Box>*/}
                     </Box>
                 </div>
             </Grid>
@@ -116,74 +98,3 @@ export default function FullCard (props) {
         </Grid>
     );
 }
-
-
-
-
-
-
-// import React from 'react';
-// import Box from '@material-ui/core/Box';
-//
-// import { makeStyles } from '@material-ui/core/styles';
-// import Button from '@material-ui/core/Button';
-// import Container from "@material-ui/core/Container";
-// import CssBaseline from "@material-ui/core/CssBaseline";
-//date-picker
-
-//-----------------------
-//
-// const useStyles = makeStyles((theme) => ({
-//     root: {
-//         '& > *': {
-//             margin: theme.spacing(1),
-//             width: '25ch',
-//         },
-//         mainText:{
-//             textAlign: 'justify',
-//         },
-//         mainTextHeader: {
-//             textAlign: 'center',
-//         },
-//
-//     },
-//     paper: {
-//         marginTop: theme.spacing(15),
-//         display: 'flex',
-//         flexDirection: 'column',
-//         alignItems: 'center',
-//     },
-//     container: {
-//         display: 'flex',
-//         flexWrap: 'wrap',
-//     },
-// }));
-//
-// export default function FullCard (props) {
-//     console.log(props);
-//     const classes = useStyles();
-//     return (
-//     <Container component="main" maxWidth="xs=12">
-//         <CssBaseline />
-//         <div className={classes.paper}>
-//             <Box component="div" m={2}>
-//                 <TransitionsModal img={props.data.img}
-//                                 mini={props.data.mini}
-//                 />
-//                 <Box component="span" m={1}>
-//                    <h2 className={classes.mainTextHeader}>{props.data.title}</h2>
-//                     <p className={classes.mainText}>{props.data.text}</p>
-//                 </Box>
-//                 <Box>
-//                     <InlineDatePicker />
-//                 </Box>
-//                 <div className={classes.root}>
-//                     <Button variant="contained" onClick={props.handleClickForm}>
-//                         Оформить
-//                     </Button>
-//                 </div>
-//             </Box>
-//         </div>
-//     </Container>
-//     );
-// }
