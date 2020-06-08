@@ -111,7 +111,7 @@ export default function FormContainer (props) {
                             <Grid item xs={12}>
                                 <TextField
                                     autoComplete="fname"
-                                    name="n"
+                                    name="name"
                                     variant="outlined"
                                     required
                                     fullWidth

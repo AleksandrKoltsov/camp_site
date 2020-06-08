@@ -254,6 +254,7 @@ class App extends React.Component {
       this.setState({...this.state, content: <Message state={true}/>});
       console.log(data)
     })}catch(e){
+      this.setState({...this.state, error:true});
       this.setState({...this.state, content: <Message state={false}/>});
     }
   }

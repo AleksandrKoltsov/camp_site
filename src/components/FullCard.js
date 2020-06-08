@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
     },
     form: {
         width: '100%', // Fix IE 11 issue.
-        marginTop: theme.spacing(1),
+        // marginTop: theme.spacing(1),
     },
     submit: {
         margin: theme.spacing(3, 0, 2),
@@ -90,7 +90,7 @@ export default function FullCard (props) {
             </Grid>
             <Grid item xs={12}>
                 <div className={classes.paper}>
-                    <Box component="span" m={1}>
+                    <Box component="div" m={1}>
                         <p className={classes.mainText}>{props.data.text}</p>
                     </Box>
                 </div>

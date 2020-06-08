@@ -33,26 +33,26 @@ export default function Message (props) {
     const classes = useStyles();
     const {state} = props;
     return (
-            <Grid
-                className={classes.paper}
-                container
-                direction="row"
-                justify="center"
-                alignItems="center"
-                component={Paper}
-            >
-                <CssBaseline/>
-                {state ?
-                    <Box xs={12} justify="center" alignItems="center" className={classes.green}>
-                        <span>Операція виконана успішно</span>
-                        <span className={classes.check}><CheckCircleIcon fontSize={'large'}/></span>
-                    </Box>
-                    :
-                    <Box xs={12} justify="center" alignItems="center" className={classes.red}>
-                        <span>Виникла помилочка, спробуйте ще!</span>
-                        <span className={classes.check}><CancelIcon fontSize={'large'}/></span>
-                    </Box>
-                }
-            </Grid>
+        <Grid
+            className={classes.paper}
+            container
+            direction="row"
+            justify="center"
+            alignItems="center"
+            component={Paper}
+        >
+            <CssBaseline/>
+            {state ?
+                <Box xs={12} justify="center" alignItems="center" className={classes.green}>
+                    <span>Операція виконана успішно</span>
+                    <span className={classes.check}><CheckCircleIcon fontSize={'large'}/></span>
+                </Box>
+                :
+                <Box xs={12} justify="center" alignItems="center" className={classes.red}>
+                    <span>Виникла помилочка, спробуйте ще!</span>
+                    <span className={classes.check}><CancelIcon fontSize={'large'}/></span>
+                </Box>
+            }
+        </Grid>
     );
 }
