@@ -168,10 +168,10 @@ class App extends React.Component {
               }
 
   //передача объекта отзывов методом POST
-  handleReview(data){
+  async handleReview(data){
     this.setState({...this.state, isLoadForm: true});
     // console.log(data);
-    try{fetch(this.postReviewLink, {
+    try{await fetch(this.postReviewLink, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -182,6 +182,7 @@ class App extends React.Component {
         this.setState({...this.state, isLoadForm: false});
         this.setState({...this.state, content: <Message state={true}/>});
     })}catch(e){
+      this.setState({...this.state, isLoadForm: false});
       this.setState({...this.state, content: <Message state={false}/>});
     }
   }
@@ -240,21 +241,27 @@ class App extends React.Component {
 // dop//date of payment
 // am//amount
 
-  handleClickForm(data){
+  async handleClickForm(data){
     this.setState({...this.state, isLoadForm: true});
     console.log(data);
-    try{fetch(this.formLink, {
+    try{
+      await fetch(this.formLink, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
       body: JSON.stringify(data),
-    }).then(result=>result.json()).then(data=>{
+    })
+    .then(result=>result.json())
+    .then(data=>{
       this.setState({...this.state, isLoadForm: false});
       this.setState({...this.state, content: <Message state={true}/>});
       console.log(data)
-    })}catch(e){
+    })
+    }catch(e){
+      this.setState({...this.state, isLoadForm: false});
       this.setState({...this.state, content: <Message state={false}/>});
+      // this.setState({...this.state, content: <Message state={false}/>});
     }
   }
 //   handleClickForm(data){
