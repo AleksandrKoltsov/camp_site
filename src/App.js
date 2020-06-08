@@ -35,7 +35,8 @@ class App extends React.Component {
     this.formLink = 'https://script.google.com/macros/s/AKfycbx64rdwZnavnYIdDmbUXC3BxzWEEzCv_7B7_ngqkDr9SbPfD3E/exec';
     // this.formLink = 'https://script.google.com/macros/s/AKfycbxIjKe8TfxxsbfZle-_G_uWFs7qZa5TkSVDosNVC9EtclMbSao/exec?';
     //метод для загрузки данных из таблицы
-    this.menu = ['ГОЛОВНА', 'ВИБРАТИ БУДИНОК', 'ЯК ДІСТАТИСЯ', 'ПРО НАС', 'ГАЛЕРЕЯ']; // список пунктов для меню - передаем в MainPage
+    this.menu = ['ГОЛОВНА', 'ВИБРАТИ БУДИНОК', 'ЯК ДІСТАТИСЯ', 'ПРО НАС', 'НОВИНИ']; // список пунктов для меню -
+    // передаем в MainPage
     this.favorite = localStorage.getItem('fav')||[];
     //ссылка для получения объекта отзывов
     this.getReviewLink = 'https://spreadsheets.google.com/feeds/list/1sZPcAjPYYH3gm8-DJQlDf-5ndS7ZHJGWaqL3TFbfkzc/1/public/full?alt=json';
@@ -155,14 +156,14 @@ class App extends React.Component {
   parseReview({feed}) {
     if(feed.entry){
       return [...feed.entry].map(({gsx$rating, gsx$name, gsx$email, gsx$review, gsx$date}) => {
-                    return {
-                        rating: gsx$rating.$t,
-                        name: gsx$name.$t,
-                        email: gsx$email.$t,
-                        review: gsx$review.$t,
-                        date: gsx$date.$t
-                    };//Data - обьект данных для review
-                });
+          return {
+              rating: gsx$rating.$t,
+              name: gsx$name.$t,
+              email: gsx$email.$t,
+              review: gsx$review.$t,
+              date: gsx$date.$t
+          };//Data - обьект данных для review
+      });
     }
     return [];
               }
