@@ -31,24 +31,23 @@ const useStyles = makeStyles({
     backgroundPosition:'center',
     backgroundRepeat:'no-repeat',
     backgroundSize:'contain',
+    transition:'all .2s linear',
     },
   hiddenBar:{
     backgroundColor:'transparent',
-    height:"20vh",
-    color:'#221F1F',
+    color:'#212121',
     boxShadow:"none",
     paddingTop:"25px",
     paddingBottom:"25px",
-    transition:'all .1s linear',
+    transition:'all .2s linear',
   },
   visibleBar:{
     background: 'linear-gradient(#212121, #3241A2, #3241A2 100%);',
     boxShadow: '0 10px 18px rgba(0,0,0,0.2), 0 10px 10px rgba(0,0,0,0.2)',
     color:'white',
-    height:"inherit",
     paddingTop:0,
     paddingBottom:0,
-    transition:'all .1s linear',
+    transition:'all .2s linear',
   },
   fullList: {
     width: 'auto',
@@ -57,9 +56,11 @@ const useStyles = makeStyles({
     flexGrow: 1,
   },
   toolbarGroup:{
-    justifyContent:"space-between",
     flexDirection:"row",
   },
+  logo:{
+    margin:'auto',
+  }
 });
 
 export default function MainPage(props) {//принимает список позиций меню, handleClick для обработки клика по меню,и контент для отрисовки
@@ -68,11 +69,11 @@ export default function MainPage(props) {//принимает список по�
   const [state, setState] = React.useState({
     menu: false,// состояние меню - открыто закрыто
   });
-  const [svgColor, setSvgColor] = React.useState('#221F1F');
+  const [svgColor, setSvgColor] = React.useState('#212121');
   const [shouldHideHeader, setShouldHideHeader] = useState('hiddenBar');
 
     const MINIMUM_SCROLL = 50;
-    const TIMEOUT_DELAY = 100;
+    const TIMEOUT_DELAY = 50;
     ScrollHandler(callbackData => {
       const { currentScrollTop } = callbackData;
       const isMinimumScrolled = currentScrollTop > MINIMUM_SCROLL;
@@ -84,7 +85,7 @@ export default function MainPage(props) {//принимает список по�
         }else{
           setTimeout(() => {
             setShouldHideHeader('hiddenBar');
-            setSvgColor('#221F1F');
+            setSvgColor('#212121');
           }, TIMEOUT_DELAY);
         }
     });
@@ -131,18 +132,8 @@ export default function MainPage(props) {//принимает список по�
           >
             <MenuIcon />
           </IconButton>
+          <Box className={classes.logo}>
           <Logo color={svgColor}/>
-          <Box component="div" display="block">
-            <Typography>
-            <Link href="https://drive.google.com/open?id=1BuePN0GHsl2ig48EYF2Z9Amx6aA94tE9lYTTy-tg4dY" color='inherit'>
-              google table
-            </Link>
-          </Typography>
-            <Typography>
-            <Link href="https://drive.google.com/open?id=1wMW9gsr43GQ-fkDuYRiGCc24oUlSas_s" color='inherit'>
-              google drive
-            </Link>
-            </Typography>
           </Box>
         </Toolbar>
       </AppBar>
