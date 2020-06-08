@@ -35,8 +35,8 @@ export default function AdvancedGridList(props) {//принимает масси
 return (
   <div>
       <GridList cellHeight={200} spacing={1} className={classes.gridList}>
-        {data.map(tile => (
-          <GridListTile key={tile.img} cols={1} rows={2}>
+        {data.map((tile, i) => (
+          <GridListTile key={tile.img} cols={i%3===0?2:1} rows={2}>
             <img src={tile.img} alt={tile.title} />
             <GridListTileBar
               titlePosition="top"
