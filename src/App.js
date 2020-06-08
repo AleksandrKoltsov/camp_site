@@ -14,13 +14,8 @@ import SimpleBackdrop from "./components/Loader";
 import Grid from '@material-ui/core/Grid';
 import MapContainer from './components/Map';
 import Message from "./components/Message";
-<<<<<<< HEAD
-import News from "./components/News";
-=======
+import News from "./components/News/News";
 import AboutUs from "./components/AboutUs";
->>>>>>> 77aae854fc39420b02379527aa5ed2b9f23dd0e3
-
-
 
 class App extends React.Component {
   constructor(props){
