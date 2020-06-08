@@ -14,7 +14,11 @@ import SimpleBackdrop from "./components/Loader";
 import Grid from '@material-ui/core/Grid';
 import MapContainer from './components/Map';
 import Message from "./components/Message";
+<<<<<<< HEAD
 import News from "./components/News";
+=======
+import AboutUs from "./components/AboutUs";
+>>>>>>> 77aae854fc39420b02379527aa5ed2b9f23dd0e3
 
 
 
@@ -90,7 +94,7 @@ class App extends React.Component {
       </div>),
       (<div><Box mt={15}><MapContainer/></Box>
       </div>),
-      (<div><Box mt={15}>ABOUT US</Box>
+      (<div><Box mt={15}><AboutUs/></Box>
       </div>),
       (<div><Box mt={15}><News /></Box>
       </div>),
