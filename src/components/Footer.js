@@ -57,13 +57,14 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'space-around',
         alignContent: 'flex-start',
         width: '100%',
+        paddingLeft: '13vw'
     },
     smallCont: {
         // margin: '1rem',
         padding: '0.8rem',
         flex: '0 1 auto',
         flexDirection: 'column',
-        alignItems: 'center',
+        alignItems: 'flex-start',
         // alignSelf: 'stretch',
         '& smallCont:nth-child(1)': {
             flex: '0 1 30vw',
@@ -81,13 +82,14 @@ const useStyles = makeStyles((theme) => ({
         fontWeight: '600',
         color: '#fff',
         margin: '0, 2rem, 0, 2rem',
-        padding: '0 0 0 2.5rem',
+        // padding: '0 0 0 2.5rem',
         // border: '1px solid red',
         // textAlign: 'center'
     },
     text: {
         listStyleType: 'none',
         fontSize: '1rem',
+        margin: '1rem 0 0 -2.5rem'
         // border: '1px solid red',
     },
     copyright: {
@@ -100,7 +102,7 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'column',
         margin: '1rem 0 0 0',
-        alignItems: 'center',
+        alignItems: 'flex-start',
     },
 }));
 
@@ -131,9 +133,9 @@ export default function StickyFooter() {
                     <Grid container className={classes.smallCont}>
                         <span className={classes.header}>Ми в соц. мережах</span>
                         <div className={classes.soc}>
-                            <a href=""><FacebookIcon  fontSize='large'/></a>
-                            <a href=""><InstagramIcon fontSize='large'/></a>
-                            <a href=""><TelegramIcon fontSize='large'/></a>
+                            <a href=""><FacebookIcon  fontSize='small'/></a>
+                            <a href=""><InstagramIcon fontSize='small'/></a>
+                            <a href=""><TelegramIcon fontSize='small'/></a>
                         </div>
                     </Grid>
                 </Grid>
