@@ -155,14 +155,14 @@ class App extends React.Component {
   parseReview({feed}) {
     if(feed.entry){
       return [...feed.entry].map(({gsx$rating, gsx$name, gsx$email, gsx$review, gsx$date}) => {
-                    return {
-                        rating: gsx$rating.$t,
-                        name: gsx$name.$t,
-                        email: gsx$email.$t,
-                        review: gsx$review.$t,
-                        date: gsx$date.$t
-                    };//Data - обьект данных для review
-                });
+          return {
+              rating: gsx$rating.$t,
+              name: gsx$name.$t,
+              email: gsx$email.$t,
+              review: gsx$review.$t,
+              date: gsx$date.$t
+          };//Data - обьект данных для review
+      });
     }
     return [];
               }
