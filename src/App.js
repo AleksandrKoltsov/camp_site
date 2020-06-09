@@ -174,8 +174,9 @@ class App extends React.Component {
   //метод для получения объекта отзыва
   parseReview({feed}) {
     if(feed.entry){
-      return [...feed.entry].map(({gsx$rating, gsx$name, gsx$email, gsx$review, gsx$date}) => {
+      return [...feed.entry].map(({gsx$id, gsx$rating, gsx$name, gsx$email, gsx$review, gsx$date}) => {
           return {
+              id: gsx$id.$t,
               rating: gsx$rating.$t,
               name: gsx$name.$t,
               email: gsx$email.$t,
@@ -275,8 +276,10 @@ class App extends React.Component {
     .then(result=>result.json())
     .then(data=>{
       this.setState({...this.state, isLoadForm: false});
+      this.setState({...this.state, changedDate: {ad:new Date(), dd:new Date(), cd:new Date()}});
       this.setState({...this.state, content: <Message state={true}/>});
-      console.log(data)
+
+      console.log(data);
     })
     }catch(e){
       this.setState({...this.state, isLoadForm: false});
