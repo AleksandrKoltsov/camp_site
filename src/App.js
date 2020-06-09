@@ -111,26 +111,24 @@ class App extends React.Component {
   //метод для загрузки информации из таблицы
 
   async dataLoader(){
-      try{let [data, review, news] = await Promise.all([
-    fetch(this.link).then(value => value.json()),
-    fetch(this.getReviewLink).then(value => value.json()),
-    fetch(this.news).then(value => value.json()),
-  ]);
+    try{let [data, review, news] = await Promise.all([
+      fetch(this.link).then(value => value.json()),
+      fetch(this.getReviewLink).then(value => value.json()),
+      fetch(this.news).then(value => value.json()),
+    ]);
       const parseNews = this.parseNews(news);
       const parsedData = this.parseCards(data);
       const parsedReview = this.parseReview(review);
-      this.setState({...this.state, isFirstLoad: true});
       this.setState({...this.state, news: parseNews});
       this.setState({...this.state, data:parsedData});
       this.setState({...this.state, rev: parsedReview});
-      this.setState({...this.state, content: this.getContent(0)});
-
+      if(!this.state.isFirstLoad){
+        this.setState({...this.state, content: this.getContent(0)});
+        this.setState({...this.state, isFirstLoad: true});
+      }
       setTimeout(()=>{
         this.setState({...this.state, isLoading:false});
       },0);
-        if(this.state.isFirstLoad){
-          this.setState({...this.state, changedDate:{ad:null, dd:null, cd:null}});
-        }
     }catch(e){
       this.setState({...this.state, error:true});
       setTimeout(()=>{
@@ -271,22 +269,22 @@ class App extends React.Component {
 
   async handleClickForm(data){
     this.setState({...this.state, isLoadForm: true});
-    console.log(data);
     try{
       await fetch(this.formLink, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: JSON.stringify(data),
-    })
-    .then(result=>result.json())
-    .then(data=>{
-      this.setState({...this.state, isLoadForm: false});
-      this.setState({...this.state, changedDate: {ad:new Date(), dd:new Date(), cd:new Date()}});
-      this.setState({...this.state, content: <Message state={true}/>});
-      console.log(data);
-    })
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: JSON.stringify(data),
+      })
+          .then(result=>result.json())
+          .then(data=>{
+            this.setState({...this.state, isLoadForm: false});
+            this.setState({...this.state, changedDate: {ad:null, dd:null, cd:null}});
+            this.dataLoader();
+            this.setState({...this.state, content: <Message state={true}/>});
+            console.log(data);
+          })
     }catch(e){
       this.setState({...this.state, isLoadForm: false});
       this.setState({...this.state, isFirstLoad: true});
