@@ -29,7 +29,8 @@ class App extends React.Component {
       isLoading:false,
       error:false,
       // isLoadReview: false,
-      isLoadForm: false
+      isLoadForm: false,
+      isFirstLoad: false,
     };
     // ссылка на таблицу
     this.link = 'https://spreadsheets.google.com/feeds/list/1BuePN0GHsl2ig48EYF2Z9Amx6aA94tE9lYTTy-tg4dY/2/public/full?alt=json';
@@ -118,19 +119,25 @@ class App extends React.Component {
       const parseNews = this.parseNews(news);
       const parsedData = this.parseCards(data);
       const parsedReview = this.parseReview(review);
+      this.setState({...this.state, isFirstLoad: true});
       this.setState({...this.state, news: parseNews});
       this.setState({...this.state, data:parsedData});
       this.setState({...this.state, rev: parsedReview});
-      this.setState({...this.state, content:this.getContent(0)});
+      this.setState({...this.state, content: this.getContent(0)});
+
       setTimeout(()=>{
         this.setState({...this.state, isLoading:false});
-      },0)
+      },0);
+        if(this.state.isFirstLoad){
+          this.setState({...this.state, changedDate:{ad:null, dd:null, cd:null}});
+        }
     }catch(e){
       this.setState({...this.state, error:true});
       setTimeout(()=>{
         this.setState({...this.state, isLoading:false});
       },0)
     }
+
   }
   parseNews({feed}){
     if(feed.entry){
@@ -278,11 +285,11 @@ class App extends React.Component {
       this.setState({...this.state, isLoadForm: false});
       this.setState({...this.state, changedDate: {ad:new Date(), dd:new Date(), cd:new Date()}});
       this.setState({...this.state, content: <Message state={true}/>});
-
       console.log(data);
     })
     }catch(e){
       this.setState({...this.state, isLoadForm: false});
+      this.setState({...this.state, isFirstLoad: true});
       this.setState({...this.state, content: <Message state={false}/>});
       // this.setState({...this.state, content: <Message state={false}/>});
     }
