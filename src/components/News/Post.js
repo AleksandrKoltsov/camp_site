@@ -14,7 +14,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        maxWidth: '70vw',
+        width: '30vw',
         margin: '0 0 1rem 0'
     },
     media: {
@@ -37,8 +37,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Post(props) {
+    console.log(props);
+    const {date, id, img, text, title} = props.item;
     const classes = useStyles();
     const [expanded, setExpanded] = React.useState(false);
+
 
     const handleExpandClick = () => {
         setExpanded(!expanded);
@@ -47,17 +50,17 @@ export default function Post(props) {
     return (
         <Card className={classes.root}>
             <CardHeader
-                title={props.item.title}
-                subheader={props.item.date}
+                title={title}
+                subheader={date}
             />
             <CardMedia
                 className={classes.media}
-                image={props.item.img}
+                image={img}
                 title="Paella dish"
             />
             <CardContent>
                 <Typography variant="body2" color="textSecondary" component="p">
-                    {props.item.text}
+                    {text}
                 </Typography>
             </CardContent>
             <CardActions disableSpacing>
@@ -74,7 +77,7 @@ export default function Post(props) {
             </CardActions>
             <Collapse in={expanded} timeout="auto" unmountOnExit>
                 <CardContent>
-                    {props.item.text}
+                    {text}
                 </CardContent>
             </Collapse>
         </Card>

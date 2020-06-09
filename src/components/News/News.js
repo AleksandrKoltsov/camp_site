@@ -10,10 +10,11 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
     },
     paper: {
-        margin: theme.spacing(2, 2),
+        margin: theme.spacing(4, 4),
         display: 'flex',
-        flexDirection: 'column',
+        flexDirection: 'row',
         alignItems: 'center',
+        flexWrap: 'wrap',
     },
     header: {
         textAlign: 'center'
@@ -21,16 +22,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function News (props) {
-
-    const data = [
-        {id: 1, title: 'Новина №1', img: 'https://vgorode.ua/img/article/5180/26_main-v1583945938.jpg', text: 'Тут має бути якась цікава новина', date: new Date().toString()},
-        {id: 2, title: 'Новина №2', img: 'https://vgorode.ua/img/article/5180/26_main-v1583945938.jpg', text: 'Тут має бути якась цікава новина', date: new Date().toString()},
-        {id: 3, title: 'Новина №3', img: 'https://vgorode.ua/img/article/5180/26_main-v1583945938.jpg', text: 'Тут має бути якась цікава новина', date: new Date().toString()},
-        {id: 4, title: 'Новина №4', img: 'https://vgorode.ua/img/article/5180/26_main-v1583945938.jpg', text: 'Тут має бути якась цікава новина', date: new Date().toString()},
-        {id: 5, title: 'Новина №5', img: 'https://vgorode.ua/img/article/5180/26_main-v1583945938.jpg', text: 'Тут має бути якась цікава новина', date: new Date().toString()},
-        {id: 6, title: 'Новина №6', img: 'https://vgorode.ua/img/article/5180/26_main-v1583945938.jpg', text: 'Тут має бути якась цікава новина', date: new Date().toString()},
-
-    ];
     const classes = useStyles();
 
     return (
@@ -47,7 +38,7 @@ export default function News (props) {
                   xs={12}
             >
                 <div>
-                    {data.map((el) => {
+                    {props.data.map((el) => {
                         return (
                             <Post key={el.id} item={el} />
                      )}).reverse()}

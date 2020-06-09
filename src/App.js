@@ -25,6 +25,7 @@ class App extends React.Component {
       content:[], // отображаемый на странице в данный момент контент
       changedDate:{ad:null, dd:null, cd:null},
       rev:[],
+      news: [],
       isLoading:false,
       error:false,
       // isLoadReview: false,
@@ -43,6 +44,8 @@ class App extends React.Component {
     //ссылка для отправки ПОСТ запроса с объектом отзывов
     this.postReviewLink = 'https://script.google.com/macros/s/AKfycbzMGcjPUDRrA9YOsIa98Ou5urysQYMWMybtI9ETuYDHyABnaPE/exec';
     // this.loadReview();
+    //ссылка для получения объекта новостей
+    this.news = 'https://spreadsheets.google.com/feeds/list/1M8cbrQWX4aNdVPcj7GSArf_8gGhX8sX_IxOUtM0qzqE/1/public/full?alt=json';
   }
   // метод для получения контента для отображения
   //принимает число-позицию в массиве);
@@ -91,7 +94,7 @@ class App extends React.Component {
       </div>),
       (<div><Box mt={15}><AboutUs/></Box>
       </div>),
-      (<div><Box mt={15}><News /></Box>
+      (<div><Box mt={15}><News data={this.state.news}/></Box>
       </div>),
     ];
     return structure[pos];
@@ -107,12 +110,15 @@ class App extends React.Component {
   //метод для загрузки информации из таблицы
 
   async dataLoader(){
-      try{let [data, review] = await Promise.all([
+      try{let [data, review, news] = await Promise.all([
     fetch(this.link).then(value => value.json()),
-    fetch(this.getReviewLink).then(value => value.json())
+    fetch(this.getReviewLink).then(value => value.json()),
+    fetch(this.news).then(value => value.json()),
   ]);
+      const parseNews = this.parseNews(news);
       const parsedData = this.parseCards(data);
       const parsedReview = this.parseReview(review);
+      this.setState({...this.state, news: parseNews});
       this.setState({...this.state, data:parsedData});
       this.setState({...this.state, rev: parsedReview});
       this.setState({...this.state, content:this.getContent(0)});
@@ -126,7 +132,20 @@ class App extends React.Component {
       },0)
     }
   }
-
+  parseNews({feed}){
+    if(feed.entry){
+      return [...feed.entry].map(({gsx$id, gsx$title, gsx$img, gsx$text, gsx$date}) => {
+        return {
+          id: gsx$id.$t,
+          title: gsx$title.$t,
+          img: gsx$img.$t,
+          text: gsx$text.$t,
+          date: gsx$date.$t
+        };
+      });
+    }
+    return [];
+  }
   parseCards({feed}){
     if(feed.entry){
       return [...feed.entry].sort((a,b)=>{
@@ -166,7 +185,7 @@ class App extends React.Component {
       });
     }
     return [];
-              }
+  }
 
   //передача объекта отзывов методом POST
   async handleReview(data){
