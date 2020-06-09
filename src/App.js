@@ -14,8 +14,8 @@ import SimpleBackdrop from "./components/Loader";
 import Grid from '@material-ui/core/Grid';
 import MapContainer from './components/Map';
 import Message from "./components/Message";
-
-
+import News from "./components/News/News";
+import AboutUs from "./components/AboutUs";
 
 class App extends React.Component {
   constructor(props){
@@ -25,23 +25,28 @@ class App extends React.Component {
       content:[], // отображаемый на странице в данный момент контент
       changedDate:{ad:null, dd:null, cd:null},
       rev:[],
+      news: [],
       isLoading:false,
       error:false,
       // isLoadReview: false,
-      isLoadForm: false
+      isLoadForm: false,
+      isFirstLoad: false,
     };
     // ссылка на таблицу
     this.link = 'https://spreadsheets.google.com/feeds/list/1BuePN0GHsl2ig48EYF2Z9Amx6aA94tE9lYTTy-tg4dY/2/public/full?alt=json';
     this.formLink = 'https://script.google.com/macros/s/AKfycbx64rdwZnavnYIdDmbUXC3BxzWEEzCv_7B7_ngqkDr9SbPfD3E/exec';
     // this.formLink = 'https://script.google.com/macros/s/AKfycbxIjKe8TfxxsbfZle-_G_uWFs7qZa5TkSVDosNVC9EtclMbSao/exec?';
     //метод для загрузки данных из таблицы
-    this.menu = ['ГОЛОВНА', 'ВИБРАТИ БУДИНОК', 'ЯК ДІСТАТИСЯ', 'ПРО НАС', 'ГАЛЕРЕЯ']; // список пунктов для меню - передаем в MainPage
+    this.menu = ['ГОЛОВНА', 'ВИБРАТИ БУДИНОК', 'ЯК ДІСТАТИСЯ', 'ПРО НАС', 'НОВИНИ']; // список пунктов для меню -
+    // передаем в MainPage
     this.favorite = localStorage.getItem('fav')||[];
     //ссылка для получения объекта отзывов
     this.getReviewLink = 'https://spreadsheets.google.com/feeds/list/1sZPcAjPYYH3gm8-DJQlDf-5ndS7ZHJGWaqL3TFbfkzc/1/public/full?alt=json';
     //ссылка для отправки ПОСТ запроса с объектом отзывов
     this.postReviewLink = 'https://script.google.com/macros/s/AKfycbzMGcjPUDRrA9YOsIa98Ou5urysQYMWMybtI9ETuYDHyABnaPE/exec';
     // this.loadReview();
+    //ссылка для получения объекта новостей
+    this.news = 'https://spreadsheets.google.com/feeds/list/1M8cbrQWX4aNdVPcj7GSArf_8gGhX8sX_IxOUtM0qzqE/1/public/full?alt=json';
   }
   // метод для получения контента для отображения
   //принимает число-позицию в массиве);
@@ -88,9 +93,9 @@ class App extends React.Component {
       </div>),
       (<div><Box mt={15}><MapContainer/></Box>
       </div>),
-      (<div><Box mt={15}>ABOUT US</Box>
+      (<div><Box mt={15}><AboutUs/></Box>
       </div>),
-      (<div><Box mt={15}>GALLERY</Box>
+      (<div><Box mt={15}><News data={this.state.news}/></Box>
       </div>),
     ];
     return structure[pos];
@@ -106,26 +111,48 @@ class App extends React.Component {
   //метод для загрузки информации из таблицы
 
   async dataLoader(){
-      try{let [data, review] = await Promise.all([
+      try{let [data, review, news] = await Promise.all([
     fetch(this.link).then(value => value.json()),
-    fetch(this.getReviewLink).then(value => value.json())
+    fetch(this.getReviewLink).then(value => value.json()),
+    fetch(this.news).then(value => value.json()),
   ]);
+      const parseNews = this.parseNews(news);
       const parsedData = this.parseCards(data);
       const parsedReview = this.parseReview(review);
+      this.setState({...this.state, isFirstLoad: true});
+      this.setState({...this.state, news: parseNews});
       this.setState({...this.state, data:parsedData});
       this.setState({...this.state, rev: parsedReview});
-      this.setState({...this.state, content:this.getContent(0)});
+      this.setState({...this.state, content: this.getContent(0)});
+
       setTimeout(()=>{
         this.setState({...this.state, isLoading:false});
-      },0)
+      },0);
+        if(this.state.isFirstLoad){
+          this.setState({...this.state, changedDate:{ad:null, dd:null, cd:null}});
+        }
     }catch(e){
       this.setState({...this.state, error:true});
       setTimeout(()=>{
         this.setState({...this.state, isLoading:false});
       },0)
     }
-  }
 
+  }
+  parseNews({feed}){
+    if(feed.entry){
+      return [...feed.entry].map(({gsx$id, gsx$title, gsx$img, gsx$text, gsx$date}) => {
+        return {
+          id: gsx$id.$t,
+          title: gsx$title.$t,
+          img: gsx$img.$t,
+          text: gsx$text.$t,
+          date: gsx$date.$t
+        };
+      });
+    }
+    return [];
+  }
   parseCards({feed}){
     if(feed.entry){
       return [...feed.entry].sort((a,b)=>{
@@ -154,18 +181,19 @@ class App extends React.Component {
   //метод для получения объекта отзыва
   parseReview({feed}) {
     if(feed.entry){
-      return [...feed.entry].map(({gsx$rating, gsx$name, gsx$email, gsx$review, gsx$date}) => {
-                    return {
-                        rating: gsx$rating.$t,
-                        name: gsx$name.$t,
-                        email: gsx$email.$t,
-                        review: gsx$review.$t,
-                        date: gsx$date.$t
-                    };//Data - обьект данных для review
-                });
+      return [...feed.entry].map(({gsx$id, gsx$rating, gsx$name, gsx$email, gsx$review, gsx$date}) => {
+          return {
+              id: gsx$id.$t,
+              rating: gsx$rating.$t,
+              name: gsx$name.$t,
+              email: gsx$email.$t,
+              review: gsx$review.$t,
+              date: gsx$date.$t
+          };//Data - обьект данных для review
+      });
     }
     return [];
-              }
+  }
 
   //передача объекта отзывов методом POST
   async handleReview(data){
@@ -255,11 +283,13 @@ class App extends React.Component {
     .then(result=>result.json())
     .then(data=>{
       this.setState({...this.state, isLoadForm: false});
+      this.setState({...this.state, changedDate: {ad:new Date(), dd:new Date(), cd:new Date()}});
       this.setState({...this.state, content: <Message state={true}/>});
-      console.log(data)
+      console.log(data);
     })
     }catch(e){
       this.setState({...this.state, isLoadForm: false});
+      this.setState({...this.state, isFirstLoad: true});
       this.setState({...this.state, content: <Message state={false}/>});
       // this.setState({...this.state, content: <Message state={false}/>});
     }

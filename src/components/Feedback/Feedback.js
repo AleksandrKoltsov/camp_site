@@ -52,6 +52,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Feedback (props) {
+    console.log(props);
     const data = props.data;
     const classes = useStyles();
     const [name, setName] = useState('');
@@ -72,6 +73,7 @@ export default function Feedback (props) {
             setErrorText({name: '', email: ''});
 
             props.handleReview({
+                // id: props.data.id,
                 rating: rate,
                 name: name,
                 email: email,
@@ -192,9 +194,9 @@ export default function Feedback (props) {
                 square
             >
                 <div>
-                    {data.map((el, i) => {
+                    {data.map((el) => {
                        return (
-                           <Review key={i} item={el} />
+                           <Review key={el.id} item={el} />
                     )}).reverse()}
                 </div>
             </Grid>
