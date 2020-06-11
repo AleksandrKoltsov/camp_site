@@ -28,38 +28,36 @@ const useStyles = makeStyles(theme => ({
 
 const tutorialSteps = [
   {
-      imgPath:
-      'https://drive.google.com/uc?export=download&id=1l-BlVYJAxpo1loXzHQd9V1QhJKnx-nkO#.mp4',
+      imgPath1:'https://drive.google.com/uc?export=download&id=1WA6wnPzefEUHLcPUhHDKZJwcBuItTDAJ#.mp4',
+      imgPath2:'https://drive.google.com/uc?export=download&id=1IPbvqylwMpnOUXcnVv7HipN0BV-KxzuE#.mp4',
+      imgPath3:'https://drive.google.com/uc?export=download&id=1SQKLkfI0fLal1owsQDfr322uv7tZrG7a#.mp4',
           // 'https://www.videvo.net/videvo_files/converted/2016_01/preview/Forest_15_3b_Videvo.mov47209.webm',
   },
     {
-        imgPath:
-        'https://drive.google.com/uc?export=download&id=1QnThvRoMSy34uJpyOneLnS2JwgMaopKm#.mp4',
+        imgPath1:'https://drive.google.com/uc?export=download&id=1qWTRzhoMS5omhC6i8XFVMTuLscxeuQ8F#.mp4',
+        imgPath2:'https://drive.google.com/uc?export=download&id=1Iwk1KIz9o4buHpp3mPGKC0G5fiIU-D07#.mp4',
+        imgPath3:'https://drive.google.com/uc?export=download&id=1zns24o0pQBnAtfOhHpxkSC9ZImaOzflX#.mp4',
             // 'https://www.videvo.net/videvo_files/converted/2016_11/preview/GOPR6239_1.mov34724.webm',
     },
     {
-        imgPath:
-        'https://drive.google.com/uc?export=download&id=1EQf8oVc5BInmTQSA10Mb5rMc18tVWHHz#.mp4',
+        imgPath1:'https://drive.google.com/uc?export=download&id=1Ivgl408v3hqGqGUxr2JXyuzraFPsA83n#.mp4',
+        imgPath2:'https://drive.google.com/uc?export=download&id=1vcNN-QJ0UaryFmZQs-3i6qTih13sWqVB#.mp4',
+        imgPath3:'https://drive.google.com/uc?export=download&id=1FiGMGBlQxTJUSdDCBe42CkVolIsw4vY1#.mp4',
             // 'https://cdn.videvo.net/videvo_files/video/free/2019-05/small_watermarked/190416_10_Drone1_04_preview.webm',
-    },
-    {
-        imgPath:
-        'https://drive.google.com/uc?export=download&id=1BAdWLh87TgKSfjgg0V9IMcDN92haClzD#.mp4',
-            // 'https://www.videvo.net/videvo_files/converted/2017_12/preview/171124_B1_HD_001.mp494977.webm',
-    },
-    {
-        imgPath:
-        'https://drive.google.com/uc?export=download&id=1igSFDPSvXZyx-7YOvyg3DfjmxqmfC_Y7#.mp4',
-            // 'https://www.videvo.net/videvo_files/converted/2015_05/preview/Barley_3_Videvo.mov94814.webm',
-    },
+    }
 ];
 
 function SwipeableTextMobileStepper() {
     const classes = useStyles();
     const [activeStep, setActiveStep] = React.useState(0);
 
-    const handleStepChange = step => {
-          setActiveStep(step);
+    const handleStepChange = ({target}) => {
+      let step = activeStep + 1;
+      if(step >= tutorialSteps.length){
+          step = 0;
+      }
+      setActiveStep(step);
+      target.currentTime = 0;
     };
 
     return (
@@ -67,19 +65,19 @@ function SwipeableTextMobileStepper() {
             <AutoPlaySwipeableViews
                 axis={'x'}
                 index={activeStep}
-                onChangeIndex={handleStepChange}
                 enableMouseEvents
             >
                 {tutorialSteps.map((step, index) => (
-                  <video
-                  key={index}
-                  autoPlay
-                  loop
-                  src={step.imgPath}
-                  muted
-                  className={classes.img}
-                  >
-                  </video>
+                          <video key={index}
+                            autoPlay
+                            muted
+                            className={classes.img}
+                            onEnded={handleStepChange}
+                            >
+                            <source src={step.imgPath1} type="video/mp4" />
+                            <source src={step.imgPath2} type="video/mp4" />
+                            <source src={step.imgPath3} type="video/mp4" />
+                          </video>
                 ))}
             </AutoPlaySwipeableViews>
         </div>

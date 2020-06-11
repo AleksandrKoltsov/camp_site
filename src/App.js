@@ -128,12 +128,12 @@ class App extends React.Component {
       }
       setTimeout(()=>{
         this.setState({...this.state, isLoading:false});
-      },0);
+      },6000);
     }catch(e){
       this.setState({...this.state, error:true});
       setTimeout(()=>{
         this.setState({...this.state, isLoading:false});
-      },0)
+      },6000)
     }
 
   }
