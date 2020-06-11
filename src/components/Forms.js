@@ -188,7 +188,7 @@ export default function FormContainer (props) {
                     </Grid>
                     <Button
                         type="submit"
-                        fullWidth
+                        fullWidth={true}
                         variant="contained"
                         color="primary"
                         className={classes.submit}
