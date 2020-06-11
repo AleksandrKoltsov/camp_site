@@ -71,11 +71,8 @@ function SwipeableTextMobileStepper() {
                           <video key={index}
                             autoPlay
                             muted
-                            preload={true}
                             className={classes.img}
-                            onEnded={(ev)=>{
-                              handleStepChange(ev);
-                            }}
+                            onEnded={handleStepChange}
                             >
                             <source src={step.imgPath1} type="video/mp4" />
                             <source src={step.imgPath2} type="video/mp4" />
