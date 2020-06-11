@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
         padding: theme.spacing(3, 2),
         width: '100%',
         marginTop: '7rem',
-        minHeight: '30vh',
+        // minHeight: '30vh',
         // backgroundColor: '#0d47a1',
         background: 'linear-gradient(#3241A2, #3241A2, #212121 100%);',
         color: 'white',

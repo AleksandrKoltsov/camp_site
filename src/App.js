@@ -67,7 +67,7 @@ class App extends React.Component {
             />
       </Grid>
       </Box>
-      <Box mb={50}>
+      <Box mb={0}>
           <Feedback
               handleReview={this.handleReview.bind(this)}
               data={this.state.rev}
