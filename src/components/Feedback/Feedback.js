@@ -118,7 +118,7 @@ export default function Feedback (props) {
                                 defaultValue={5}
                                 size="large"
                                 max={10}
-                                value={rate}
+                                value={+rate}
                                 onChange={(e)=>setRate(e.target.value)}
                             />
                         </div>
