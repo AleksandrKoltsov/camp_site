@@ -35,9 +35,9 @@ export default function FormContainer (props) {
     // console.log(props);
     const classes = useStyles();
     const [selectedDate, handleDateChange] = useState(new Date());
-    const [name, setName] = useState();
-    const [phone, setPhone] = useState();
-    const [email, setEmail] = useState();
+    const [name, setName] = useState('');
+    const [phone, setPhone] = useState('');
+    const [email, setEmail] = useState('');
     // const [loadSpinner, setLoadSpinner] = useState(false);
     // new
     const {changedDate, handleChangedDate, data} = props;
@@ -176,13 +176,15 @@ export default function FormContainer (props) {
                         <Grid item xs={12}>
                             <FormControlLabel
                                 control={<Checkbox value="allowExtraEmails" color="primary" />}
-                                label="Я хочу получать новости и промоакции на свою почту"
+                                label="Я хочу отримувати новини та промоакції на свою пошту"
+                                checked
+
                             />
                         </Grid>
                         <Grid item xs={12}>
                             <FormControlLabel
                                 control={<Checkbox value="allowExtraEmails" color="primary" />}
-                                label="оплатить сейчас"
+                                label="оплатити зараз"
                             />
                         </Grid>
                     </Grid>
