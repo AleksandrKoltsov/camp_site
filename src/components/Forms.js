@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function FormContainer (props) {
-    // console.log(props);
+    console.log(props);
     const classes = useStyles();
     const [selectedDate, handleDateChange] = useState(new Date());
     const [name, setName] = useState('');
@@ -63,7 +63,7 @@ export default function FormContainer (props) {
             setErrorState({name: false, phone: false, email: false});
             setErrorText({name: '', phone: '', email: ''});
             props.handleClickOrder({
-                h: '15',
+                h: props.data.house,
                 d: {
 
                     cd: new Date().toString(),//new
