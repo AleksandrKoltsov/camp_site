@@ -268,6 +268,7 @@ class App extends React.Component {
 // am//amount
 
   async handleClickForm(data){
+    console.log(data);
     this.setState({...this.state, isLoadForm: true});
     try{
       await fetch(this.formLink, {
