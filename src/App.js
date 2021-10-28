@@ -33,7 +33,7 @@ class App extends React.Component {
       isFirstLoad: false,
     };
     // ссылка на таблицу
-    this.link = 'https://spreadsheets.google.com/feeds/list/1BuePN0GHsl2ig48EYF2Z9Amx6aA94tE9lYTTy-tg4dY/2/public/full?alt=json';
+    this.link = 'https://gsheets.vercel.app/1BuePN0GHsl2ig48EYF2Z9Amx6aA94tE9lYTTy-tg4dY/WWW';
     this.formLink = 'https://script.google.com/macros/s/AKfycbx64rdwZnavnYIdDmbUXC3BxzWEEzCv_7B7_ngqkDr9SbPfD3E/exec';
     // this.formLink = 'https://script.google.com/macros/s/AKfycbxIjKe8TfxxsbfZle-_G_uWFs7qZa5TkSVDosNVC9EtclMbSao/exec?';
     //метод для загрузки данных из таблицы
@@ -41,12 +41,12 @@ class App extends React.Component {
     // передаем в MainPage
     this.favorite = localStorage.getItem('fav')||[];
     //ссылка для получения объекта отзывов
-    this.getReviewLink = 'https://spreadsheets.google.com/feeds/list/1sZPcAjPYYH3gm8-DJQlDf-5ndS7ZHJGWaqL3TFbfkzc/1/public/full?alt=json';
+    this.getReviewLink = 'https://gsheets.vercel.app/1sZPcAjPYYH3gm8-DJQlDf-5ndS7ZHJGWaqL3TFbfkzc/WWW';
     //ссылка для отправки ПОСТ запроса с объектом отзывов
     this.postReviewLink = 'https://script.google.com/macros/s/AKfycbzMGcjPUDRrA9YOsIa98Ou5urysQYMWMybtI9ETuYDHyABnaPE/exec';
     // this.loadReview();
     //ссылка для получения объекта новостей
-    this.news = 'https://spreadsheets.google.com/feeds/list/1M8cbrQWX4aNdVPcj7GSArf_8gGhX8sX_IxOUtM0qzqE/1/public/full?alt=json';
+    this.news = 'https://gsheets.vercel.app/1M8cbrQWX4aNdVPcj7GSArf_8gGhX8sX_IxOUtM0qzqE/WWW';
   }
   // метод для получения контента для отображения
   //принимает число-позицию в массиве);
