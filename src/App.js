@@ -137,56 +137,48 @@ class App extends React.Component {
     }
 
   }
-  parseNews({feed}){
-    if(feed.entry){
-      return [...feed.entry].map(({gsx$id, gsx$title, gsx$img, gsx$text, gsx$date}) => {
+  parseNews(data){
+    if(data.length){
+      return [...data].map(({ ID, TITLE, IMG, TEXT, DATE }) => {
         return {
-          id: gsx$id.$t,
-          title: gsx$title.$t,
-          img: gsx$img.$t,
-          text: gsx$text.$t,
-          date: gsx$date.$t
+          id: ID,
+          title: TITLE,
+          img: IMG,
+          text: TEXT,
+          date: DATE
         };
       });
     }
     return [];
   }
-  parseCards({feed}){
-    if(feed.entry){
-      return [...feed.entry].sort((a,b)=>{
-      if(a.gsx$text.$t > b.gsx$text.$t){
-        return 1;
-      }
-      if(a.gsx$text.$t < b.gsx$text.$t){
-        return -1;
-      }
-      return 0;
-    }).map(({gsx$house,gsx$text,gsx$id,gsx$image,gsx$title, gsx$price, gsx$booked, gsx$mini}) => {
+  parseCards(data){
+    if(data.length){
+      return [...data].map(({ HOUSE, TEXT, ID, IMAGE, TITLE, PRICE, BOOKED, MINI }) => {
       return {
-        house:gsx$house.$t,
-        id:gsx$id.$t,
-        text:gsx$text.$t,
-        img:gsx$image.$t,
-        title:gsx$title.$t,
-        price:gsx$price.$t,
-        mini:JSON.parse(gsx$mini.$t),
-        booked:JSON.parse(gsx$booked.$t),
+        house:HOUSE,
+        id:ID,
+        text:TEXT,
+        img:IMAGE,
+        title:TITLE,
+        price:PRICE,
+        booked:JSON.parse(BOOKED),
+        mini:JSON.parse(MINI),
       };//Data - обьект данных для карточки
     });
     }
     return [];
   }
   //метод для получения объекта отзыва
-  parseReview({feed}) {
-    if(feed.entry){
-      return [...feed.entry].map(({gsx$id, gsx$rating, gsx$name, gsx$email, gsx$review, gsx$date}) => {
+  parseReview(data) {
+    if(data.length){
+      return [...data].map(({ID, RATING, NAME, EMAIL, REVIEW, DATE}) => {
           return {
-              id: gsx$id.$t,
-              rating: gsx$rating.$t,
-              name: gsx$name.$t,
-              email: gsx$email.$t,
-              review: gsx$review.$t,
-              date: gsx$date.$t
+              id: ID,
+              rating: RATING,
+              name: NAME,
+              email: EMAIL,
+              review: REVIEW,
+              date: DATE
           };//Data - обьект данных для review
       });
     }

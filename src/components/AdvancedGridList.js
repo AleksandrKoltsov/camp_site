@@ -1,15 +1,15 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import GridList from '@material-ui/core/GridList';
-import GridListTile from '@material-ui/core/GridListTile';
-import GridListTileBar from '@material-ui/core/GridListTileBar';
+import ImageList from '@material-ui/core/ImageList';
+import ImageListItem from '@material-ui/core/ImageListItem';
+import ImageListItemBar from '@material-ui/core/ImageListItemBar';
 import IconButton from '@material-ui/core/IconButton';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 // import StarIcon from '@material-ui/icons/Star'; возможно будет использован для показа состояния отмеченной звездочки в карточке
 import InfoIcon from '@material-ui/icons/Info';
 
 const useStyles = makeStyles(theme => ({
-  gridList: {
+  ImageList: {
     width: "100%",
     // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
     transform: 'translateZ(0)',
@@ -29,16 +29,16 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function AdvancedGridList(props) {//принимает массив информации карточек(data),
+export default function AdvancedImageList(props) {//принимает массив информации карточек(data),
   const classes = useStyles();                   //методы App.js handleClickInfo, handleClickStar
   const {data, handleClickStar, handleClickInfo} = props;
 return (
   <div>
-      <GridList cellHeight={200} spacing={1} className={classes.gridList}>
+      <ImageList cellHeight={200} spacing={1} className={classes.ImageList}>
         {data.map((tile, i) => (
-          <GridListTile key={tile.img} cols={i%3===0?2:1} rows={2}>
+          <ImageListItem key={tile.img} cols={i%3===0?2:1} rows={2}>
             <img src={tile.img} alt={tile.title} />
-            <GridListTileBar
+            <ImageListItemBar
               titlePosition="top"
               actionIcon={
                 <IconButton
@@ -52,7 +52,7 @@ return (
               actionPosition="right"
               className={classes.titleBarTop}
             />
-          <GridListTileBar
+          <ImageListItemBar
               title={tile.title}
               subtitle={`от ${tile.price}`}
               titlePosition="bottom"
@@ -69,9 +69,9 @@ return (
               actionPosition="left"
               className={classes.titleBar}
             />
-          </GridListTile>
+          </ImageListItem>
         ))}
-      </GridList>
+      </ImageList>
     </div>
   );
 }
